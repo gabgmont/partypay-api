@@ -23,18 +23,18 @@ class SwaggerConfiguration {
             .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.any())
             .build()
+            .apiInfo(apiInfo())
     }
 
-    @Bean
-    fun apiInfo(
-        @Value("\${application.name}")
-        name: String,
-        @Value("\${application.version}")
-        version: String,
-        @Value("\${application.description}")
-        description: String
-    ): ApiInfo? {
+    @Value("\${application.name}")
+    private lateinit var name: String
+    @Value("\${application.version}")
+    private lateinit var version: String
+    @Value("\${application.description}")
+    private lateinit var description: String
 
+    @Bean
+    fun apiInfo(): ApiInfo? {
         return ApiInfoBuilder()
             .title(name)
             .version(version)
