@@ -1,0 +1,9 @@
+server:
+  port: 9999
+
+application:
+  name: PartyPay-Api
+  description: Projeto de integração do Partypay!
+  version: 0.0.1
+  artifact-id: partypay
+
