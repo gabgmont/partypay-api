@@ -1,4 +1,4 @@
-package br.com.fairie.helloworld
+package br.com.fairie.endpoints.helloworld
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation

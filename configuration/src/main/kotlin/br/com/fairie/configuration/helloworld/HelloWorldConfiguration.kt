@@ -1,6 +1,6 @@
-package br.com.fairie.partypay.configuration.helloworld
+package br.com.fairie.configuration.helloworld
 
-import br.com.fairie.helloworld.HelloWorldController
+import br.com.fairie.endpoints.helloworld.HelloWorldController
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
