@@ -20,7 +20,7 @@ class SwaggerConfiguration {
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
             .select()
-            .apis(RequestHandlerSelectors.any())
+            .apis(RequestHandlerSelectors.basePackage("br.com.fairie.partypay"))
             .paths(PathSelectors.any())
             .build()
             .apiInfo(apiInfo())

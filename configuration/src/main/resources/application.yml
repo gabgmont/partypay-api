@@ -1,5 +1,27 @@
 application:
-  name: PartyPay-Api
-  description: Projeto de integração do Partypay!
+  name: PartyPay Api
+  description: Api do Partypay
   version: 0.0.1
-  artifact-id: partypay
+  artifactid: partypay
+
+
+info:
+  app:
+    name: ${application.name}
+    version: ${application.version}
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:9090/
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
