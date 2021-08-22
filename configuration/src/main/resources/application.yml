@@ -11,6 +11,8 @@ info:
     version: ${application.version}
 
 spring:
+  application:
+    name: ${application.name}
   boot:
     admin:
       client:
