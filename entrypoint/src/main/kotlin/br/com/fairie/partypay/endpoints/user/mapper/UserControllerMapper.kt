@@ -7,11 +7,20 @@ import br.com.fairie.partypay.usecase.user.entity.User
 
 fun CPFDto.toCPF(): CPF = CPF(cpf!!)
 
-fun User.toDto(): UserDto =
-    UserDto(
-        nome,
-        cpf.value,
-        email.value,
-        phone.value,
-        photo?.value ?: "No Photo"
-    )
+fun List<User>.toDto(): List<UserDto> {
+    val userList = ArrayList<UserDto>()
+
+    forEach { user ->
+        userList.add(
+            UserDto(
+                user.nome,
+                user.cpf.value,
+                user.email.value,
+                user.phone.value,
+                user.photo?.value ?: "No Photo"
+            )
+        )
+    }
+
+    return userList
+}

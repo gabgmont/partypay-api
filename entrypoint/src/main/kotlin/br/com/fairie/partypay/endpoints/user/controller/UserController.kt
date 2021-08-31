@@ -20,16 +20,16 @@ import javax.validation.Valid
     tags = ["User"]
 )
 class UserController(
-    val useCase: UserUseCase
+    private val useCase: UserUseCase
 ) {
 
     @GetMapping
     @ApiOperation(
         value = "Retrieve user information with CPF.",
-        notes = """Operation used to get user from Firebase"""
+        notes = """Operation used to get user from Database"""
     )
 
-    fun getUser(@Valid cpfDto: CPFDto): ResponseEntity<UserDto> {
+    fun getUser(@Valid cpfDto: CPFDto): ResponseEntity<List<UserDto>> {
 
         val request = cpfDto.toCPF()
         val response = useCase.get(request).toDto()
