@@ -25,7 +25,7 @@ class UserController(private val useCase: UserUseCase) {
     @GetMapping
     @ApiOperation(value = GET_USER_OPERATION_VALUE, notes = GET_USER_OPERATION_NOTES)
 
-    fun getUser(@Valid cpfForm: CPFForm): ResponseEntity<List<UserDTO>> {
+    fun getUser(cpfForm: CPFForm): ResponseEntity<List<UserDTO>> {
 
         val request = cpfForm.toCPForNull()
         val response = useCase.get(request).toDto()

@@ -24,17 +24,17 @@ class SecurityConfiguration(
         return super.authenticationManager()
     }
 
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.userDetailsService(authenticationService).passwordEncoder(BCryptPasswordEncoder())
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(authenticationService).passwordEncoder(BCryptPasswordEncoder())
     }
 
-    override fun configure(http: HttpSecurity?) {
+    override fun configure(http: HttpSecurity) {
 
         authenticationService.setAuthManager(authenticationManager())
 
-        http!!.authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/menu/*").permitAll()
-            .antMatchers(HttpMethod.GET, "/menu/*/*").permitAll()
+        http.authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .antMatchers(HttpMethod.POST, "/auth").permitAll()
             .anyRequest().authenticated()
             .and().csrf().disable()
@@ -43,6 +43,7 @@ class SecurityConfiguration(
             .addFilterBefore(AuthenticationTokenFilter(authenticationService), UsernamePasswordAuthenticationFilter::class.java)
     }
 
-    override fun configure(web: WebSecurity?) {
+    override fun configure(web: WebSecurity) {
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**")
     }
 }

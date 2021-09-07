@@ -14,7 +14,7 @@ class AuthenticationTokenFilter(private val authService: AuthService) : OncePerR
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
 
         val token = retrieveToken(request)
-        val isValid = authService.verifyToken(token!!)
+        val isValid = authService.verifyToken(token)
         if(isValid){
             authenticateUser(token)
         }

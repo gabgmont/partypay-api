@@ -1,5 +1,12 @@
 package br.com.fairie.partypay.utils
 
+//Authentication Controller
+const val AUTH_TAG_TITLE = "Authentication"
+const val AUTH_TAG_DESCRIPTION = "Authentication Operations"
+
+const val POST_AUTHENTICATION_VALUE = "Generate Bearer token to authenticate other requests."
+const val POST_AUTHENTICATION_NOTES = ""
+
 //User Controller
 const val USER_TAG_TITLE = "User"
 const val USER_TAG_DESCRIPTION = "User Operations"

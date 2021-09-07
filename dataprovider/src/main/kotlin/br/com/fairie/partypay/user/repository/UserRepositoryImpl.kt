@@ -37,7 +37,7 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
 
         val users = try {
             jdbc.execute(sql) { ps ->
-                println("${javaClass.kotlin.simpleName}: MONTAGEM: SELECT ${ps.toString().substringAfter("SELECT")}")
+                println("${javaClass.kotlin.simpleName}: MONTAGEM: SELECT ${ps.toString().substringAfter("SELECT ")}")
 
                 val execute = ps.executeQuery()
                 mapUserRows(execute)
@@ -57,6 +57,7 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
 
         val users = try {
             jdbc.execute(sql) { ps ->
+                println("${javaClass.kotlin.simpleName}: MONTAGEM: SELECT ${ps.toString().substringAfter("SELECT ")}")
 
                 val execute = ps.executeQuery()
                 mapUserRows(execute)
@@ -75,6 +76,7 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
 
         val users = try {
             jdbc.execute(sql) { ps ->
+                println("${javaClass.kotlin.simpleName}: MONTAGEM: SELECT ${ps.toString().substringAfter("SELECT ")}")
 
                 val execute = ps.executeQuery()
                 mapUserRows(execute)

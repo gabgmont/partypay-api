@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menu/{restaurant}")
 @Api(tags = [MENU_TAG_TITLE], description = MENU_TAG_DESCRIPTION)
 class MenuController(val useCase: MenuUseCase) {
 
-    @GetMapping("/{restaurant}")
+    @GetMapping
     @ApiOperation(value = GET_MENU_OPERATION_VALUE, notes = GET_MENU_OPERATION_NOTES)
     fun browseMenu(@PathVariable restaurant: String): MenuDTO {
         val response = useCase.getMenu(restaurant)
         return response.toDto()
     }
 
-    @GetMapping("/{restaurant}/category/{category}")
+    @GetMapping("/category/{category}")
     @ApiOperation(value = GET_MENU_CATEGORY_OPERATION_VALUE, notes = GET_MENU_CATEGORY_OPERATION_NOTES)
     fun browseCategory(@PathVariable restaurant: String, @PathVariable category: String): CategoryDTO{
         val response = useCase.getMenuCategory(restaurant, category)
         return response.toDto()
     }
 
-    @GetMapping("/{restaurant}/order/{order}")
+    @GetMapping("/order/{order}")
     @ApiOperation(value = GET_MENU_ORDER_OPERATION_VALUE, notes = GET_MENU_ORDER_OPERATION_NOTES)
     fun browseOrder(@PathVariable restaurant: String, @PathVariable order: String): OrderDTO{
         val response = useCase.getMenuOrder(restaurant, order)
