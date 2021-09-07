@@ -1,8 +1,8 @@
 package br.com.fairie.partypay.endpoints.user.controller
 
-import br.com.fairie.partypay.shared.dto.CPFDto
+import br.com.fairie.partypay.shared.dto.CPFForm
 import br.com.fairie.partypay.usecase.user.UserUseCase
-import br.com.fairie.partypay.endpoints.user.dto.UserDto
+import br.com.fairie.partypay.endpoints.user.dto.UserDTO
 import br.com.fairie.partypay.endpoints.user.mapper.toCPForNull
 import br.com.fairie.partypay.endpoints.user.mapper.toDto
 import br.com.fairie.partypay.utils.GET_USER_OPERATION_NOTES
@@ -25,9 +25,9 @@ class UserController(private val useCase: UserUseCase) {
     @GetMapping
     @ApiOperation(value = GET_USER_OPERATION_VALUE, notes = GET_USER_OPERATION_NOTES)
 
-    fun getUser(@Valid cpfDto: CPFDto): ResponseEntity<List<UserDto>> {
+    fun getUser(@Valid cpfForm: CPFForm): ResponseEntity<List<UserDTO>> {
 
-        val request = cpfDto.toCPForNull()
+        val request = cpfForm.toCPForNull()
         val response = useCase.get(request).toDto()
 
         return ResponseEntity.ok(response)

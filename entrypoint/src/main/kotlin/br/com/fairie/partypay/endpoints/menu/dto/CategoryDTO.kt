@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.endpoints.menu.dto
 
-class CategoryDto(
+class CategoryDTO(
     val name: String,
-    val orderList: List<OrderDto>
+    val orderList: List<OrderDTO>
 ) {
 }

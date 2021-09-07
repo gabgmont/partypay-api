@@ -1,6 +1,7 @@
 package br.com.fairie.partypay.endpoints.handler
 
 import br.com.fairie.partypay.endpoints.handler.dto.ErrorDto
+import br.com.fairie.partypay.exception.BadRequestException
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.exception.SQLCallException
 import org.springframework.http.HttpStatus
@@ -33,6 +34,15 @@ class HttpExceptionHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SQLCallException::class)
     fun handleSQLCallException(exception: SQLCallException): ErrorDto{
+        return ErrorDto(
+            HttpStatus.BAD_REQUEST.value(),
+            exception.message!!
+        )
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadRequestException::class)
+    fun handleBadRequestException(exception: BadRequestException): ErrorDto{
         return ErrorDto(
             HttpStatus.BAD_REQUEST.value(),
             exception.message!!

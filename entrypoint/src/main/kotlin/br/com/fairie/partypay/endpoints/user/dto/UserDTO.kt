@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.endpoints.user.dto
 
-class UserDto(
+class UserDTO(
     val name: String,
     val cpf: String,
     val email: String,

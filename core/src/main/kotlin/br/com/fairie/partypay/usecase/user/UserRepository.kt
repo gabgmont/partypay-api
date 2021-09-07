@@ -6,4 +6,5 @@ import br.com.fairie.partypay.vo.CPF
 interface UserRepository{
 
     fun findUser(cpf: CPF?): List<User>
+    fun findUserByEmail(email: String?) : User
 }

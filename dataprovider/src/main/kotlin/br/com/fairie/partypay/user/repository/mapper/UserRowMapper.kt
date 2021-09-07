@@ -1,18 +1,19 @@
 package br.com.fairie.partypay.user.repository.mapper
 
-import br.com.fairie.partypay.user.dao.UserEntity
+import br.com.fairie.partypay.user.dao.UserDao
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 
-class UserRowMapper : RowMapper<UserEntity> {
-    override fun mapRow(rs: ResultSet, p1: Int): UserEntity {
-        return UserEntity(
-            id = rs.getLong(UserEntity.COLUMN_ID),
-            name = rs.getString(UserEntity.COLUMN_NAME),
-            cpf = rs.getString(UserEntity.COLUMN_CPF),
-            email = rs.getString(UserEntity.COLUMN_EMAIL),
-            phone = rs.getString(UserEntity.COLUMN_PHONE),
-            photo = rs.getString(UserEntity.COLUMN_PHOTO)
+class UserRowMapper : RowMapper<UserDao> {
+    override fun mapRow(rs: ResultSet, p1: Int): UserDao {
+        return UserDao(
+            id = rs.getLong(UserDao.COLUMN_ID),
+            name = rs.getString(UserDao.COLUMN_NAME),
+            cpf = rs.getString(UserDao.COLUMN_CPF),
+            email = rs.getString(UserDao.COLUMN_EMAIL),
+            secret = rs.getString(UserDao.COLUMN_SECRET),
+            phone = rs.getString(UserDao.COLUMN_PHONE),
+            photo = rs.getString(UserDao.COLUMN_PHOTO)
         )
     }
 }

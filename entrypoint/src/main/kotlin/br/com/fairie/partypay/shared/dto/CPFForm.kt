@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
-class CPFDto(
+class CPFForm(
     @NotNull @NotBlank @Size(min = 11, max = 11)
     val cpf: String?
 ) {

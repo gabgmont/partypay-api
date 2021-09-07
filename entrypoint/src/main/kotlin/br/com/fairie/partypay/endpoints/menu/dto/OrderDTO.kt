@@ -1,6 +1,8 @@
 package br.com.fairie.partypay.endpoints.menu.dto
 
-class MenuDto(
+class OrderDTO(
     val name: String,
-    val cateogryList: List<CategoryDto>
-)
+    val description: String,
+    val value: Double
+) {
+}
