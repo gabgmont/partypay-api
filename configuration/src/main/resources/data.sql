@@ -9,5 +9,9 @@ INSERT INTO CATEGORY_TBL (name) VALUES('Aperitivos');
 INSERT INTO MENU_TBL (restaurant) VALUES('Outback');
 */
 
-INSERT INTO USERS_TBL (name, cpf, email, phone) VALUES('Gabriel', '999.999.999-00', 'gabriel@partypay.com', '11 99191-9090');
+INSERT INTO USERS_TBL (name, cpf, email, phone) VALUES('Gabriel Monteiro', '999.999.999-00', 'gabriel@partypay.com', '11 99191-9090');
+INSERT INTO USERS_TBL (name, cpf, email, phone) VALUES('Giovanni Enrico', '999.999.999-11', 'giovanni@partypay.com', '11 99191-8080');
+INSERT INTO USERS_TBL (name, cpf, email, phone) VALUES('Gabriel Bueno', '999.999.999-22', 'bueno@partypay.com', '11 99191-7070');
+INSERT INTO USERS_TBL (name, cpf, email, phone) VALUES('Giullio Emmanuel', '999.999.999-33', 'giullio@partypay.com', '11 99191-6060');
+INSERT INTO USERS_TBL (name, cpf, email, phone) VALUES('Rafael Barbosa', '999.999.999-44', 'rafael@partypay.com', '11 99191-5050');
 

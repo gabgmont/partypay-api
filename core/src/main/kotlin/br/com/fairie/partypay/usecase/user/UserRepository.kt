@@ -5,5 +5,5 @@ import br.com.fairie.partypay.vo.CPF
 
 interface UserRepository{
 
-    fun findByCpf(cpf: CPF): List<User>
+    fun findUser(cpf: CPF?): List<User>
 }

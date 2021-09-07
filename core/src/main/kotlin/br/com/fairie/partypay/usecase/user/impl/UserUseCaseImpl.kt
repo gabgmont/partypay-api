@@ -8,7 +8,7 @@ import br.com.fairie.partypay.usecase.user.entity.User
 class UserUseCaseImpl(
     private val repository: UserRepository
 ): UserUseCase {
-    override fun get(cpf: CPF): List<User> {
-        return repository.findByCpf(cpf)
+    override fun get(cpf: CPF?): List<User> {
+        return repository.findUser(cpf)
     }
 }

@@ -5,7 +5,10 @@ import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.endpoints.user.dto.UserDto
 import br.com.fairie.partypay.usecase.user.entity.User
 
-fun CPFDto.toCPF(): CPF = CPF(cpf!!)
+fun CPFDto.toCPForNull(): CPF? {
+    if (cpf.isNullOrEmpty()) return null
+    return CPF(cpf)
+}
 
 fun List<User>.toDto(): List<UserDto> {
     val userList = ArrayList<UserDto>()

@@ -3,7 +3,7 @@ package br.com.fairie.partypay.endpoints.user.controller
 import br.com.fairie.partypay.shared.dto.CPFDto
 import br.com.fairie.partypay.usecase.user.UserUseCase
 import br.com.fairie.partypay.endpoints.user.dto.UserDto
-import br.com.fairie.partypay.endpoints.user.mapper.toCPF
+import br.com.fairie.partypay.endpoints.user.mapper.toCPForNull
 import br.com.fairie.partypay.endpoints.user.mapper.toDto
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -26,12 +26,14 @@ class UserController(
     @GetMapping
     @ApiOperation(
         value = "Retrieve user information with CPF.",
-        notes = """Operation used to get user from Database"""
+        notes = """Operation used to get user from Database. 
+            |
+        """
     )
 
     fun getUser(@Valid cpfDto: CPFDto): ResponseEntity<List<UserDto>> {
 
-        val request = cpfDto.toCPF()
+        val request = cpfDto.toCPForNull()
         val response = useCase.get(request).toDto()
 
         return ResponseEntity.ok(response)
