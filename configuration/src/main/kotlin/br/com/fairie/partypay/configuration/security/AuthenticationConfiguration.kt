@@ -1,5 +1,6 @@
-package br.com.fairie.partypay.configuration.security.controller
+package br.com.fairie.partypay.configuration.security
 
+import br.com.fairie.partypay.configuration.security.filter.AuthenticationTokenFilter
 import br.com.fairie.partypay.endpoints.authentication.controller.AuthenticationController
 import br.com.fairie.partypay.usecase.authentication.AuthService
 import br.com.fairie.partypay.usecase.authentication.AuthenticationUseCase
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class AuthenticationControllerConfiguration {
+class AuthenticationConfiguration {
 
     @Bean
     fun loadAuthController(

@@ -1,6 +1,7 @@
 package br.com.fairie.partypay.configuration.security
 
-import org.springframework.context.annotation.Bean
+import br.com.fairie.partypay.configuration.security.filter.AuthenticationTokenFilter
+import br.com.fairie.partypay.configuration.security.service.AuthenticationService
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,13 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @EnableWebSecurity
 @Configuration
-class SecurityConfiguration(val authenticationService: AuthenticationService) : WebSecurityConfigurerAdapter() {
+class SecurityConfiguration(
+    private val authenticationService: AuthenticationService
+) : WebSecurityConfigurerAdapter() {
 
-    @Bean
-    override fun authenticationManager(): AuthenticationManager {
+    final override fun authenticationManager(): AuthenticationManager {
         return super.authenticationManager()
     }
 
@@ -26,6 +29,9 @@ class SecurityConfiguration(val authenticationService: AuthenticationService) : 
     }
 
     override fun configure(http: HttpSecurity?) {
+
+        authenticationService.setAuthManager(authenticationManager())
+
         http!!.authorizeRequests()
             .antMatchers(HttpMethod.GET, "/menu/*").permitAll()
             .antMatchers(HttpMethod.GET, "/menu/*/*").permitAll()
@@ -33,6 +39,8 @@ class SecurityConfiguration(val authenticationService: AuthenticationService) : 
             .anyRequest().authenticated()
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(AuthenticationTokenFilter(authenticationService), UsernamePasswordAuthenticationFilter::class.java)
     }
 
     override fun configure(web: WebSecurity?) {

@@ -18,6 +18,7 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
     companion object {
         private const val CALL_FIND_USER_BY_CPF = "{SELECT * FROM users_tbl WHERE cpf = '@p_cpf'}"
         private const val CALL_FIND_USER_BY_EMAIL = "{SELECT * FROM users_tbl WHERE email = '@p_email'}"
+        private const val CALL_FIND_USER_BY_ID = "{SELECT * FROM users_tbl WHERE id = '@p_id'}"
         private const val CALL_FIND_ALL_USERS = "{SELECT * FROM users_tbl}"
 
         private const val ERROR_USER_NOT_FOUND = "User not found."
@@ -68,6 +69,23 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
 
         return users.first()
     }
+
+    override fun findUserById(userId: Long): User {
+        val sql = CALL_FIND_USER_BY_ID.replace("@p_id", userId.toString())
+
+        val users = try {
+            jdbc.execute(sql) { ps ->
+
+                val execute = ps.executeQuery()
+                mapUserRows(execute)
+            }?.toUserList() ?: arrayListOf()
+
+        } catch (exception: Exception) {
+            throw SQLCallException(ERROR_SQL_CALL_EXCEPTION)
+        }
+        if (users.isEmpty()) throw UsernameNotFoundException(ERROR_USER_NOT_FOUND)
+
+        return users.first()    }
 }
 
 private fun mapUserRows(resultSet: ResultSet): List<UserDao> {

@@ -7,4 +7,5 @@ interface UserRepository{
 
     fun findUser(cpf: CPF?): List<User>
     fun findUserByEmail(email: String?) : User
+    fun findUserById(userId: Long): User
 }

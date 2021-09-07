@@ -8,4 +8,4 @@ import br.com.fairie.partypay.vo.Email
 
 fun LoginForm.toLoginData(): LoginData = LoginData(Email(email), secret)
 
-fun GeneratedToken.toDto(): TokenDto = TokenDto(token, expiration)
+fun GeneratedToken.toDto(): TokenDto = TokenDto(type = "Bearer", token = token, expiration = expiration)
