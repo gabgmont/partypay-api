@@ -74,7 +74,6 @@ class AuthenticationService(
         val body = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).body
 
         return body.subject.toLong()
-
     }
 
     override fun getUserById(userId: Long): User {
