@@ -5,6 +5,10 @@ import br.com.fairie.partypay.usecase.user.UserUseCase
 import br.com.fairie.partypay.endpoints.user.dto.UserDto
 import br.com.fairie.partypay.endpoints.user.mapper.toCPForNull
 import br.com.fairie.partypay.endpoints.user.mapper.toDto
+import br.com.fairie.partypay.utils.GET_USER_OPERATION_NOTES
+import br.com.fairie.partypay.utils.GET_USER_OPERATION_VALUE
+import br.com.fairie.partypay.utils.USER_TAG_DESCRIPTION
+import br.com.fairie.partypay.utils.USER_TAG_TITLE
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -15,21 +19,11 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/user")
-@Api(
-    description = "User Operations",
-    tags = ["User"]
-)
-class UserController(
-    private val useCase: UserUseCase
-) {
+@Api(tags = [USER_TAG_TITLE], description = USER_TAG_DESCRIPTION)
+class UserController(private val useCase: UserUseCase) {
 
     @GetMapping
-    @ApiOperation(
-        value = "Retrieve user information with CPF.",
-        notes = """Operation used to get user from Database. 
-            |
-        """
-    )
+    @ApiOperation(value = GET_USER_OPERATION_VALUE, notes = GET_USER_OPERATION_NOTES)
 
     fun getUser(@Valid cpfDto: CPFDto): ResponseEntity<List<UserDto>> {
 
