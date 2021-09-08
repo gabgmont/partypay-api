@@ -8,5 +8,8 @@ import br.com.fairie.partypay.usecase.authentication.vo.LoginData
 class AuthenticationUseCaseImpl(
     private val authenticationService: AuthService
 ) : AuthenticationUseCase {
-    override fun authenticate(login: LoginData): GeneratedToken = authenticationService.generateToken(login)
+
+    override fun authenticate(login: LoginData): GeneratedToken {
+        return authenticationService.generateToken(login)
+    }
 }
