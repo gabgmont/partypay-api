@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-		<module>entrypoint</module>
-		<module>configuration</module>
-		<module>core</module>
-		<module>dataprovider</module>
+		<module>application/entrypoint</module>
+		<module>application/configuration</module>
+		<module>application/core</module>
+		<module>application/dataprovider</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

@@ -1,0 +1,6 @@
+rootProject.name = 'partypay'
+
+include "application:dataprovider"
+include "application:entrypoint"
+include "application:configuration"
+include "application:core"
