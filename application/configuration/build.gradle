@@ -1,0 +1,31 @@
+//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
+plugins {
+    id("org.springframework.boot") version "2.5.3"
+    id("io.spring.dependency-management") version "1.0.8.RELEASE"
+}
+apply plugin: 'war'
+
+description = "Wires the application together."
+
+//Generate jar with other name
+bootWar {
+    archiveFileName = "${rootProject.ext.archive_file_name}"
+}
+
+dependencies {
+    implementation project(":application:core")
+    implementation project(":application:dataprovider")
+    implementation project(":application:entrypoint")
+
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+
+    implementation libs.database
+    implementation libs.spring_config
+    implementation libs.spring_provider
+    implementation libs.spring_web
+    implementation libs.cacheable
+    implementation libs.swagger
+
+    testImplementation libs.spring_test
+    testImplementation libs.unit_test
+}

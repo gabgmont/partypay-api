@@ -1,0 +1,17 @@
+description = 'entrypoint'
+
+dependencies {
+    implementation project(':application:core')
+    implementation 'javax:javaee-web-api:8.0.1'
+    implementation 'com.jayway.jsonpath:json-path:2.5.0'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    implementation libs.swagger
+    implementation libs.spring_web
+//    implementation 'junit:junit:4.13.1'
+
+    testImplementation libs.spring_test
+    testImplementation libs.unit_test
+}
+
+

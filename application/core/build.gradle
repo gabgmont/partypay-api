@@ -1,0 +1,6 @@
+description = 'core'
+
+dependencies {
+    testImplementation libs.spring_test
+    testImplementation libs.unit_test
+}
