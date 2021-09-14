@@ -3,7 +3,6 @@ package br.com.fairie.partypay.user
 import io.mockk.every
 import io.mockk.mockk
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.jdbc.core.JdbcTemplate
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
