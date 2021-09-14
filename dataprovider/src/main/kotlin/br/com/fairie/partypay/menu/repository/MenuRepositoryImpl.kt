@@ -17,8 +17,8 @@ class MenuRepositoryImpl : MenuRepository {
     companion object{
         const val MENU_NOT_FOUND = "Menu not found."
         const val RESTAURANT_NOT_FOUND = "Restaurant not found."
-        const val CATEGORY_NOT_FOUND = ""
-        const val ORDER_NOT_FOUND = ""
+        const val CATEGORY_NOT_FOUND = "Category not found."
+        const val ORDER_NOT_FOUND = "Order not found."
     }
 
     override fun getMenuByName(restaurant: String): Menu {

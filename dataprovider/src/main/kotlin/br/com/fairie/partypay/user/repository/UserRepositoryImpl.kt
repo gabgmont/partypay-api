@@ -75,4 +75,3 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
         return RowMapperResultSetExtractor(UserRowMapper()).extractData(resultSet)
     }
 }
-
