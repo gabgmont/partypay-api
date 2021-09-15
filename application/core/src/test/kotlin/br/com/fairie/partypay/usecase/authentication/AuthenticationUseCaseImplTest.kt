@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 class AuthenticationUseCaseImplTest {
 
     private val fakeToken = GeneratedToken("FAKE TOKEN 1234", "240000")

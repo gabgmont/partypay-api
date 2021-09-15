@@ -2,11 +2,10 @@ package br.com.fairie.partypay.user
 
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.boot.test.context.SpringBootTest
+import org.mockito.ArgumentMatchers.any
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-@SpringBootTest
 class UserRepositoryImplTest {
 
     private val mockResultSet = mockk<ResultSet>().also { rs ->

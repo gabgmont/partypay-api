@@ -8,9 +8,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 class MenuUseCaseImplTest {
 
     private val order = Order("Bloomin' Onions", "description", 99.99)
