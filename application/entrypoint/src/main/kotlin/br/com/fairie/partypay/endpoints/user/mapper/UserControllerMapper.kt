@@ -3,7 +3,7 @@ package br.com.fairie.partypay.endpoints.user.mapper
 import br.com.fairie.partypay.shared.dto.CPFForm
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.endpoints.user.dto.UserDTO
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 
 fun CPFForm.toCPForNull(): CPF? {
     if (cpf.isNullOrEmpty()) return null

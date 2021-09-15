@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.usecase.menu.entity
+package br.com.fairie.partypay.usecase.menu.vo
 
 class Order(
     val name: String,

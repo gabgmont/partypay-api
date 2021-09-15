@@ -8,7 +8,7 @@ import br.com.fairie.partypay.usecase.authentication.AuthService
 import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
 import br.com.fairie.partypay.usecase.authentication.vo.LoginData
 import br.com.fairie.partypay.usecase.user.UserRepository
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value

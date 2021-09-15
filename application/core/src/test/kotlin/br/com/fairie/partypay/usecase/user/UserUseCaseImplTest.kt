@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.usecase.user
 
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.usecase.user.impl.UserUseCaseImpl
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
@@ -10,7 +10,6 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
 class UserUseCaseImplTest {
 

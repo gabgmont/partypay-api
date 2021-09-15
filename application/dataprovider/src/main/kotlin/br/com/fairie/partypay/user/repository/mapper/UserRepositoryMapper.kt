@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.user.repository.mapper
 
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.user.dao.UserDao
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email

@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.usecase.user.entity
+package br.com.fairie.partypay.usecase.user.vo
 
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email

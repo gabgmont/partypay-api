@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.entity
 
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.*

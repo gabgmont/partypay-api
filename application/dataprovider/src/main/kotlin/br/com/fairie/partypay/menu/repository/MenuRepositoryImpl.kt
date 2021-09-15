@@ -4,9 +4,9 @@ import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.menu.dao.MenuDao
 import br.com.fairie.partypay.menu.mapper.toVo
 import br.com.fairie.partypay.usecase.menu.MenuRepository
-import br.com.fairie.partypay.usecase.menu.entity.Category
-import br.com.fairie.partypay.usecase.menu.entity.Menu
-import br.com.fairie.partypay.usecase.menu.entity.Order
+import br.com.fairie.partypay.usecase.menu.vo.Category
+import br.com.fairie.partypay.usecase.menu.vo.Menu
+import br.com.fairie.partypay.usecase.menu.vo.Order
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.File
 import java.io.FileNotFoundException

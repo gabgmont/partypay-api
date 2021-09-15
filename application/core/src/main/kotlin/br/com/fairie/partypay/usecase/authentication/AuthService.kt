@@ -2,7 +2,7 @@ package br.com.fairie.partypay.usecase.authentication
 
 import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
 import br.com.fairie.partypay.usecase.authentication.vo.LoginData
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 
 interface AuthService {
     fun generateToken(login: LoginData): GeneratedToken

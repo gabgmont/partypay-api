@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.usecase.user.entity
+package br.com.fairie.partypay.usecase.user.vo
 
 class Profile(
     val id: Long,

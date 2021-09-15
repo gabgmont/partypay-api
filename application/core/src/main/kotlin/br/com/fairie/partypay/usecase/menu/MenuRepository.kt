@@ -1,8 +1,8 @@
 package br.com.fairie.partypay.usecase.menu
 
-import br.com.fairie.partypay.usecase.menu.entity.Category
-import br.com.fairie.partypay.usecase.menu.entity.Menu
-import br.com.fairie.partypay.usecase.menu.entity.Order
+import br.com.fairie.partypay.usecase.menu.vo.Category
+import br.com.fairie.partypay.usecase.menu.vo.Menu
+import br.com.fairie.partypay.usecase.menu.vo.Order
 
 interface MenuRepository {
     fun getMenuByName(restaurant: String): Menu

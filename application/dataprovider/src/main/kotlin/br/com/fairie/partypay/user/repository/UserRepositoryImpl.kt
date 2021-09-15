@@ -3,7 +3,7 @@ package br.com.fairie.partypay.user.repository
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.exception.SQLCallException
 import br.com.fairie.partypay.usecase.user.UserRepository
-import br.com.fairie.partypay.usecase.user.entity.User
+import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.user.dao.UserDao
 import br.com.fairie.partypay.user.repository.mapper.UserRowMapper
 import br.com.fairie.partypay.user.repository.mapper.toUserList
