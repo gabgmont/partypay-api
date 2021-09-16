@@ -32,7 +32,9 @@ class MenuController(
     fun browseMenu(@PathVariable restaurant: String): MenuDTO {
         var response: Menu? = null
 
-        threadPool.executor.submit { response = useCase.getMenu(restaurant) }.also { future ->
+        threadPool.executor.submit { response = useCase.getMenu(restaurant)
+            Thread.sleep(10000)
+        }.also { future ->
             while (!future.isDone) {
                 Thread.sleep(100)
             }

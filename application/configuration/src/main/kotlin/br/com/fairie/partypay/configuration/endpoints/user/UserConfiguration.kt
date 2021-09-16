@@ -6,6 +6,7 @@ import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.UserUseCase
 import br.com.fairie.partypay.usecase.user.impl.UserUseCaseImpl
 import br.com.fairie.partypay.user.repository.UserRepositoryImpl
+import br.com.fairie.partypay.utils.ThreadPool
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.JdbcTemplate
@@ -16,8 +17,9 @@ open class UserConfiguration {
 
     @Bean
     open fun loadUserController(
+        threadPool: ThreadPool,
         useCase: UserUseCase
-    ) = UserController(useCase)
+    ) = UserController(threadPool, useCase)
 
     @Bean
     open fun loadUserUseCase(
