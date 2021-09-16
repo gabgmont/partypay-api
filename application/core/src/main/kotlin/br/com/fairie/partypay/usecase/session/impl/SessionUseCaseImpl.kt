@@ -5,7 +5,14 @@ import br.com.fairie.partypay.exception.SessionStatusException
 import br.com.fairie.partypay.usecase.menu.vo.Order
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.SessionUseCase
+import br.com.fairie.partypay.usecase.session.mapper.calculateSessionResume
+import br.com.fairie.partypay.usecase.session.mapper.close
+import br.com.fairie.partypay.usecase.session.mapper.isClosed
+import br.com.fairie.partypay.usecase.session.mapper.isOpen
 import br.com.fairie.partypay.usecase.session.vo.Session
+import br.com.fairie.partypay.usecase.session.vo.SessionOrder
+import br.com.fairie.partypay.usecase.session.vo.SessionResume
+import br.com.fairie.partypay.usecase.session.vo.SessionUser
 import br.com.fairie.partypay.usecase.user.vo.User
 
 class SessionUseCaseImpl(
@@ -23,28 +30,42 @@ class SessionUseCaseImpl(
         return repository.newSession(session)
     }
 
-    override fun endSession(session: Session): Session {
-        val currentSession = repository.getSessionById(session.id)
+    override fun addUser(sessionId: Long, user: User): Session {
+        val session = repository.getSessionById(sessionId)
 
-        currentSession.close()
-        return repository.updateSession(currentSession)
-    }
+        if (session.isClosed()) throw SessionStatusException("Session is already closed.")
+        val newUser = SessionUser(user, arrayListOf())
 
-    override fun addUser(session: Session, user: User): Session {
-        val currentSession = repository.getSessionById(session.id)
-
-        if (currentSession.isClosed()) throw SessionStatusException("Session is already closed.")
-
-        currentSession.users.add(user)
+        session.users.add(newUser)
         return repository.updateSession(session)
     }
 
-    override fun addOrder(session: Session, order: Order): Session {
-        val currentSession = repository.getSessionById(session.id)
+    override fun addOrder(sessionId: Long, order: Order, users: List<User>): Session {
+        val session = repository.getSessionById(sessionId)
 
-        if (currentSession.isClosed()) throw SessionStatusException("Session is already closed.")
+        if (session.isClosed()) throw SessionStatusException("Session is already closed.")
+        val newOrder = SessionOrder(order, users)
 
-        currentSession.orders.add(order)
+        users.forEach { user ->
+            session.users.forEach{ sessionUser ->
+                if (user == sessionUser.user){
+                    sessionUser.orders.add(order)
+                    sessionUser.updateShare(users.size)
+                }
+            }
+        }
+
+        session.orders.add(newOrder)
         return repository.updateSession(session)
+    }
+
+    override fun endSession(sessionId: Long): SessionResume {
+        val session = repository.getSessionById(sessionId)
+
+        val sessionResume = session.calculateSessionResume()
+
+        session.close()
+        repository.updateSession(session)
+        return sessionResume
     }
 }

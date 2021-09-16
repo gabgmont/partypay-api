@@ -14,4 +14,6 @@ class User(
     val phone: Phone,
     val photo: Photo?,
     val profiles: MutableCollection<Profile>
-)
+){
+
+}
