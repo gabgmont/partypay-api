@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.configuration.handler
+package br.com.fairie.partypay.configuration.endpoints.handler
 
 import br.com.fairie.partypay.endpoints.handler.HttpExceptionHandler
 import org.springframework.context.annotation.Bean

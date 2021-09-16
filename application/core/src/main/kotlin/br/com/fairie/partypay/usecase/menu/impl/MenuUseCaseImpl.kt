@@ -19,6 +19,8 @@ class MenuUseCaseImpl(
     }
 
     override fun getMenuOrder(restaurant: String, order: String): Order {
+        Thread.sleep(10000)
+
         return repository.getOrderByName(restaurant, order)
     }
 }
