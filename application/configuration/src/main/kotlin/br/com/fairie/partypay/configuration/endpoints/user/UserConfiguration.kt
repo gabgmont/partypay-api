@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.configuration.user
+package br.com.fairie.partypay.configuration.endpoints.user
 
 import br.com.fairie.partypay.configuration.repository.RepositoryConfiguration.Companion.H2_JDBC_TEMPLATE
 import br.com.fairie.partypay.endpoints.user.controller.UserController
