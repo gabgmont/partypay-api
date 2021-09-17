@@ -10,7 +10,7 @@ fun Session.calculateSessionResume(): SessionResume {
     val check = BigDecimal.ZERO
 
     orders.forEach{ sessionOrder ->
-        check.add(sessionOrder.order.value)
+        check.add(sessionOrder.value)
     }
 
     return SessionResume(users, check)

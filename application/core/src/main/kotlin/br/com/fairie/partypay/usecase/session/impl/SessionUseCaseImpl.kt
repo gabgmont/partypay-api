@@ -11,7 +11,6 @@ import br.com.fairie.partypay.usecase.session.mapper.close
 import br.com.fairie.partypay.usecase.session.mapper.isClosed
 import br.com.fairie.partypay.usecase.session.mapper.isOpen
 import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
 import br.com.fairie.partypay.usecase.session.vo.SessionResume
 import br.com.fairie.partypay.usecase.session.vo.SessionUser
 import br.com.fairie.partypay.usecase.user.UserRepository
@@ -37,11 +36,11 @@ class SessionUseCaseImpl(
 
     override fun addUser(sessionId: Long, cpf: CPF): Session {
         val session = sessionRepository.getSessionById(sessionId)
-        val users = userRepository.findUser(cpf)
+        if (session.isClosed()) throw SessionStatusException("Session is already closed.")
 
+        val users = userRepository.findUser(cpf)
         if (users.isEmpty()) throw EmptyListException("No users found with provided CPF.")
 
-        if (session.isClosed()) throw SessionStatusException("Session is already closed.")
         val newUser = SessionUser(users.first(), arrayListOf())
 
         session.users.add(newUser)
@@ -50,7 +49,6 @@ class SessionUseCaseImpl(
 
     override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
         val session = sessionRepository.getSessionById(sessionId)
-
         if (session.isClosed()) throw SessionStatusException("Session is already closed.")
 
         val userList = ArrayList<User>()
@@ -65,7 +63,6 @@ class SessionUseCaseImpl(
         }
 
         val order = menuRepository.getOrderByName(session.menu.name, orderName)
-        val newOrder = SessionOrder(order, userList)
 
         userList.forEach { user ->
             session.users.forEach{ sessionUser ->
@@ -76,13 +73,12 @@ class SessionUseCaseImpl(
             }
         }
 
-        session.orders.add(newOrder)
+        session.orders.add(order)
         return sessionRepository.updateSession(session)
     }
 
     override fun endSession(sessionId: Long): SessionResume {
         val session = sessionRepository.getSessionById(sessionId)
-
         val sessionResume = session.calculateSessionResume()
 
         session.close()

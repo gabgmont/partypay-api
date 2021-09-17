@@ -49,12 +49,12 @@ fun Session.toDTO(): SessionDTO {
         )
     }
 
-    orders.forEach { session ->
+    orders.forEach { order ->
         ordersDTO.add(
             OrderDTO(
-                name = session.order.name,
-                description = session.order.description,
-                value = session.order.value.toDouble(),
+                name = order.name,
+                description = order.description,
+                value = order.value.toDouble(),
             )
         )
     }

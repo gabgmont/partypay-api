@@ -37,5 +37,5 @@ fun Order.toDto(): OrderDTO =
     OrderDTO(
         name = name,
         description = description,
-        value = value
+        value = value.toDouble()
     )

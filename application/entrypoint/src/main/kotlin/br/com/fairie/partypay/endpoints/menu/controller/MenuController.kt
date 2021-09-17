@@ -6,9 +6,9 @@ import br.com.fairie.partypay.endpoints.menu.dto.OrderDTO
 import br.com.fairie.partypay.endpoints.menu.mapper.toDto
 import br.com.fairie.partypay.exception.ThreadExecutionException
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
-import br.com.fairie.partypay.usecase.menu.entity.Category
-import br.com.fairie.partypay.usecase.menu.entity.Menu
-import br.com.fairie.partypay.usecase.menu.entity.Order
+import br.com.fairie.partypay.usecase.menu.vo.Category
+import br.com.fairie.partypay.usecase.menu.vo.Menu
+import br.com.fairie.partypay.usecase.menu.vo.Order
 import br.com.fairie.partypay.utils.*
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.Callable
-import javax.validation.constraints.Future
 
 @RestController
 @RequestMapping("/menu/{restaurant}")

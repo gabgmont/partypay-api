@@ -8,10 +8,11 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 class MenuUseCaseImplTest {
 
-    private val order = Order("Bloomin' Onions", "description", 99.99)
+    private val order = Order("Bloomin' Onions", "description", BigDecimal(99.99))
     private val category = Category("Aperitivos", arrayListOf(order))
     private val menu = Menu(1, "Outback", arrayListOf(category))
 

@@ -8,6 +8,6 @@ interface SessionUseCase {
 
     fun createSession(session: Session) : Session
     fun addUser(sessionId: Long, cpf: CPF): Session
-    fun addOrder(sessionId: Long, order: String, users: List<CPF>): Session
+    fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session
     fun endSession(sessionId: Long): SessionResume
 }

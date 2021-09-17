@@ -6,6 +6,7 @@ import br.com.fairie.partypay.menu.dao.OrderDao
 import br.com.fairie.partypay.usecase.menu.vo.Category
 import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order
+import java.math.BigDecimal
 
 fun MenuDao.toVo(): Menu {
     val obList = ArrayList<Category>()
@@ -38,5 +39,5 @@ fun OrderDao.toVo(): Order =
     Order(
         name = name,
         description = description,
-        value = value
+        value = BigDecimal(value)
     )
