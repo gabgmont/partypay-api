@@ -5,5 +5,4 @@ import java.math.BigDecimal
 class SessionResume(
     val users: List<SessionUser>,
     val check: BigDecimal
-) {
-}
+)

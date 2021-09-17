@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.endpoints.handler.dto
+package br.com.fairie.partypay.handler.dto
 
 class ErrorDto(
     val code: Int,

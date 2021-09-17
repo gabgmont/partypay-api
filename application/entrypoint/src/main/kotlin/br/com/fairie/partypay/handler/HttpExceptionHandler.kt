@@ -1,6 +1,6 @@
-package br.com.fairie.partypay.endpoints.handler
+package br.com.fairie.partypay.handler
 
-import br.com.fairie.partypay.endpoints.handler.dto.ErrorDto
+import br.com.fairie.partypay.handler.dto.ErrorDto
 import br.com.fairie.partypay.exception.BadRequestException
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.exception.SQLCallException
