@@ -11,8 +11,8 @@ import br.com.fairie.partypay.usecase.session.mapper.close
 import br.com.fairie.partypay.usecase.session.mapper.isClosed
 import br.com.fairie.partypay.usecase.session.mapper.isOpen
 import br.com.fairie.partypay.usecase.session.vo.Session
+import br.com.fairie.partypay.usecase.session.vo.SessionOrder
 import br.com.fairie.partypay.usecase.session.vo.SessionResume
-import br.com.fairie.partypay.usecase.session.vo.SessionUser
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.vo.CPF
@@ -41,15 +41,15 @@ class SessionUseCaseImpl(
         val users = userRepository.findUser(cpf)
         if (users.isEmpty()) throw EmptyListException("No users found with provided CPF.")
 
-        val newUser = SessionUser(users.first(), arrayListOf())
-
-        session.users.add(newUser)
+        session.users.add(users.first())
         return sessionRepository.updateSession(session)
     }
 
     override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
         val session = sessionRepository.getSessionById(sessionId)
         if (session.isClosed()) throw SessionStatusException("Session is already closed.")
+
+        val order = menuRepository.getOrderByName(session.menu.name, orderName)
 
         val userList = ArrayList<User>()
         cpfs.forEach { cpf ->
@@ -62,18 +62,8 @@ class SessionUseCaseImpl(
             }
         }
 
-        val order = menuRepository.getOrderByName(session.menu.name, orderName)
-
-        userList.forEach { user ->
-            session.users.forEach{ sessionUser ->
-                if (user == sessionUser.user){
-                    sessionUser.orders.add(order)
-                    sessionUser.updateShare(cpfs.size)
-                }
-            }
-        }
-
-        session.orders.add(order)
+        val sessionOrder = SessionOrder(order, userList)
+        session.orders.add(sessionOrder)
         return sessionRepository.updateSession(session)
     }
 

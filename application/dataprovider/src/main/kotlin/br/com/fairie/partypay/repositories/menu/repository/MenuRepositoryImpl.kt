@@ -1,8 +1,8 @@
-package br.com.fairie.partypay.menu.repository
+package br.com.fairie.partypay.repositories.menu.repository
 
 import br.com.fairie.partypay.exception.NotFoundException
-import br.com.fairie.partypay.menu.dao.MenuDao
-import br.com.fairie.partypay.menu.mapper.toVo
+import br.com.fairie.partypay.repositories.menu.dao.MenuDao
+import br.com.fairie.partypay.repositories.menu.mapper.toVo
 import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.menu.vo.Category
 import br.com.fairie.partypay.usecase.menu.vo.Menu

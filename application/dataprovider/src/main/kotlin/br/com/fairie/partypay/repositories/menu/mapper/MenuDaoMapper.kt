@@ -1,8 +1,8 @@
-package br.com.fairie.partypay.menu.mapper
+package br.com.fairie.partypay.repositories.menu.mapper
 
-import br.com.fairie.partypay.menu.dao.CategoryDao
-import br.com.fairie.partypay.menu.dao.MenuDao
-import br.com.fairie.partypay.menu.dao.OrderDao
+import br.com.fairie.partypay.repositories.menu.dao.CategoryDao
+import br.com.fairie.partypay.repositories.menu.dao.MenuDao
+import br.com.fairie.partypay.repositories.menu.dao.OrderDao
 import br.com.fairie.partypay.usecase.menu.vo.Category
 import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order

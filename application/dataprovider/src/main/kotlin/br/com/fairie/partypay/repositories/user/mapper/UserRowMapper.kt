@@ -1,6 +1,6 @@
-package br.com.fairie.partypay.user.repository.mapper
+package br.com.fairie.partypay.repositories.user.mapper
 
-import br.com.fairie.partypay.user.dao.UserDao
+import br.com.fairie.partypay.repositories.user.dao.UserDao
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 

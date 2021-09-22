@@ -36,6 +36,7 @@ open class SecurityConfiguration(
             .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
             .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .antMatchers(HttpMethod.POST, "/auth").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -44,6 +45,6 @@ open class SecurityConfiguration(
     }
 
     override fun configure(web: WebSecurity) {
-        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**")
+        web.ignoring().antMatchers("/h2-console/**","/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**")
     }
 }

@@ -1,7 +1,7 @@
-package br.com.fairie.partypay.user.repository.mapper
+package br.com.fairie.partypay.repositories.user.mapper
 
 import br.com.fairie.partypay.usecase.user.vo.User
-import br.com.fairie.partypay.user.dao.UserDao
+import br.com.fairie.partypay.repositories.user.dao.UserDao
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone

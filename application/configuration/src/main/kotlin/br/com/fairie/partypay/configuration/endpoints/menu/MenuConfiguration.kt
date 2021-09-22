@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.configuration.endpoints.menu
 
 import br.com.fairie.partypay.endpoints.menu.controller.MenuController
-import br.com.fairie.partypay.menu.repository.MenuRepositoryImpl
+import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl
 import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
 import br.com.fairie.partypay.usecase.menu.impl.MenuUseCaseImpl

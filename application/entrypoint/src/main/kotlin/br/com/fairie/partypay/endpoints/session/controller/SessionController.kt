@@ -1,6 +1,5 @@
 package br.com.fairie.partypay.endpoints.session.controller
 
-import br.com.fairie.partypay.endpoints.menu.dto.OrderDTO
 import br.com.fairie.partypay.endpoints.session.controller.SessionController.Companion.ACTIVE_PATH
 import br.com.fairie.partypay.endpoints.session.dto.SessionDTO
 import br.com.fairie.partypay.endpoints.session.dto.SessionResumeDTO

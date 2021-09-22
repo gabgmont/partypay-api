@@ -1,12 +1,16 @@
-package br.com.fairie.partypay.user.repository
+package br.com.fairie.partypay.repositories.user.repository
 
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.exception.SQLCallException
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.vo.User
-import br.com.fairie.partypay.user.dao.UserDao
-import br.com.fairie.partypay.user.repository.mapper.UserRowMapper
-import br.com.fairie.partypay.user.repository.mapper.toUserList
+import br.com.fairie.partypay.repositories.user.dao.UserDao
+import br.com.fairie.partypay.repositories.user.mapper.UserRowMapper
+import br.com.fairie.partypay.repositories.user.mapper.toUserList
+import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_ALL_USERS
+import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_USER_BY_CPF
+import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_USER_BY_EMAIL
+import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_USER_BY_ID
 import br.com.fairie.partypay.vo.CPF
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapperResultSetExtractor
@@ -16,11 +20,6 @@ import java.sql.ResultSet
 class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
 
     companion object {
-        private const val SELECT_FIND_USER_BY_CPF = "{SELECT * FROM users_tbl WHERE cpf = '@p_cpf'}"
-        private const val SELECT_FIND_USER_BY_EMAIL = "{SELECT * FROM users_tbl WHERE email = '@p_email'}"
-        private const val SELECT_FIND_USER_BY_ID = "{SELECT * FROM users_tbl WHERE id = '@p_id'}"
-        private const val SELECT_FIND_ALL_USERS = "{SELECT * FROM users_tbl}"
-
         private const val ERROR_USER_NOT_FOUND = "User not found."
         private const val ERROR_SQL_SELECT_EXCEPTION = "Exception occurred while trying to retrieve data from database."
     }
@@ -62,8 +61,10 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
             jdbc.execute(sql) { ps ->
                 println("${javaClass.kotlin.simpleName}: MONTAGEM: SELECT ${ps.toString().substringAfter("SELECT ")}")
 
-                val execute = ps.executeQuery()
-                mapUserRows(execute)
+                ps.executeQuery().use { rs ->
+                    mapUserRows(rs)
+                }
+
             }?.toUserList() ?: arrayListOf()
 
         } catch (exception: Exception) {

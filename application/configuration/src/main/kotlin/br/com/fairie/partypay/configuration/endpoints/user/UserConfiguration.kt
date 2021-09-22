@@ -5,7 +5,7 @@ import br.com.fairie.partypay.endpoints.user.controller.UserController
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.UserUseCase
 import br.com.fairie.partypay.usecase.user.impl.UserUseCaseImpl
-import br.com.fairie.partypay.user.repository.UserRepositoryImpl
+import br.com.fairie.partypay.repositories.user.repository.UserRepositoryImpl
 import br.com.fairie.partypay.utils.ThreadPool
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

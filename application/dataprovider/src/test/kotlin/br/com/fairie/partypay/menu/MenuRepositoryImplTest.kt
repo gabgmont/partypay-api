@@ -1,16 +1,15 @@
 package br.com.fairie.partypay.menu
 
 import br.com.fairie.partypay.exception.NotFoundException
-import br.com.fairie.partypay.menu.repository.MenuRepositoryImpl
-import br.com.fairie.partypay.menu.repository.MenuRepositoryImpl.Companion.CATEGORY_NOT_FOUND
-import br.com.fairie.partypay.menu.repository.MenuRepositoryImpl.Companion.MENU_NOT_FOUND
-import br.com.fairie.partypay.menu.repository.MenuRepositoryImpl.Companion.ORDER_NOT_FOUND
-import br.com.fairie.partypay.menu.repository.MenuRepositoryImpl.Companion.RESTAURANT_NOT_FOUND
+import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl
+import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl.Companion.CATEGORY_NOT_FOUND
+import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl.Companion.MENU_NOT_FOUND
+import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl.Companion.ORDER_NOT_FOUND
+import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl.Companion.RESTAURANT_NOT_FOUND
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.boot.test.context.SpringBootTest
 
 class MenuRepositoryImplTest {
 

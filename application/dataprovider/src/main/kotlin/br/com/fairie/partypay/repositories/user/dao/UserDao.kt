@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.user.dao
+package br.com.fairie.partypay.repositories.user.dao
 
 class UserDao(
     val id: Long,
@@ -17,6 +17,5 @@ class UserDao(
         const val COLUMN_SECRET = "secret"
         const val COLUMN_PHONE = "phone"
         const val COLUMN_PHOTO = "photo"
-
     }
 }

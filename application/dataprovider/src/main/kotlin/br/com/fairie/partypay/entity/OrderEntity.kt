@@ -12,5 +12,4 @@ class OrderEntity(
     val name: String,
     val description: String,
     val value: Double
-) {
-}
+)
