@@ -7,7 +7,6 @@ class Session(
     val id: Long,
     val restaurant: String,
     val table: Int,
-    val menu: Menu,
     var status: SessionStatus,
     val users: MutableList<User>,
     val orders: MutableList<SessionOrder>

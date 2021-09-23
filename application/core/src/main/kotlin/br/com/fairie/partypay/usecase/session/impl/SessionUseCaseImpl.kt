@@ -24,7 +24,7 @@ class SessionUseCaseImpl(
 ): SessionUseCase {
 
     override fun createSession(session: Session): Session {
-        val sessionsByTable = sessionRepository.getSessionsByTable(session.table)
+        val sessionsByTable = sessionRepository.getSessionsWithCounter(session.table)
 
         if (sessionsByTable.isNotEmpty())
             sessionsByTable.parallelStream().limit(20).forEach { instance ->
@@ -35,7 +35,7 @@ class SessionUseCaseImpl(
     }
 
     override fun addUser(sessionId: Long, cpf: CPF): Session {
-        val session = sessionRepository.getSessionById(sessionId)
+        val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw SessionStatusException("Session is already closed.")
 
         val users = userRepository.findUser(cpf)
@@ -46,10 +46,10 @@ class SessionUseCaseImpl(
     }
 
     override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
-        val session = sessionRepository.getSessionById(sessionId)
+        val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw SessionStatusException("Session is already closed.")
 
-        val order = menuRepository.getOrderByName(session.menu.name, orderName)
+        val order = menuRepository.getOrderByName(session.restaurant, orderName)
 
         val userList = ArrayList<User>()
         cpfs.forEach { cpf ->
@@ -68,7 +68,7 @@ class SessionUseCaseImpl(
     }
 
     override fun endSession(sessionId: Long): SessionResume {
-        val session = sessionRepository.getSessionById(sessionId)
+        val session = sessionRepository.getSessionWithId(sessionId)
         val sessionResume = session.calculateSessionResume()
 
         session.close()
