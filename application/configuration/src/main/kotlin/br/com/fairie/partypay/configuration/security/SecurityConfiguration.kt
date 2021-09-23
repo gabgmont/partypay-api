@@ -34,6 +34,8 @@ open class SecurityConfiguration(
 
         http.authorizeRequests()
             .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
+            .antMatchers(HttpMethod.PUT, "/session/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/session/**").permitAll()
             .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .antMatchers(HttpMethod.POST, "/auth").permitAll()
             .antMatchers("/h2-console/**").permitAll()
@@ -48,3 +50,4 @@ open class SecurityConfiguration(
         web.ignoring().antMatchers("/h2-console/**","/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**")
     }
 }
+

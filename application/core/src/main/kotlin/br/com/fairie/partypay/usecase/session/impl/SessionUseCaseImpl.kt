@@ -27,7 +27,7 @@ class SessionUseCaseImpl(
         val sessionsByTable = sessionRepository.getSessionsWithCounter(session.table)
 
         if (sessionsByTable.isNotEmpty())
-            sessionsByTable.parallelStream().limit(20).forEach { instance ->
+            sessionsByTable.forEach { instance ->
                 if(instance.isOpen()) throw SessionCreationException("Session is already open on this table.")
             }
 

@@ -7,7 +7,7 @@ import javax.persistence.*
 class SessionEntity(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long?,
     val restaurant: String,
     val counter: Int,
 
