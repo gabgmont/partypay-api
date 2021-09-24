@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.repositories.menu.dao
+package br.com.fairie.partypay.repositories.menu.json.dao
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

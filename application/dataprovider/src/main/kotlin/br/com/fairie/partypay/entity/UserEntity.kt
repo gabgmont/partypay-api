@@ -10,11 +10,23 @@ class UserEntity(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
+
+    @Column
     val name: String,
+
+    @Column
     val cpf: String,
+
+    @Column
     val email: String,
+
+    @Column
     val secret: String,
+
+    @Column
     val phone: String,
+
+    @Column
     val photo: String?,
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -38,7 +50,7 @@ class UserEntity(
     companion object {
         fun User.toEntity(): UserEntity {
             return UserEntity(
-                id = id,
+                id = id(),
                 name = name,
                 cpf = cpf.value,
                 email = email.value,

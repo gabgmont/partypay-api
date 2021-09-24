@@ -4,13 +4,13 @@ import javax.persistence.*
 
 @Entity(name = "session_order_tbl")
 class SessionOrderEntity(
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long?,
+    val id: Long,
 
     @ManyToOne
-    val order: OrderEntity,
+    var order: OrderEntity,
 
     @ManyToMany(fetch = FetchType.EAGER)
     val users: List<UserEntity>
-
 )

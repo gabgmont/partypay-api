@@ -1,16 +1,19 @@
 package br.com.fairie.partypay.entity
 
 import java.math.BigDecimal
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity(name = "order_tbl")
 class OrderEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long?,
+    val id: Long,
+
+    @Column
     val name: String,
+
+    @Column(length = 500)
     val description: String,
+
+    @Column
     val value: BigDecimal
 )

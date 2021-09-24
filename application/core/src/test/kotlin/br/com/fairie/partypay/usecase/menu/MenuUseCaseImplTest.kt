@@ -16,7 +16,7 @@ class MenuUseCaseImplTest {
     private val category = Category("Aperitivos", arrayListOf(order))
     private val menu = Menu(1, "Outback", arrayListOf(category))
 
-    private val repository = mockk<MenuRepository>().also { repository ->
+    private val repository = mockk<MenuJsonRepository>().also { repository ->
         every { repository.getOrderByName("outback", "bloomin' onions") } returns order
         every { repository.getCategoryByName("outback", "aperitivos") } returns category
         every { repository.getMenuByName("outback") } returns menu

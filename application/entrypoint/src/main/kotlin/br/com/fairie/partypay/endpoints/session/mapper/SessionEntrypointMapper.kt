@@ -26,7 +26,7 @@ fun CPFListForm.toCPFList(): List<CPF> {
 
 fun SessionForm.toVo(status: SessionStatus): Session {
     return Session(
-        id = null,
+        id = 0,
         restaurant = restaurant,
         table = table,
         status = status,
@@ -40,7 +40,7 @@ fun Session.toDTO(): SessionDTO {
     val ordersDTO = orders.toSessionOrderDTOList()
 
     return SessionDTO(
-        id = id,
+        id = id(),
         restaurant = restaurant,
         table = table,
         userList = usersDTO,

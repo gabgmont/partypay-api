@@ -7,15 +7,21 @@ import javax.persistence.*
 class SessionEntity(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long?,
+    val id: Long,
+
+    @Column
     val restaurant: String,
+
+    @Column
     val counter: Int,
 
+    @Column
     @Enumerated(EnumType.STRING)
     val status: SessionStatus,
 
+    @Column
     @OneToMany
-    val orders: List<SessionOrderEntity>,
+    val orders: MutableList<SessionOrderEntity>,
 
     @ManyToMany(fetch = FetchType.EAGER)
     val users: List<UserEntity>

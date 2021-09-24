@@ -2,6 +2,7 @@ package br.com.fairie.partypay.configuration.endpoints.session
 
 import br.com.fairie.partypay.endpoints.session.controller.SessionController
 import br.com.fairie.partypay.repositories.session.repository.SessionRepositoryImpl
+import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.SessionUseCase
@@ -22,8 +23,8 @@ open class SessionConfiguration {
     open fun loadSessionUseCase(
         sessionRepository: SessionRepository,
         userRepository: UserRepository,
-        menuRepository: MenuRepository
-    ): SessionUseCase = SessionUseCaseImpl(sessionRepository, userRepository, menuRepository)
+        menuJsonRepository: MenuJsonRepository
+    ): SessionUseCase = SessionUseCaseImpl(sessionRepository, userRepository, menuJsonRepository)
 
     @Bean
     open fun loadSessionRepository(

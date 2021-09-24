@@ -24,6 +24,33 @@ fun SessionEntity.toSession(): Session {
     )
 }
 
+fun SessionOrder.toEntity(): SessionOrderEntity {
+    val userEntityList = ArrayList<UserEntity>()
+
+    users.forEach { user ->
+        userEntityList.add(
+            UserEntity(
+                id = user.id(),
+                name = user.name,
+                cpf = user.cpf.value,
+                email = user.email.value,
+                secret = user.secret,
+                phone = user.phone.value,
+                photo = user.photo?.value ?: "",
+                arrayListOf()
+            )
+        )
+    }
+
+    val orderEntity = OrderEntity(
+        id = order.id(),
+        name = order.name,
+        description = order.description,
+        value = order.value,
+    )
+    return SessionOrderEntity(id(), orderEntity, userEntityList)
+}
+
 fun List<UserEntity>.toUserList(): MutableList<User> {
     val userList = ArrayList<User>()
 
@@ -65,12 +92,13 @@ fun List<SessionOrderEntity>.toSessionOrderList(): MutableList<SessionOrder> {
             )
         }
         val order = Order(
+            id = sessionOder.order.id,
             name = sessionOder.order.name,
             description = sessionOder.order.description,
             value = sessionOder.order.value
         )
 
-        sessionOrderList.add(SessionOrder(order, userList))
+        sessionOrderList.add(SessionOrder(sessionOder.id, order, userList))
     }
 
     return sessionOrderList
@@ -78,7 +106,7 @@ fun List<SessionOrderEntity>.toSessionOrderList(): MutableList<SessionOrder> {
 
 fun Session.toSessionEntity(): SessionEntity {
     return SessionEntity(
-        id = id,
+        id = id(),
         restaurant = restaurant,
         counter = table,
         status = status,
@@ -93,7 +121,7 @@ fun MutableList<User>.toUserEntityList(): List<UserEntity> {
     forEach { user ->
         userList.add(
             UserEntity(
-                id = user.id,
+                id = user.id(),
                 name = user.name,
                 cpf = user.cpf.value,
                 email = user.email.value,
@@ -107,7 +135,7 @@ fun MutableList<User>.toUserEntityList(): List<UserEntity> {
     return userList
 }
 
-fun MutableList<SessionOrder>.toSessionOrderEntityList(): List<SessionOrderEntity> {
+fun MutableList<SessionOrder>.toSessionOrderEntityList(): MutableList<SessionOrderEntity> {
     val sessionOrderList = ArrayList<SessionOrderEntity>()
 
     forEach { sessionOder ->
@@ -116,7 +144,7 @@ fun MutableList<SessionOrder>.toSessionOrderEntityList(): List<SessionOrderEntit
         sessionOder.users.forEach { user ->
             userList.add(
                 UserEntity(
-                    id = user.id,
+                    id = user.id(),
                     name = user.name,
                     cpf = user.cpf.value,
                     email = user.email.value,
@@ -128,19 +156,19 @@ fun MutableList<SessionOrder>.toSessionOrderEntityList(): List<SessionOrderEntit
             )
         }
         val order = OrderEntity(
-            null,
+            id = sessionOder.order.id(),
             name = sessionOder.order.name,
             description = sessionOder.order.description,
             value = sessionOder.order.value
         )
 
-        sessionOrderList.add(SessionOrderEntity(null, order, userList))
+        sessionOrderList.add(SessionOrderEntity(sessionOder.id(), order, userList))
     }
 
     return sessionOrderList
 }
 
-fun List<SessionEntity>.toSessionList(): List<Session>{
+fun List<SessionEntity>.toSessionList(): List<Session> {
     val sessionList = ArrayList<Session>()
 
     forEach { session ->

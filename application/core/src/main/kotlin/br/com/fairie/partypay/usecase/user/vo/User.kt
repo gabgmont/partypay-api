@@ -6,7 +6,7 @@ import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
 
 class User(
-    val id: Long,
+    private val id: Long,
     val name: String,
     val cpf: CPF,
     val email: Email,
@@ -14,4 +14,6 @@ class User(
     val phone: Phone,
     val photo: Photo?,
     val profiles: MutableCollection<Profile>
-)
+){
+    fun id() = id
+}

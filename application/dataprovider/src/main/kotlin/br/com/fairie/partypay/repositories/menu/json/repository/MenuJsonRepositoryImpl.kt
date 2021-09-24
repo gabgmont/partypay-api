@@ -1,9 +1,9 @@
-package br.com.fairie.partypay.repositories.menu.repository
+package br.com.fairie.partypay.repositories.menu.json.repository
 
 import br.com.fairie.partypay.exception.NotFoundException
-import br.com.fairie.partypay.repositories.menu.dao.MenuDao
-import br.com.fairie.partypay.repositories.menu.mapper.toVo
-import br.com.fairie.partypay.usecase.menu.MenuRepository
+import br.com.fairie.partypay.repositories.menu.json.dao.MenuDao
+import br.com.fairie.partypay.repositories.menu.json.mapper.toVo
+import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.menu.vo.Category
 import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order
@@ -12,7 +12,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
 
-class MenuRepositoryImpl : MenuRepository {
+class MenuJsonRepositoryImpl : MenuJsonRepository {
 
     companion object{
         const val MENU_NOT_FOUND = "Menu not found."

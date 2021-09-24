@@ -1,7 +1,9 @@
 package br.com.fairie.partypay.configuration.endpoints.menu
 
 import br.com.fairie.partypay.endpoints.menu.controller.MenuController
-import br.com.fairie.partypay.repositories.menu.repository.MenuRepositoryImpl
+import br.com.fairie.partypay.repositories.menu.db.repository.MenuRepositoryImpl
+import br.com.fairie.partypay.repositories.menu.json.repository.MenuJsonRepositoryImpl
+import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
 import br.com.fairie.partypay.usecase.menu.impl.MenuUseCaseImpl
@@ -20,9 +22,13 @@ open class MenuConfiguration {
 
     @Bean
     open fun loadMenuUseCase(
-        repository: MenuRepository
+        repository: MenuJsonRepository
     ): MenuUseCase =
         MenuUseCaseImpl(repository)
+
+    @Bean
+    open fun loadMenuJsonRepository(): MenuJsonRepository =
+        MenuJsonRepositoryImpl()
 
     @Bean
     open fun loadMenuRepository(): MenuRepository =
