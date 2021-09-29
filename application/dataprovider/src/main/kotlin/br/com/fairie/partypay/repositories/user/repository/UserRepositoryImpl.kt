@@ -20,7 +20,7 @@ import java.sql.ResultSet
 class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
 
     companion object {
-        private const val ERROR_USER_NOT_FOUND = "User not found."
+        private const val ERROR_USER_NOT_FOUND = "User not found:"
         private const val ERROR_SQL_SELECT_EXCEPTION = "Exception occurred while trying to retrieve data from database."
     }
 
@@ -33,7 +33,7 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
         }
 
         val users = executeRequest(sql)
-        if (users.isEmpty()) throw NotFoundException(ERROR_USER_NOT_FOUND)
+        if (users.isEmpty()) throw NotFoundException("$ERROR_USER_NOT_FOUND ${cpf?.value}")
 
         return users
     }

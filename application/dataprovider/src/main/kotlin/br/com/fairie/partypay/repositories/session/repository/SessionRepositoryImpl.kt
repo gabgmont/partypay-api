@@ -1,5 +1,6 @@
 package br.com.fairie.partypay.repositories.session.repository
 
+import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.repositories.menu.db.jpa.OrderJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionOrderJpaRepository
@@ -56,15 +57,23 @@ class SessionRepositoryImpl : SessionRepository {
     }
 
     override fun getSessionWithId(id: Long): Session {
-        val entity = sessionJpaRepository.findById(id).get()
+        try{
+            val entity = sessionJpaRepository.findById(id).get()
 
-        return entity.toSession()
+            return entity.toSession()
+        }catch (exception: Exception){
+            throw NotFoundException("Session with id $id not found.")
+        }
     }
 
     override fun getSessionsWithCounter(counter: Int): List<Session> {
-        val sessions = sessionJpaRepository.getSessionsByCounter(counter)
+        try{
+            val sessions = sessionJpaRepository.getSessionsByCounter(counter)
 
-        return sessions.toSessionList()
+            return sessions.toSessionList()
+        }catch (exception: Exception){
+            throw NotFoundException("Session with table $counter not found")
+        }
     }
 
     override fun getSessions(): List<Session> {

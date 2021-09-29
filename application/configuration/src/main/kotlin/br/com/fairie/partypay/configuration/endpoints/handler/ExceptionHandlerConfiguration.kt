@@ -1,6 +1,7 @@
 package br.com.fairie.partypay.configuration.endpoints.handler
 
 import br.com.fairie.partypay.handler.HttpExceptionHandler
+import br.com.fairie.partypay.handler.UsecaseExceptionHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -8,6 +9,9 @@ import org.springframework.context.annotation.Configuration
 open class ExceptionHandlerConfiguration {
 
     @Bean
-    open fun loadUserNotFoundExceptionHandler() = HttpExceptionHandler()
+    open fun loadHttpExceptionHandler() = HttpExceptionHandler()
+
+    @Bean
+    open fun loadUseCaseExceptionHandler() = UsecaseExceptionHandler()
 
 }

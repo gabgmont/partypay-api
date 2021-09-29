@@ -23,26 +23,10 @@ class HttpExceptionHandler {
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleBadRequest(exception: MethodArgumentNotValidException): ErrorDto{
-        return ErrorDto(
-            HttpStatus.BAD_REQUEST.value(),
-            exception.message!!
-        )
-    }
-
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(SQLCallException::class)
-    fun handleSQLCallException(exception: SQLCallException): ErrorDto{
-        return ErrorDto(
-            HttpStatus.BAD_REQUEST.value(),
-            exception.message!!
-        )
-    }
-
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BadRequestException::class)
-    fun handleBadRequestException(exception: BadRequestException): ErrorDto{
+    @ExceptionHandler(
+        MethodArgumentNotValidException::class,
+        BadRequestException::class)
+    fun handleBadRequest(exception: Exception): ErrorDto {
         return ErrorDto(
             HttpStatus.BAD_REQUEST.value(),
             exception.message!!

@@ -2,6 +2,7 @@ package br.com.fairie.partypay.usecase.session.impl
 
 import br.com.fairie.partypay.exception.EmptyListException
 import br.com.fairie.partypay.exception.SessionCreationException
+import br.com.fairie.partypay.exception.SessionInconsistenceException
 import br.com.fairie.partypay.exception.SessionStatusException
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.session.SessionRepository
@@ -43,6 +44,9 @@ class SessionUseCaseImpl(
         val users = userRepository.findUser(cpf)
         if (users.isEmpty()) throw EmptyListException("No users found with provided CPF.")
 
+        val user = users.first()
+        if (session.users.contains(user)) throw SessionInconsistenceException("User ${user.cpf.value} already in session.")
+
         session.users.add(users.first())
         return sessionRepository.updateSessionUser(session)
     }
@@ -52,16 +56,14 @@ class SessionUseCaseImpl(
         if (session.isClosed()) throw SessionStatusException("Session is already closed.")
 
         val order = menuJsonRepository.getOrderByName(session.restaurant, orderName)
-
         val userList = ArrayList<User>()
         cpfs.forEach { cpf ->
-            try {
-                val users = userRepository.findUser(cpf)
-                userList.add(users.first())
+            val users = userRepository.findUser(cpf)
+            userList.add(users.first())
+        }
 
-            } catch (exception: Exception) {
-
-            }
+        userList.forEach { user ->
+            if(!session.users.contains(user)) throw SessionInconsistenceException("User ${user.cpf.value} not in current session.")
         }
 
         val sessionOrder = SessionOrder(0, order, userList)
