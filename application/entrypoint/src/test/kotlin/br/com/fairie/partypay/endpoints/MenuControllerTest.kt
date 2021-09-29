@@ -25,15 +25,4 @@ class MenuControllerTest {
         mvc.perform(MockMvcRequestBuilders.get(uri))
             .andExpect(MockMvcResultMatchers.status().isNotFound)
     }
-
-    @Test
-    fun testFound() {
-
-        val content = "outback"
-        val uri = URI("/menu/$content")
-
-        mvc.perform(MockMvcRequestBuilders.get(uri))
-            .andExpect(MockMvcResultMatchers.status().`is`(200))
-
-    }
 }

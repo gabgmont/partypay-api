@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.endpoints.session.dto
 
 class SessionResumeDTO(
-    val userList: List<SessionOrderDTO>,
+    val userList: List<SessionUserDTO>,
     val check: Double
 )

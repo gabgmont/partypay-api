@@ -1,7 +1,5 @@
 package br.com.fairie.partypay.repositories.session.repository
 
-import br.com.fairie.partypay.entity.OrderEntity
-import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.repositories.menu.db.jpa.OrderJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionOrderJpaRepository

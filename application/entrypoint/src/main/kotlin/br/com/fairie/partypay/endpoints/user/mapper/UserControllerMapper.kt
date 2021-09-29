@@ -27,3 +27,13 @@ fun List<User>.toDto(): List<UserDTO> {
 
     return userList
 }
+
+fun User.toDTO(): UserDTO {
+    return UserDTO(
+        name = name,
+        cpf = cpf.value,
+        email = email.value,
+        phone = phone.value,
+        photo = photo?.value ?: "",
+    )
+}

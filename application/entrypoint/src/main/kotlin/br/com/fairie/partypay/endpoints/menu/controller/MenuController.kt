@@ -3,7 +3,7 @@ package br.com.fairie.partypay.endpoints.menu.controller
 import br.com.fairie.partypay.endpoints.menu.dto.CategoryDTO
 import br.com.fairie.partypay.endpoints.menu.dto.MenuDTO
 import br.com.fairie.partypay.endpoints.menu.dto.OrderDTO
-import br.com.fairie.partypay.endpoints.menu.mapper.toDto
+import br.com.fairie.partypay.endpoints.menu.mapper.toDTO
 import br.com.fairie.partypay.exception.ThreadExecutionException
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
 import br.com.fairie.partypay.usecase.menu.vo.Category
@@ -38,7 +38,7 @@ class MenuController(
             }
             future.get()
             if (response == null) throw ThreadExecutionException("Failed to execute Thread.")
-            return (response as Menu).toDto()
+            return (response as Menu).toDTO()
         }
     }
 
@@ -53,7 +53,7 @@ class MenuController(
             }
             future.get()
             if (response == null) throw ThreadExecutionException("Failed to execute Thread.")
-            return (response as Category).toDto()
+            return (response as Category).toDTO()
         }
     }
 
@@ -68,7 +68,7 @@ class MenuController(
             }
             future.get()
             if (response == null) throw ThreadExecutionException("Failed to execute Thread.")
-            return (response as Order).toDto()
+            return (response as Order).toDTO()
         }
     }
 }

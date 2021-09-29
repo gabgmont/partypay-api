@@ -7,11 +7,11 @@ import br.com.fairie.partypay.usecase.menu.vo.Category
 import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order
 
-fun Menu.toDto(): MenuDTO {
+fun Menu.toDTO(): MenuDTO {
     val dtoList = ArrayList<CategoryDTO>()
 
     categoryList.forEach { category ->
-        dtoList.add(category.toDto())
+        dtoList.add(category.toDTO())
     }
 
     return MenuDTO(
@@ -20,11 +20,11 @@ fun Menu.toDto(): MenuDTO {
     )
 }
 
-fun Category.toDto(): CategoryDTO {
+fun Category.toDTO(): CategoryDTO {
     val dtoList = ArrayList<OrderDTO>()
 
     orderList.forEach{ order ->
-        dtoList.add(order.toDto())
+        dtoList.add(order.toDTO())
     }
 
     return CategoryDTO(
@@ -33,7 +33,7 @@ fun Category.toDto(): CategoryDTO {
     )
 }
 
-fun Order.toDto(): OrderDTO =
+fun Order.toDTO(): OrderDTO =
     OrderDTO(
         name = name,
         description = description,

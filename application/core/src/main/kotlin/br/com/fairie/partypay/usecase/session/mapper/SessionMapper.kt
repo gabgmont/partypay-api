@@ -1,21 +1,26 @@
 package br.com.fairie.partypay.usecase.session.mapper
 
 import br.com.fairie.partypay.exception.SessionStatusException
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
-import br.com.fairie.partypay.usecase.session.vo.SessionResume
-import br.com.fairie.partypay.usecase.session.vo.SessionStatus
+import br.com.fairie.partypay.usecase.session.vo.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-fun Session.calculateSessionResume(): SessionResume {
-    val check = BigDecimal.ZERO
+fun Session.calculateSessionResume(userList: List<SessionUser>): SessionResume {
+    var check = BigDecimal.ZERO
 
     orders.forEach{ sessionOrder ->
-        check.add(sessionOrder.order.value)
+        check = check.add(sessionOrder.order.value)
+        sessionOrder.users.forEach { user ->
+            userList.forEach { sessionUser ->
+                if(user.cpf.value == sessionUser.user.cpf.value) {
+                    sessionUser.orders.add(sessionOrder.order)
+                    sessionUser.totalValue = sessionUser.totalValue.add(sessionOrder.order.value.divide(BigDecimal(sessionOrder.users.size), RoundingMode.HALF_UP))
+                }
+            }
+        }
     }
 
-    return SessionResume(orders, check)
+    return SessionResume(userList, check)
 }
 
 fun Session.isOpen(): Boolean = status == SessionStatus.OPEN

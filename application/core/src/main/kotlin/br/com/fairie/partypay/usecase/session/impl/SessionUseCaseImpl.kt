@@ -13,9 +13,11 @@ import br.com.fairie.partypay.usecase.session.mapper.isOpen
 import br.com.fairie.partypay.usecase.session.vo.Session
 import br.com.fairie.partypay.usecase.session.vo.SessionOrder
 import br.com.fairie.partypay.usecase.session.vo.SessionResume
+import br.com.fairie.partypay.usecase.session.vo.SessionUser
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.vo.CPF
+import java.math.BigDecimal
 
 class SessionUseCaseImpl(
     private val sessionRepository: SessionRepository,
@@ -68,7 +70,20 @@ class SessionUseCaseImpl(
 
     override fun endSession(sessionId: Long): SessionResume {
         val session = sessionRepository.getSessionWithId(sessionId)
-        val sessionResume = session.calculateSessionResume()
+
+        val sessionUserList = ArrayList<SessionUser>()
+
+        session.users.forEach { user ->
+            sessionUserList.add(
+                SessionUser(
+                    user = user,
+                    orders = arrayListOf(),
+                    totalValue = BigDecimal.ZERO
+                )
+            )
+        }
+
+        val sessionResume = session.calculateSessionResume(sessionUserList)
 
         session.close()
         sessionRepository.updateSessionUser(session)

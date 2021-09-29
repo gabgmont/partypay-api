@@ -1,17 +1,17 @@
 package br.com.fairie.partypay.endpoints.session.mapper
 
 import br.com.fairie.partypay.endpoints.menu.dto.OrderDTO
+import br.com.fairie.partypay.endpoints.menu.mapper.toDTO
 import br.com.fairie.partypay.endpoints.session.dto.SessionDTO
 import br.com.fairie.partypay.endpoints.session.dto.SessionResumeDTO
 import br.com.fairie.partypay.endpoints.session.dto.SessionOrderDTO
+import br.com.fairie.partypay.endpoints.session.dto.SessionUserDTO
 import br.com.fairie.partypay.endpoints.session.form.CPFListForm
 import br.com.fairie.partypay.endpoints.session.form.SessionForm
 import br.com.fairie.partypay.endpoints.user.dto.UserDTO
+import br.com.fairie.partypay.endpoints.user.mapper.toDTO
 import br.com.fairie.partypay.usecase.session.mapper.valuePerUser
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
-import br.com.fairie.partypay.usecase.session.vo.SessionResume
-import br.com.fairie.partypay.usecase.session.vo.SessionStatus
+import br.com.fairie.partypay.usecase.session.vo.*
 import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.vo.CPF
 
@@ -100,8 +100,30 @@ fun MutableList<SessionOrder>.toSessionOrderDTOList(): List<SessionOrderDTO> {
     return sessionOrderList
 }
 
+fun List<SessionUser>.toSessionUserDTOList(): List<SessionUserDTO> {
+    val dtoList = ArrayList<SessionUserDTO>()
+
+    forEach { sessionUser ->
+
+        val orderList = ArrayList<OrderDTO>()
+
+        sessionUser.orders.forEach { order ->
+            orderList.add(order.toDTO())
+        }
+
+        dtoList.add(
+            SessionUserDTO(
+                user = sessionUser.user.toDTO(),
+                orders = orderList,
+                totalValue = sessionUser.totalValue,
+            )
+        )
+    }
+    return dtoList
+}
+
 fun SessionResume.toDTO(): SessionResumeDTO {
-    val userResumeList = orders.toSessionOrderDTOList()
+    val userResumeList = users.toSessionUserDTOList()
 
     return SessionResumeDTO(
         userList = userResumeList,
