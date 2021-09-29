@@ -37,6 +37,9 @@ const val SESSION_TAG_DESCRIPTION = "Session management operations."
 const val CREATE_SESSION_OPERATION_VALUE = "Creates new session."
 const val CREATE_SESSION_OPERATION_NOTES = ""
 
+const val GET_SESSION_OPERATION_VALUE = "Search session with provided id."
+const val GET_SESSION_OPERATION_NOTES = ""
+
 const val ADD_ORDER_SESSION_OPERATION_VALUE = "Adds order to current session."
 const val ADD_ORDER_SESSION_OPERATION_NOTES = ""
 

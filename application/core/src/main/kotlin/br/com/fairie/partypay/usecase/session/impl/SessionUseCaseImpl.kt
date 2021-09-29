@@ -37,6 +37,10 @@ class SessionUseCaseImpl(
         return sessionRepository.newSession(session)
     }
 
+    override fun getSession(sessionId: Long): Session {
+        return sessionRepository.getSessionWithId(sessionId)
+    }
+
     override fun addUser(sessionId: Long, cpf: CPF): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw SessionStatusException("Session is already closed.")
@@ -63,7 +67,7 @@ class SessionUseCaseImpl(
         }
 
         userList.forEach { user ->
-            if(!session.users.contains(user)) throw SessionInconsistenceException("User ${user.cpf.value} not in current session.")
+            if (!session.users.contains(user)) throw SessionInconsistenceException("User ${user.cpf.value} not in current session.")
         }
 
         val sessionOrder = SessionOrder(0, order, userList)

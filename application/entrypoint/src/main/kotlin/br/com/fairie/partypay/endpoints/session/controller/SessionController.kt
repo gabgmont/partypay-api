@@ -39,6 +39,14 @@ class SessionController(
         return ResponseEntity.ok(createdSession)
     }
 
+    @GetMapping("/{sessionId}")
+    @ApiOperation(value = GET_SESSION_OPERATION_VALUE, notes = GET_SESSION_OPERATION_NOTES)
+    fun getSession(@PathVariable sessionId: Long): ResponseEntity<SessionDTO>{
+        val createdSession = useCase.getSession(sessionId).toDTO()
+
+        return ResponseEntity.ok(createdSession)
+    }
+
     @PutMapping("/{sessionId}/add/user/{cpf}")
     @ApiOperation(value = ADD_USER_SESSION_OPERATION_VALUE, notes = ADD_USER_SESSION_OPERATION_NOTES)
     fun addUser(@PathVariable sessionId: Long, @PathVariable cpf: String): ResponseEntity<SessionDTO>{
