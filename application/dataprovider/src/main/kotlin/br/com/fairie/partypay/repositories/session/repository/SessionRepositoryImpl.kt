@@ -27,9 +27,9 @@ class SessionRepositoryImpl : SessionRepository {
     private lateinit var orderJpaRepository: OrderJpaRepository
 
     override fun newSession(session: Session): Session {
-        val entity = session.toSessionEntity()
-        sessionJpaRepository.save(entity)
-        return session
+        var entity = session.toSessionEntity()
+        entity = sessionJpaRepository.save(entity)
+        return entity.toSession()
     }
 
     override fun updateSessionOrder(session: Session, sessionOrder: SessionOrder): Session {

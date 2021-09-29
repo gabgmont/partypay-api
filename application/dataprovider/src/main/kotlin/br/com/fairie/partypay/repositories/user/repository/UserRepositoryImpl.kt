@@ -7,11 +7,9 @@ import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.repositories.user.dao.UserDao
 import br.com.fairie.partypay.repositories.user.mapper.UserRowMapper
 import br.com.fairie.partypay.repositories.user.mapper.toUserList
-import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_ALL_USERS
-import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_USER_BY_CPF
-import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_USER_BY_EMAIL
-import br.com.fairie.partypay.repositories.user.sql.SELECT_FIND_USER_BY_ID
+import br.com.fairie.partypay.repositories.user.sql.*
 import br.com.fairie.partypay.vo.CPF
+import org.springframework.jdbc.core.CallableStatementCallback
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapperResultSetExtractor
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -23,6 +21,20 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
         private const val ERROR_USER_NOT_FOUND = "User not found:"
         private const val ERROR_SQL_SELECT_EXCEPTION = "Exception occurred while trying to retrieve data from database."
     }
+
+    override fun registerUser(user: User): User {
+        jdbc.execute(INSERT_REGISTER_USER, CallableStatementCallback { cs ->
+            cs.setString(1, user.name)
+            cs.setString(2, user.cpf.value)
+            cs.setString(3, user.email.value)
+            cs.setString(4, user.secret)
+            cs.setString(5, user.phone.value)
+
+            cs.execute()
+        })
+        return user
+    }
+
 
     override fun findUser(cpf: CPF?): List<User> {
 

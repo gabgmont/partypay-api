@@ -38,6 +38,7 @@ open class SecurityConfiguration(
             .antMatchers(HttpMethod.POST, "/session/**").permitAll()
             .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .antMatchers(HttpMethod.POST, "/auth").permitAll()
+            .antMatchers(HttpMethod.POST, "/user/register").permitAll()
             .antMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and().csrf().disable()

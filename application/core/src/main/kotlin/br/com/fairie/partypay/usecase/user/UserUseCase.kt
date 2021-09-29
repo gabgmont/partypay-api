@@ -5,4 +5,5 @@ import br.com.fairie.partypay.usecase.user.vo.User
 
 interface UserUseCase {
      fun get(cpf: CPF?): List<User>
+     fun register(user: User): User
 }

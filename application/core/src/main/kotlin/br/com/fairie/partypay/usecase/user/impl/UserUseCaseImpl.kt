@@ -11,4 +11,8 @@ class UserUseCaseImpl(
     override fun get(cpf: CPF?): List<User> {
         return repository.findUser(cpf)
     }
+
+    override fun register(user: User): User {
+        return repository.registerUser(user)
+    }
 }
