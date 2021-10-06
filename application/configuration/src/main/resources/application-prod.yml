@@ -7,7 +7,9 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:9090/
+        url: https://fairie-admin.herokuapp.com/
+        username: client
+        password: client123
   datasource:
     driverClassName: org.h2.Driver
     url: jdbc:h2:mem:partypay
