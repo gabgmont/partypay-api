@@ -1,6 +1,7 @@
 package br.com.fairie.partypay.repositories.menu.json.repository
 
 import br.com.fairie.partypay.exception.NotFoundException
+import br.com.fairie.partypay.repositories.menu.json.OutbackMenu
 import br.com.fairie.partypay.repositories.menu.json.dao.MenuDao
 import br.com.fairie.partypay.repositories.menu.json.mapper.toVo
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
@@ -57,11 +58,11 @@ class MenuJsonRepositoryImpl : MenuJsonRepository {
     }
 
     private fun getMenusFromResource(): MenuDao {
-        val url = javaClass.classLoader.getResource("menu.json") ?: throw FileNotFoundException("File Not Found.")
-        val file = File(url.file).toPath()
-
-        val content = String(Files.readAllBytes(file))
-        return jacksonObjectMapper().readValue(content, MenuDao::class.java)
+//        val url = javaClass.classLoader.getResource("menu.json") ?: throw FileNotFoundException("File Not Found.")
+//        val file = File(url.file).toPath()
+//
+//        val content = String(Files.readAllBytes(file))
+        return jacksonObjectMapper().readValue(OutbackMenu.menuJson, MenuDao::class.java)
     }
 }
 

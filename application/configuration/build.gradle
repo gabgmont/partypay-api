@@ -1,6 +1,6 @@
 //https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
 plugins {
-    id("org.springframework.boot") version "2.5.3"
+    id("org.springframework.boot") version "2.1.7.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
 apply plugin: 'war'
@@ -10,6 +10,23 @@ description = "Wires the application together."
 //Generate jar with other name
 bootWar {
     archiveFileName = "${rootProject.ext.archive_file_name}"
+}
+
+//task to copy jar to root build dir
+task copyBootWar(type: Copy) {
+    from bootWar
+    into rootProject.buildDir
+}
+
+//Execute copy after compile
+compileJava.finalizedBy copyBootWar
+
+//Automatic Property Expansion Using Gradle
+// (https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html)
+processResources {
+    filesMatching("application.yml") {
+        expand('project': rootProject.properties)
+    }
 }
 
 dependencies {

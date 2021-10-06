@@ -7,7 +7,7 @@ buildscript {
     ext.deploy_version = '0.0.1'
     ext.undeploy_version = '0.0.0'
     ext.p_group = 'br.com.fairie.partypay'
-    ext.archive_extension = 'war'
+    ext.archive_extension = 'jar'
     ext.archive_file_name = "${artifactId}##${deploy_version}.${archive_extension}"
 
     ext.kotlin_version = '1.5.21'
@@ -88,6 +88,7 @@ subprojects {
                         "org.springframework:spring-core:${versions.spring_core}",
                         "org.springframework.security:spring-security-core:${versions.spring_security_core}",
                         "org.springframework.boot:spring-boot-starter-jdbc:${versions.spring}",
+                        "javax.xml.bind:jaxb-api:2.3.0",
                         "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}",
                 ],
                 spring_config  : [
@@ -150,6 +151,13 @@ configure(allprojects - project(":application")) {
         check.dependsOn it
         shouldRunAfter test
     }
+}
+
+jar {
+    manifest.attributes(
+            'Class-Path' : 'partypay.application.configuration.main',
+            'Main-Class' : 'br.com.fairie.partypay.PartypayApplication.kt'
+    )
 }
 
 class RemoteContainer {

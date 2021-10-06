@@ -14,4 +14,10 @@ dependencies {
     testImplementation libs.unit_test
 }
 
+processResources {
+    filesMatching("menu.json") {
+        expand('project': rootProject.properties)
+    }
+}
+
 
