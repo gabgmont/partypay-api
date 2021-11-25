@@ -10,8 +10,6 @@ dependencies {
     implementation libs.swagger
     implementation libs.spring_web
 
-//    implementation 'junit:junit:4.13.1'
-
     testImplementation libs.spring_test
     testImplementation libs.unit_test
 }
