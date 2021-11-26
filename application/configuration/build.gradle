@@ -12,7 +12,7 @@ bootWar {
 
 task copyBootWar(type: Copy) {
     from bootWar
-    into rootProject.buildDir
+    into "${rootProject.buildDir}/libs"
 }
 
 compileJava.finalizedBy copyBootWar
