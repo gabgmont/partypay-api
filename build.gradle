@@ -77,6 +77,8 @@ subprojects {
                         "org.springframework.security:spring-security-core:${versions.spring_security_core}",
                         "org.springframework.boot:spring-boot-starter-jdbc:${versions.spring}",
                         "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}",
+                        'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.4'
+
                 ],
                 spring_config  : [
                         "com.fasterxml.jackson.module:jackson-module-kotlin:${versions.jackson_kotlin}",
