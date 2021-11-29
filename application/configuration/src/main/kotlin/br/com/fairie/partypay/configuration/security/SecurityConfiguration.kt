@@ -34,8 +34,6 @@ open class SecurityConfiguration(
 
         http.authorizeRequests()
             .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
-            .antMatchers(HttpMethod.PUT, "/session/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/session/**").permitAll()
             .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .antMatchers(HttpMethod.POST, "/auth").permitAll()
             .antMatchers(HttpMethod.POST, "/user/register").permitAll()
