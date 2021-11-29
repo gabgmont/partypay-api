@@ -8,37 +8,20 @@ import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order
 import java.math.BigDecimal
 
-fun MenuDao.toVo(): Menu {
-    val obList = ArrayList<Category>()
-
-    menu.forEach { category ->
-        obList.add(category.toVo())
-    }
-
-    return Menu(
+fun MenuDao.toVo(): Menu = Menu(
         id = id,
         name = restaurant,
-        categoryList = obList
-    )
-}
+        categoryList = menu.map { menu -> menu.toVo() }
+)
 
-fun CategoryDao.toVo(): Category {
-    val obList = ArrayList<Order>()
-
-    orders.forEach{ order ->
-        obList.add(order.toVo())
-    }
-
-    return Category(
+fun CategoryDao.toVo(): Category = Category(
         name = name,
-        orderList = obList
-    )
-}
+        orderList = orders.map { order -> order.toVo() }
+)
 
-fun OrderDao.toVo(): Order =
-    Order(
+fun OrderDao.toVo(): Order = Order(
         id = 0,
         name = name,
         description = description,
         value = BigDecimal(value)
-    )
+)

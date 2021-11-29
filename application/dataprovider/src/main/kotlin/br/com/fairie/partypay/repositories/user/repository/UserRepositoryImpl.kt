@@ -35,7 +35,6 @@ class UserRepositoryImpl(private val jdbc: JdbcTemplate) : UserRepository {
         return user
     }
 
-
     override fun findUser(cpf: CPF?): List<User> {
 
         val sql = if (cpf != null) {

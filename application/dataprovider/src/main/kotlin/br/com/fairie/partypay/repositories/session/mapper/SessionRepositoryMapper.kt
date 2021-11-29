@@ -1,10 +1,11 @@
 package br.com.fairie.partypay.repositories.session.mapper
 
-import br.com.fairie.partypay.entity.OrderEntity
 import br.com.fairie.partypay.entity.SessionEntity
 import br.com.fairie.partypay.entity.SessionOrderEntity
 import br.com.fairie.partypay.entity.UserEntity
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.entity.UserEntity.Companion.toEntity
+import br.com.fairie.partypay.repositories.menu.db.mapper.toEntity
+import br.com.fairie.partypay.repositories.menu.db.mapper.toOrder
 import br.com.fairie.partypay.usecase.session.vo.Session
 import br.com.fairie.partypay.usecase.session.vo.SessionOrder
 import br.com.fairie.partypay.usecase.user.vo.User
@@ -13,167 +14,48 @@ import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
 
-fun SessionEntity.toSession(): Session {
-    return Session(
+fun SessionEntity.toSession(): Session = Session(
         id = id,
         restaurant = restaurant,
         table = counter,
         status = status,
-        users = users.toUserList(),
-        orders = orders.toSessionOrderList()
-    )
-}
+        users = users.map { userEntity -> userEntity.toModel() }.toMutableList(),
+        orders = orders.map { sessionOrderEntity -> sessionOrderEntity.toModel() }.toMutableList()
+)
 
-fun SessionOrder.toEntity(): SessionOrderEntity {
-    val userEntityList = ArrayList<UserEntity>()
+fun SessionOrder.toEntity(): SessionOrderEntity = SessionOrderEntity(
+        id = id(),
+        order = order.toEntity(),
+        users = users.map { user -> user.toEntity() }
 
-    users.forEach { user ->
-        userEntityList.add(
-            UserEntity(
-                id = user.id(),
-                name = user.name,
-                cpf = user.cpf.value,
-                email = user.email.value,
-                secret = user.secret,
-                phone = user.phone.value,
-                photo = user.photo?.value ?: "",
-                arrayListOf()
-            )
-        )
-    }
+)
 
-    val orderEntity = OrderEntity(
-        id = order.id(),
-        name = order.name,
-        description = order.description,
-        value = order.value,
-    )
-    return SessionOrderEntity(id(), orderEntity, userEntityList)
-}
+fun UserEntity.toModel(): User = User(
+        id = id,
+        name = name,
+        cpf = CPF(cpf),
+        email = Email(email),
+        secret = secret,
+        phone = Phone(phone),
+        photo = Photo(photo ?: ""),
+        profiles = arrayListOf(),
+)
 
-fun List<UserEntity>.toUserList(): MutableList<User> {
-    val userList = ArrayList<User>()
-
-    forEach { user ->
-        userList.add(
-            User(
-                id = user.id,
-                name = user.name,
-                cpf = CPF(user.cpf),
-                email = Email(user.email),
-                secret = user.secret,
-                phone = Phone(user.phone),
-                photo = Photo(user.photo ?: ""),
-                profiles = arrayListOf(),
-            )
-        )
-    }
-    return userList
-}
-
-fun List<SessionOrderEntity>.toSessionOrderList(): MutableList<SessionOrder> {
-    val sessionOrderList = ArrayList<SessionOrder>()
-
-    forEach { sessionOder ->
-        val userList = ArrayList<User>()
-
-        sessionOder.users.forEach { user ->
-            userList.add(
-                User(
-                    id = user.id,
-                    name = user.name,
-                    cpf = CPF(user.cpf),
-                    email = Email(user.email),
-                    secret = user.secret,
-                    phone = Phone(user.phone),
-                    photo = Photo(user.photo ?: ""),
-                    profiles = arrayListOf(),
-                )
-            )
+fun SessionOrderEntity.toModel(): SessionOrder = SessionOrder(
+        id = order.id,
+        order = order.toOrder(),
+        users = users.map { user ->
+            user.toModel()
         }
-        val order = Order(
-            id = sessionOder.order.id,
-            name = sessionOder.order.name,
-            description = sessionOder.order.description,
-            value = sessionOder.order.value
-        )
+)
 
-        sessionOrderList.add(SessionOrder(sessionOder.id, order, userList))
-    }
-
-    return sessionOrderList
-}
-
-fun Session.toSessionEntity(): SessionEntity {
-    return SessionEntity(
+fun Session.toSessionEntity(): SessionEntity = SessionEntity(
         id = id(),
         restaurant = restaurant,
         counter = table,
         status = status,
-        users = users.toUserEntityList(),
-        orders = orders.toSessionOrderEntityList()
-    )
-}
+        users = users.map { user -> user.toEntity() },
+        orders = orders.map { order -> order.toEntity() }.toMutableList()
+)
 
-fun MutableList<User>.toUserEntityList(): List<UserEntity> {
-    val userList = ArrayList<UserEntity>()
-
-    forEach { user ->
-        userList.add(
-            UserEntity(
-                id = user.id(),
-                name = user.name,
-                cpf = user.cpf.value,
-                email = user.email.value,
-                secret = user.secret,
-                phone = user.phone.value,
-                photo = user.photo?.value ?: "",
-                profiles = arrayListOf(),
-            )
-        )
-    }
-    return userList
-}
-
-fun MutableList<SessionOrder>.toSessionOrderEntityList(): MutableList<SessionOrderEntity> {
-    val sessionOrderList = ArrayList<SessionOrderEntity>()
-
-    forEach { sessionOder ->
-        val userList = ArrayList<UserEntity>()
-
-        sessionOder.users.forEach { user ->
-            userList.add(
-                UserEntity(
-                    id = user.id(),
-                    name = user.name,
-                    cpf = user.cpf.value,
-                    email = user.email.value,
-                    secret = user.secret,
-                    phone = user.phone.value,
-                    photo = user.photo?.value ?: "",
-                    profiles = arrayListOf(),
-                )
-            )
-        }
-        val order = OrderEntity(
-            id = sessionOder.order.id(),
-            name = sessionOder.order.name,
-            description = sessionOder.order.description,
-            value = sessionOder.order.value
-        )
-
-        sessionOrderList.add(SessionOrderEntity(sessionOder.id(), order, userList))
-    }
-
-    return sessionOrderList
-}
-
-fun List<SessionEntity>.toSessionList(): List<Session> {
-    val sessionList = ArrayList<Session>()
-
-    forEach { session ->
-        sessionList.add(session.toSession())
-    }
-
-    return sessionList
-}
+fun List<SessionEntity>.toSessionList(): List<Session> = map { sessionEntity -> sessionEntity.toSession() }
