@@ -70,31 +70,23 @@ subprojects {
                 spring_web     : [
                         "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
                         "org.springframework.boot:spring-boot-starter-validation:${versions.spring}",
+                        "org.springframework.boot:spring-boot-starter-security:${versions.spring}",
                 ],
                 spring_provider: [
                         "org.springframework:spring-core:${versions.spring_core}",
                         "org.springframework.security:spring-security-core:${versions.spring_security_core}",
                         "org.springframework.boot:spring-boot-starter-jdbc:${versions.spring}",
-                        "javax.xml.bind:jaxb-api:2.3.0",
                         "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}",
                 ],
                 spring_config  : [
                         "com.fasterxml.jackson.module:jackson-module-kotlin:${versions.jackson_kotlin}",
                         "org.springframework.boot:spring-boot-configuration-processor:${versions.spring}",
-                        "org.springframework.boot:spring-boot-starter-security:${versions.spring}",
                         "de.codecentric:spring-boot-admin-starter-client:${versions.codecentric}",
                         "io.jsonwebtoken:jjwt:${versions.jjwt}"
                 ],
                 swagger        : [
                         "io.springfox:springfox-swagger2:${versions.swagger}",
-                        "io.springfox:springfox-swagger2:${versions.swagger}",
                         "io.springfox:springfox-swagger-ui:${versions.swagger}"
-                ],
-                cacheable      : [
-                        "org.springframework.boot:spring-boot-starter-cache:${versions.spring}",
-                        "com.github.ben-manes.caffeine:caffeine:2.8.0",
-                        "com.github.ben-manes.caffeine:guava:2.8.0",
-                        "com.github.ben-manes.caffeine:jcache:2.8.0",
                 ],
                 database       : [
                         "mysql:mysql-connector-java:${versions.mysql}",

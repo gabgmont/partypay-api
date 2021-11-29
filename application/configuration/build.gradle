@@ -2,20 +2,19 @@ plugins {
     id("org.springframework.boot") version "2.5.3"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
-apply plugin: 'war'
 
 description = "Wires the application together."
 
-bootWar {
+bootJar {
     archiveFileName = "${rootProject.ext.archive_file_name}"
 }
 
-task copyBootWar(type: Copy) {
-    from bootWar
+task copyBootJar(type: Copy) {
+    from bootJar
     into "${rootProject.buildDir}/libs"
 }
 
-compileJava.finalizedBy copyBootWar
+compileJava.finalizedBy copyBootJar
 
 processResources {
     filesMatching("application.yml") {
@@ -42,7 +41,6 @@ dependencies {
     implementation libs.spring_config
     implementation libs.spring_provider
     implementation libs.spring_web
-    implementation libs.cacheable
     implementation libs.swagger
 
     testImplementation libs.spring_test
