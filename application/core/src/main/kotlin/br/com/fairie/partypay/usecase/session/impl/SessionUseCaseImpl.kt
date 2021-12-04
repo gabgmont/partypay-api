@@ -24,6 +24,7 @@ class SessionUseCaseImpl(
 ) : SessionUseCase {
 
     override fun createSession(session: Session): Session {
+        menuJsonRepository.getMenuByName(session.restaurant)
         val sessionsByTable = sessionRepository.getSessionsWithCounter(session.table)
 
         if (sessionsByTable.isNotEmpty())
