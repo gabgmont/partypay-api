@@ -10,5 +10,6 @@ interface SessionUseCase {
     fun getSession(sessionId: Long): Session
     fun addUser(sessionId: Long, cpf: CPF): Session
     fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session
+    fun cancelOrder(sessionId: Long, sessionOrderId: Long): Session
     fun endSession(sessionId: Long): SessionResume
 }

@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.usecase.session.impl
 
-import br.com.fairie.partypay.exception.EmptyListException
 import br.com.fairie.partypay.exception.InconsistenceException
+import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.SessionUseCase
@@ -44,13 +44,13 @@ class SessionUseCaseImpl(
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
         val users = userRepository.findUser(cpf)
-        if (users.isEmpty()) throw EmptyListException("No users found with provided CPF.")
+        if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
 
         val user = users.first()
         if (session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} already in session.")
 
         session.users.add(users.first())
-        return sessionRepository.updateSessionUser(session)
+        return sessionRepository.addSessionUser(session)
     }
 
     override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
@@ -61,15 +61,21 @@ class SessionUseCaseImpl(
         val userList = ArrayList<User>()
         cpfs.forEach { cpf ->
             val users = userRepository.findUser(cpf)
+            if (users.isEmpty()) throw NotFoundException("User ${cpf.value} is not on current session.")
             userList.add(users.first())
         }
 
-        userList.forEach { user ->
-            if (!session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} not in current session.")
-        }
-
         val sessionOrder = SessionOrder(0, order, userList)
-        return sessionRepository.updateSessionOrder(session, sessionOrder)
+        return sessionRepository.addSessionOrder(session, sessionOrder)
+    }
+
+    override fun cancelOrder(sessionId: Long, sessionOrderId: Long): Session {
+        val session = sessionRepository.getSessionWithId(sessionId)
+        val sessionOrder = session.orders.find { sessionOrder ->
+            sessionOrder.id() == sessionOrderId
+        } ?: throw NotFoundException("Order $sessionOrderId not found in this session.")
+
+        return sessionRepository.cancelSessionOrder(session, sessionOrder)
     }
 
     override fun endSession(sessionId: Long): SessionResume {
@@ -90,7 +96,7 @@ class SessionUseCaseImpl(
         val sessionResume = session.calculateSessionResume(sessionUserList)
 
         session.close()
-        sessionRepository.updateSessionUser(session)
+        sessionRepository.addSessionUser(session)
         return sessionResume
     }
 }

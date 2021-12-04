@@ -49,7 +49,7 @@ fun SessionOrderEntity.toModel(): SessionOrder = SessionOrder(
         }
 )
 
-fun Session.toSessionEntity(): SessionEntity = SessionEntity(
+fun Session.toEntity(): SessionEntity = SessionEntity(
         id = id(),
         restaurant = restaurant,
         counter = table,

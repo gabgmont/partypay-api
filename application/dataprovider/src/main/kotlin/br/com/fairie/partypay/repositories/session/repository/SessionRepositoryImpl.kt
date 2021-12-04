@@ -1,12 +1,12 @@
 package br.com.fairie.partypay.repositories.session.repository
 
 import br.com.fairie.partypay.exception.NotFoundException
+import br.com.fairie.partypay.exception.SQLCallException
 import br.com.fairie.partypay.repositories.menu.db.jpa.OrderJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionOrderJpaRepository
 import br.com.fairie.partypay.repositories.session.mapper.toEntity
 import br.com.fairie.partypay.repositories.session.mapper.toModel
-import br.com.fairie.partypay.repositories.session.mapper.toSessionEntity
 import br.com.fairie.partypay.repositories.session.mapper.toModelList
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.vo.Session
@@ -27,19 +27,19 @@ class SessionRepositoryImpl : SessionRepository {
     private lateinit var orderJpaRepository: OrderJpaRepository
 
     override fun newSession(session: Session): Session {
-        var entity = session.toSessionEntity()
+        var entity = session.toEntity()
         entity = sessionJpaRepository.save(entity)
         return entity.toModel()
     }
 
-    override fun updateSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
-        var sessionEntity = session.toSessionEntity()
+    override fun addSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
+        var sessionEntity = session.toEntity()
         var sessionOrderEntity = sessionOrder.toEntity()
 
-        val orderEntity = try{
+        val orderEntity = try {
             orderJpaRepository.findOrderEntityByName(sessionOrderEntity.order.name)
 
-        }catch (exception: Exception){
+        } catch (exception: Exception) {
             orderJpaRepository.save(sessionOrderEntity.order)
         }
         sessionOrderEntity.order = orderEntity
@@ -49,29 +49,45 @@ class SessionRepositoryImpl : SessionRepository {
         return sessionEntity.toModel()
     }
 
-    override fun updateSessionUser(session: Session): Session {
-        val sessionEntity = session.toSessionEntity()
+    override fun cancelSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
+        try {
+            var sessionEntity = session.toEntity()
+            val sessionOrderEntity = sessionOrder.toEntity()
+
+            sessionOrderJpaRepository.delete(sessionOrderEntity)
+            sessionEntity.orders.remove(sessionOrderEntity)
+
+            sessionEntity = sessionJpaRepository.save(sessionEntity)
+            return sessionEntity.toModel()
+        } catch (exception: Exception) {
+            throw SQLCallException("Failed to cancel order ${sessionOrder.id()} - ${sessionOrder.order}")
+        }
+    }
+
+
+    override fun addSessionUser(session: Session): Session {
+        val sessionEntity = session.toEntity()
 
         sessionJpaRepository.save(sessionEntity)
         return session
     }
 
     override fun getSessionWithId(id: Long): Session {
-        try{
+        try {
             val entity = sessionJpaRepository.findById(id).get()
 
             return entity.toModel()
-        }catch (exception: Exception){
+        } catch (exception: Exception) {
             throw NotFoundException("Session with id $id not found.")
         }
     }
 
     override fun getSessionsWithCounter(counter: Int): List<Session> {
-        try{
+        try {
             val sessions = sessionJpaRepository.getSessionsByCounter(counter)
 
             return sessions.toModelList()
-        }catch (exception: Exception){
+        } catch (exception: Exception) {
             throw NotFoundException("Session with table $counter not found")
         }
     }
