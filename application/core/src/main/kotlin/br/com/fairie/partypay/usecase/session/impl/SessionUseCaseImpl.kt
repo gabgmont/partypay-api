@@ -87,12 +87,15 @@ class SessionUseCaseImpl(
     override fun endSession(sessionId: Long, forceClose: Boolean): SessionResume {
         val session = sessionRepository.getSessionWithId(sessionId)
 
-        if (!forceClose){
-            val notDeliveredOrders = session.orders.filter { order ->
-                order.status != SessionOrderStatus.DELIVERED
-            }
-            if (notDeliveredOrders.isNotEmpty()) throw PendingOrdersException("There are pending orders in this session.", notDeliveredOrders)
+        if (forceClose) session.orders.forEach { order ->
+            if (order.status != SessionOrderStatus.DELIVERED) order.status = SessionOrderStatus.CANCELED
         }
+
+        val notDeliveredOrders = session.orders.filter { order ->
+            order.status != SessionOrderStatus.DELIVERED && order.status != SessionOrderStatus.CANCELED
+        }
+        if (notDeliveredOrders.isNotEmpty()) throw PendingOrdersException("There are pending orders in this session.", notDeliveredOrders)
+
 
         val sessionUserList = session.users.map { user ->
             SessionUser(
