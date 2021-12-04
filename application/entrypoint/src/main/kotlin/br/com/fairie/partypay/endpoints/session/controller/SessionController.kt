@@ -10,6 +10,7 @@ import br.com.fairie.partypay.endpoints.session.mapper.toDTO
 import br.com.fairie.partypay.endpoints.session.mapper.toResumedDTO
 import br.com.fairie.partypay.endpoints.session.mapper.toVo
 import br.com.fairie.partypay.usecase.session.SessionUseCase
+import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
 import br.com.fairie.partypay.usecase.session.vo.SessionStatus
 import br.com.fairie.partypay.utils.*
 import br.com.fairie.partypay.vo.CPF
@@ -54,10 +55,10 @@ class SessionController(
         return ResponseEntity.ok(session)
     }
 
-    @PutMapping("/{sessionId}/cancel/order/{orderId}")
-    @ApiOperation(value = CANCEL_ORDER_SESSION_OPERATION_VALUE, notes = CANCEL_ORDER_SESSION_OPERATION_NOTES)
-    fun cancelOrder(@PathVariable sessionId: Long, @PathVariable orderId: Long): ResponseEntity<ResumedSessionDTO> {
-        val session = useCase.cancelOrder(sessionId, orderId).toResumedDTO()
+    @PutMapping("/{sessionId}/update/order/{orderId}/status/{status}")
+    @ApiOperation(value = UPDATE_ORDER_STATUS_SESSION_OPERATION_VALUE, notes = UPDATE_ORDER_STATUS_SESSION_OPERATION_NOTES)
+    fun cancelOrder(@PathVariable sessionId: Long, @PathVariable orderId: Long, @PathVariable status: SessionOrderStatus): ResponseEntity<ResumedSessionDTO> {
+        val session = useCase.updateOrderStatus(sessionId, orderId, status).toResumedDTO()
 
         return ResponseEntity.ok(session)
     }

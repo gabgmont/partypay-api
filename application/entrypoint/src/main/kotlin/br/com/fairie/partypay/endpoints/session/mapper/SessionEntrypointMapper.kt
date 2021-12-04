@@ -15,7 +15,6 @@ import br.com.fairie.partypay.vo.CPF
 
 fun CPFListForm.toCPFList(): List<CPF> = cpfList.map { cpf -> CPF(cpf) }
 
-
 fun SessionForm.toVo(status: SessionStatus): Session = Session(
         id = 0,
         restaurant = restaurant,
@@ -25,7 +24,6 @@ fun SessionForm.toVo(status: SessionStatus): Session = Session(
         orders = arrayListOf()
 )
 
-
 fun Session.toDTO(): SessionDTO = SessionDTO(
         id = id(),
         restaurant = restaurant,
@@ -33,7 +31,6 @@ fun Session.toDTO(): SessionDTO = SessionDTO(
         users = users.map { user -> user.toDTO() },
         orders = orders.map { sessionOrder -> sessionOrder.toDTO() }
 )
-
 
 fun SessionOrder.toDTO(): SessionOrderDTO = SessionOrderDTO(
         order = order.toDTO(),
@@ -45,7 +42,6 @@ fun SessionResume.toDTO(): SessionResumeDTO = SessionResumeDTO(
         users = users.map { user -> user.toResumedDTO() },
         check = check.toDouble()
 )
-
 
 fun SessionUser.toResumedDTO(): ResumedSessionUserDTO = ResumedSessionUserDTO(
         user = user.toResumedDTO(),
@@ -80,23 +76,3 @@ fun Order.toResumedDTO(): ResumedOrderDTO =
                 name = name,
                 value = value,
         )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

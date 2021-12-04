@@ -71,16 +71,16 @@ class SessionUseCaseImpl(
         return sessionRepository.addSessionOrder(session, sessionOrder)
     }
 
-    override fun cancelOrder(sessionId: Long, sessionOrderId: Long): Session {
+    override fun updateOrderStatus(sessionId: Long, sessionOrderId: Long, status: SessionOrderStatus): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
 
         val sessionOrder = session.orders.find { sessionOrder ->
             sessionOrder.id() == sessionOrderId
         } ?: throw NotFoundException("Order $sessionOrderId not found in this session.")
 
-        sessionOrder.status = SessionOrderStatus.CANCELED
-
+        sessionOrder.status = status
         return sessionRepository.updateSessionOrder(session, sessionOrder)
+
     }
 
     override fun endSession(sessionId: Long): SessionResume {
