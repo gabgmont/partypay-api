@@ -40,7 +40,9 @@ class SessionController(
 
     @GetMapping("/{sessionId}")
     @ApiOperation(value = GET_SESSION_OPERATION_VALUE, notes = GET_SESSION_OPERATION_NOTES)
-    fun getSession(@PathVariable sessionId: Long): ResponseEntity<SessionDTO> {
+    fun getSession(
+            @PathVariable sessionId: Long
+    ): ResponseEntity<SessionDTO> {
         val createdSession = useCase.getSession(sessionId).toDTO()
 
         return ResponseEntity.ok(createdSession)
@@ -48,7 +50,10 @@ class SessionController(
 
     @PutMapping("/{sessionId}/add/order/{orderName}")
     @ApiOperation(value = ADD_ORDER_SESSION_OPERATION_VALUE, notes = ADD_ORDER_SESSION_OPERATION_NOTES)
-    fun addOrder(@PathVariable sessionId: Long, @PathVariable orderName: String, @RequestBody cpfListForm: CPFListForm): ResponseEntity<ResumedSessionDTO> {
+    fun addOrder(
+            @PathVariable sessionId: Long,
+            @PathVariable orderName: String, @RequestBody cpfListForm: CPFListForm
+    ): ResponseEntity<ResumedSessionDTO> {
         val cpfList = cpfListForm.toCPFList()
         val session = useCase.addOrder(sessionId, orderName, cpfList).toResumedDTO()
 
@@ -57,7 +62,11 @@ class SessionController(
 
     @PutMapping("/{sessionId}/update/order/{orderId}/status/{status}")
     @ApiOperation(value = UPDATE_ORDER_STATUS_SESSION_OPERATION_VALUE, notes = UPDATE_ORDER_STATUS_SESSION_OPERATION_NOTES)
-    fun cancelOrder(@PathVariable sessionId: Long, @PathVariable orderId: Long, @PathVariable status: SessionOrderStatus): ResponseEntity<ResumedSessionDTO> {
+    fun cancelOrder(
+            @PathVariable sessionId: Long,
+            @PathVariable orderId: Long,
+            @PathVariable status: SessionOrderStatus
+    ): ResponseEntity<ResumedSessionDTO> {
         val session = useCase.updateOrderStatus(sessionId, orderId, status).toResumedDTO()
 
         return ResponseEntity.ok(session)
@@ -65,7 +74,10 @@ class SessionController(
 
     @PutMapping("/{sessionId}/add/user/{cpf}")
     @ApiOperation(value = ADD_USER_SESSION_OPERATION_VALUE, notes = ADD_USER_SESSION_OPERATION_NOTES)
-    fun addUser(@PathVariable sessionId: Long, @PathVariable cpf: String): ResponseEntity<ResumedSessionDTO> {
+    fun addUser(
+            @PathVariable sessionId: Long,
+            @PathVariable cpf: String
+    ): ResponseEntity<ResumedSessionDTO> {
         val session = useCase.addUser(sessionId, CPF(cpf)).toResumedDTO()
 
         return ResponseEntity.ok(session)
@@ -73,8 +85,11 @@ class SessionController(
 
     @PutMapping("/{sessionId}/close")
     @ApiOperation(value = CLOSE_SESSION_OPERATION_VALUE, notes = CLOSE_SESSION_OPERATION_NOTES)
-    fun closeSession(@PathVariable sessionId: Long): ResponseEntity<SessionResumeDTO> {
-        val endedSession = useCase.endSession(sessionId).toDTO()
+    fun closeSession(
+            @PathVariable sessionId: Long,
+            @RequestParam(required = false, defaultValue = "false") forceClose: Boolean
+    ): ResponseEntity<SessionResumeDTO> {
+        val endedSession = useCase.endSession(sessionId, forceClose).toDTO()
 
         return ResponseEntity.ok(endedSession)
     }

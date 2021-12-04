@@ -2,6 +2,7 @@ package br.com.fairie.partypay.usecase.session.impl
 
 import br.com.fairie.partypay.exception.InconsistenceException
 import br.com.fairie.partypay.exception.NotFoundException
+import br.com.fairie.partypay.exception.PendingOrdersException
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.SessionUseCase
@@ -83,8 +84,15 @@ class SessionUseCaseImpl(
 
     }
 
-    override fun endSession(sessionId: Long): SessionResume {
+    override fun endSession(sessionId: Long, forceClose: Boolean): SessionResume {
         val session = sessionRepository.getSessionWithId(sessionId)
+
+        if (!forceClose){
+            val notDeliveredOrders = session.orders.filter { order ->
+                order.status != SessionOrderStatus.DELIVERED
+            }
+            if (notDeliveredOrders.isNotEmpty()) throw PendingOrdersException("There are pending orders in this session.", notDeliveredOrders)
+        }
 
         val sessionUserList = session.users.map { user ->
             SessionUser(
