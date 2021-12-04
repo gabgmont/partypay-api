@@ -30,8 +30,8 @@ fun Session.toDTO(): SessionDTO = SessionDTO(
         id = id(),
         restaurant = restaurant,
         table = table,
-        userList = users.map { user -> user.toDTO() },
-        orderList = orders.map { sessionOrder -> sessionOrder.toDTO() }
+        users = users.map { user -> user.toDTO() },
+        orders = orders.map { sessionOrder -> sessionOrder.toDTO() }
 )
 
 
@@ -42,7 +42,7 @@ fun SessionOrder.toDTO(): SessionOrderDTO = SessionOrderDTO(
 )
 
 fun SessionResume.toDTO(): SessionResumeDTO = SessionResumeDTO(
-        userList = users.map { user -> user.toResumedDTO() },
+        users = users.map { user -> user.toResumedDTO() },
         check = check.toDouble()
 )
 
@@ -58,8 +58,8 @@ fun Session.toResumedDTO(): ResumedSessionDTO =
                 id = id(),
                 restaurant = restaurant,
                 table = table,
-                userList = users.map { user -> user.toResumedDTO() },
-                orderList = orders.map { order -> order.toResumedDTO() }
+                users = users.map { user -> user.toResumedDTO() },
+                orders = orders.map { order -> order.toResumedDTO() }
         )
 
 fun User.toResumedDTO(): ResumedUserDTO =

@@ -1,6 +1,10 @@
 package br.com.fairie.partypay.endpoints.session.form
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 class SessionForm(
-    val restaurant: String,
-    val table: Int
+        @JsonProperty(value = "restaurant")
+        val restaurant: String,
+        @JsonProperty(value = "table")
+        val table: Int
 )

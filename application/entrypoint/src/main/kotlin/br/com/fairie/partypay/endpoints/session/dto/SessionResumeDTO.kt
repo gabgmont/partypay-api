@@ -1,6 +1,10 @@
 package br.com.fairie.partypay.endpoints.session.dto
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 class SessionResumeDTO(
-        val userList: List<ResumedSessionUserDTO>,
+        @JsonProperty(value = "user_list")
+        val users: List<ResumedSessionUserDTO>,
+        @JsonProperty(value = "check")
         val check: Double
 )

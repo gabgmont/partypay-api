@@ -1,5 +1,8 @@
 package br.com.fairie.partypay.endpoints.session.form
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 class CPFListForm(
-    val cpfList: List<String>
+        @JsonProperty(value = "cpf_list")
+        val cpfList: List<String>
 )

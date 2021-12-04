@@ -9,13 +9,13 @@ import br.com.fairie.partypay.usecase.menu.vo.Order
 
 fun Menu.toDTO(): MenuDTO = MenuDTO(
         name = name,
-        cateogryList = categoryList.map { category -> category.toDTO() }
+        categories = categoryList.map { category -> category.toDTO() }
 )
 
 
 fun Category.toDTO(): CategoryDTO = CategoryDTO(
         name = name,
-        orderList = orderList.map { order -> order.toDTO() }
+        orders = orderList.map { order -> order.toDTO() }
 )
 
 

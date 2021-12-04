@@ -1,7 +1,12 @@
 package br.com.fairie.partypay.endpoints.authentication.dto
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 class TokenDto(
-    val type: String,
-    val token: String,
-    val expiration: String
+        @JsonProperty(value = "type")
+        val type: String,
+        @JsonProperty(value = "token")
+        val token: String,
+        @JsonProperty(value = "expiration")
+        val expiration: String
 )
