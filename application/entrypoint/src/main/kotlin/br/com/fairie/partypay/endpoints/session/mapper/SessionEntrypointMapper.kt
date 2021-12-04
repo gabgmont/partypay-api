@@ -32,11 +32,18 @@ fun Session.toDTO(): SessionDTO = SessionDTO(
         orders = orders.map { sessionOrder -> sessionOrder.toDTO() }
 )
 
-fun SessionOrder.toDTO(): SessionOrderDTO = SessionOrderDTO(
-        order = order.toDTO(),
-        users = users.map { user -> user.toDTO() },
-        valuePerUser = valuePerUser()
-)
+fun SessionOrder.toDTO(): SessionOrderDTO {
+    val userList =
+            if (status == SessionOrderStatus.CANCELED) arrayListOf()
+            else users.map { user -> user.toDTO() }
+
+    return SessionOrderDTO(
+            order = order.toDTO(),
+            status = status,
+            users = userList,
+            valuePerUser = valuePerUser()
+    )
+}
 
 fun SessionResume.toDTO(): SessionResumeDTO = SessionResumeDTO(
         users = users.map { user -> user.toResumedDTO() },
@@ -64,12 +71,20 @@ fun User.toResumedDTO(): ResumedUserDTO =
                 cpf = cpf.value
         )
 
-fun SessionOrder.toResumedDTO(): ResumedSessionOrderDTO =
-        ResumedSessionOrderDTO(
-                order = order.toResumedDTO(),
-                valuePerUser = valuePerUser(),
-                users = users.map { user -> user.toResumedDTO() }
-        )
+fun SessionOrder.toResumedDTO(): ResumedSessionOrderDTO {
+
+    val userList =
+            if (status == SessionOrderStatus.CANCELED) arrayListOf()
+            else users.map { user -> user.toResumedDTO() }
+
+    return ResumedSessionOrderDTO(
+            order = order.toResumedDTO(),
+            status = status,
+            valuePerUser = valuePerUser(),
+            users = userList
+
+    )
+}
 
 fun Order.toResumedDTO(): ResumedOrderDTO =
         ResumedOrderDTO(

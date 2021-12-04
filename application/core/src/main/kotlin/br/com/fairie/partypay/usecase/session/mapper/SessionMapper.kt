@@ -9,6 +9,8 @@ fun Session.calculateSessionResume(userList: List<SessionUser>): SessionResume {
     var check = BigDecimal.ZERO
 
     orders.forEach{ sessionOrder ->
+        if (sessionOrder.status == SessionOrderStatus.CANCELED) return@forEach
+
         check = check.add(sessionOrder.order.value)
         sessionOrder.users.forEach { user ->
             userList.forEach { sessionUser ->
@@ -33,6 +35,8 @@ fun Session.close(){
 }
 
 fun SessionOrder.valuePerUser(): BigDecimal {
+    if (status == SessionOrderStatus.CANCELED) return BigDecimal.ZERO
+
     val divide = BigDecimal(users.size)
     return order.value.divide(divide, RoundingMode.HALF_UP)
 }
