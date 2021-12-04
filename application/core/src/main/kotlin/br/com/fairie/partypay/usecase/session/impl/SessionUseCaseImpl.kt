@@ -9,10 +9,7 @@ import br.com.fairie.partypay.usecase.session.mapper.calculateSessionResume
 import br.com.fairie.partypay.usecase.session.mapper.close
 import br.com.fairie.partypay.usecase.session.mapper.isClosed
 import br.com.fairie.partypay.usecase.session.mapper.isOpen
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
-import br.com.fairie.partypay.usecase.session.vo.SessionResume
-import br.com.fairie.partypay.usecase.session.vo.SessionUser
+import br.com.fairie.partypay.usecase.session.vo.*
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.vo.CPF
 import java.math.BigDecimal
@@ -50,7 +47,7 @@ class SessionUseCaseImpl(
         if (session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} already in session.")
 
         session.users.add(users.first())
-        return sessionRepository.addSessionUser(session)
+        return sessionRepository.updateSession(session)
     }
 
     override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
@@ -70,17 +67,20 @@ class SessionUseCaseImpl(
             return@map users.first()
         }
 
-        val sessionOrder = SessionOrder(0, order, userList)
+        val sessionOrder = SessionOrder(null, order, SessionOrderStatus.PENDING, userList)
         return sessionRepository.addSessionOrder(session, sessionOrder)
     }
 
     override fun cancelOrder(sessionId: Long, sessionOrderId: Long): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
+
         val sessionOrder = session.orders.find { sessionOrder ->
             sessionOrder.id() == sessionOrderId
         } ?: throw NotFoundException("Order $sessionOrderId not found in this session.")
 
-        return sessionRepository.cancelSessionOrder(session, sessionOrder)
+        sessionOrder.status = SessionOrderStatus.CANCELED
+
+        return sessionRepository.updateSessionOrder(session, sessionOrder)
     }
 
     override fun endSession(sessionId: Long): SessionResume {
@@ -97,7 +97,7 @@ class SessionUseCaseImpl(
         val sessionResume = session.calculateSessionResume(sessionUserList)
 
         session.close()
-        sessionRepository.addSessionUser(session)
+        sessionRepository.updateSession(session)
         return sessionResume
     }
 }

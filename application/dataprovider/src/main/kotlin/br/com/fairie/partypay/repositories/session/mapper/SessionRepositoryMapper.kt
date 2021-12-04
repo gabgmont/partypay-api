@@ -26,6 +26,7 @@ fun SessionEntity.toModel(): Session = Session(
 fun SessionOrder.toEntity(): SessionOrderEntity = SessionOrderEntity(
         id = id(),
         order = order.toEntity(),
+        status = status,
         users = users.map { user -> user.toEntity() }
 
 )
@@ -42,8 +43,9 @@ fun UserEntity.toModel(): User = User(
 )
 
 fun SessionOrderEntity.toModel(): SessionOrder = SessionOrder(
-        id = order.id,
+        id = id,
         order = order.toModel(),
+        status = status,
         users = users.map { user ->
             user.toModel()
         }

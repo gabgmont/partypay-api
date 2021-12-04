@@ -49,28 +49,23 @@ class SessionRepositoryImpl : SessionRepository {
         return sessionEntity.toModel()
     }
 
-    override fun cancelSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
+    override fun updateSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
         try {
-            var sessionEntity = session.toEntity()
             val sessionOrderEntity = sessionOrder.toEntity()
 
-            sessionEntity.orders.removeIf {
-                it.id == sessionOrderEntity.id
-            }
+            sessionOrderJpaRepository.save(sessionOrderEntity)
+            return sessionJpaRepository.findById(session.id()).get().toModel()
 
-            sessionEntity = sessionJpaRepository.save(sessionEntity)
-            return sessionEntity.toModel()
         } catch (exception: Exception) {
             throw SQLCallException("Failed to cancel order ${sessionOrder.id()} - ${sessionOrder.order}")
         }
     }
 
+    override fun updateSession(session: Session): Session {
+        var sessionEntity = session.toEntity()
 
-    override fun addSessionUser(session: Session): Session {
-        val sessionEntity = session.toEntity()
-
-        sessionJpaRepository.save(sessionEntity)
-        return session
+        sessionEntity = sessionJpaRepository.save(sessionEntity)
+        return sessionEntity.toModel()
     }
 
     override fun getSessionWithId(id: Long): Session {
