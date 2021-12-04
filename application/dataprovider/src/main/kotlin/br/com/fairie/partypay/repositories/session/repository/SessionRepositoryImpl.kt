@@ -54,8 +54,9 @@ class SessionRepositoryImpl : SessionRepository {
             var sessionEntity = session.toEntity()
             val sessionOrderEntity = sessionOrder.toEntity()
 
-            sessionOrderJpaRepository.delete(sessionOrderEntity)
-            sessionEntity.orders.remove(sessionOrderEntity)
+            sessionEntity.orders.removeIf {
+                it.id == sessionOrderEntity.id
+            }
 
             sessionEntity = sessionJpaRepository.save(sessionEntity)
             return sessionEntity.toModel()

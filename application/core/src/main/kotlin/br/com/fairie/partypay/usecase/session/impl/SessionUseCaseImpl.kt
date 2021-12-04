@@ -14,14 +14,13 @@ import br.com.fairie.partypay.usecase.session.vo.SessionOrder
 import br.com.fairie.partypay.usecase.session.vo.SessionResume
 import br.com.fairie.partypay.usecase.session.vo.SessionUser
 import br.com.fairie.partypay.usecase.user.UserRepository
-import br.com.fairie.partypay.usecase.user.vo.User
 import br.com.fairie.partypay.vo.CPF
 import java.math.BigDecimal
 
 class SessionUseCaseImpl(
-    private val sessionRepository: SessionRepository,
-    private val userRepository: UserRepository,
-    private val menuJsonRepository: MenuJsonRepository
+        private val sessionRepository: SessionRepository,
+        private val userRepository: UserRepository,
+        private val menuJsonRepository: MenuJsonRepository
 ) : SessionUseCase {
 
     override fun createSession(session: Session): Session {
@@ -58,11 +57,16 @@ class SessionUseCaseImpl(
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
         val order = menuJsonRepository.getOrderByName(session.restaurant, orderName)
-        val userList = ArrayList<User>()
-        cpfs.forEach { cpf ->
+
+        val userList = cpfs.map { cpf ->
             val users = userRepository.findUser(cpf)
             if (users.isEmpty()) throw NotFoundException("User ${cpf.value} is not on current session.")
-            userList.add(users.first())
+
+            session.users.find { user ->
+                user.cpf.value == cpf.value
+            } ?: throw NotFoundException("User ${cpf.value} not on current session.")
+
+            return@map users.first()
         }
 
         val sessionOrder = SessionOrder(0, order, userList)
@@ -81,15 +85,11 @@ class SessionUseCaseImpl(
     override fun endSession(sessionId: Long): SessionResume {
         val session = sessionRepository.getSessionWithId(sessionId)
 
-        val sessionUserList = ArrayList<SessionUser>()
-
-        session.users.forEach { user ->
-            sessionUserList.add(
-                SessionUser(
+        val sessionUserList = session.users.map { user ->
+            SessionUser(
                     user = user,
                     orders = arrayListOf(),
                     totalValue = BigDecimal.ZERO
-                )
             )
         }
 

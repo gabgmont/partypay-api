@@ -43,8 +43,12 @@ const val GET_SESSION_OPERATION_NOTES = ""
 const val ADD_ORDER_SESSION_OPERATION_VALUE = "Adds order to current session."
 const val ADD_ORDER_SESSION_OPERATION_NOTES = ""
 
+const val CANCEL_ORDER_SESSION_OPERATION_VALUE = "Cancels order from session."
+const val CANCEL_ORDER_SESSION_OPERATION_NOTES = ""
+
 const val ADD_USER_SESSION_OPERATION_VALUE = "Adds user to current session."
 const val ADD_USER_SESSION_OPERATION_NOTES = ""
 
 const val CLOSE_SESSION_OPERATION_VALUE = "Ends session and calculate check."
 const val CLOSE_SESSION_OPERATION_NOTES = ""
+
