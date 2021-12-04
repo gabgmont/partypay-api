@@ -3,7 +3,7 @@ package br.com.fairie.partypay.repositories.menu.db.repository
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.repositories.menu.db.jpa.OrderJpaRepository
 import br.com.fairie.partypay.repositories.menu.db.mapper.toEntity
-import br.com.fairie.partypay.repositories.menu.db.mapper.toOrder
+import br.com.fairie.partypay.repositories.menu.db.mapper.toModel
 import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.menu.vo.Order
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,9 +18,9 @@ class MenuRepositoryImpl : MenuRepository {
     override fun getOrderByName(orderName: String): Order {
         try{
             val orderEntity = orderJpaRepository.findOrderEntityByName(orderName)
-            return orderEntity.toOrder()
+            return orderEntity.toModel()
         }catch (exception: Exception){
-            throw NotFoundException("Order not found.")
+            throw NotFoundException("Order $orderName not found.")
         }
     }
 

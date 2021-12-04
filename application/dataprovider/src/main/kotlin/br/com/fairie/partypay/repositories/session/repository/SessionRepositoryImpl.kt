@@ -5,9 +5,9 @@ import br.com.fairie.partypay.repositories.menu.db.jpa.OrderJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionJpaRepository
 import br.com.fairie.partypay.repositories.session.jpa.SessionOrderJpaRepository
 import br.com.fairie.partypay.repositories.session.mapper.toEntity
-import br.com.fairie.partypay.repositories.session.mapper.toSession
+import br.com.fairie.partypay.repositories.session.mapper.toModel
 import br.com.fairie.partypay.repositories.session.mapper.toSessionEntity
-import br.com.fairie.partypay.repositories.session.mapper.toSessionList
+import br.com.fairie.partypay.repositories.session.mapper.toModelList
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.vo.Session
 import br.com.fairie.partypay.usecase.session.vo.SessionOrder
@@ -29,7 +29,7 @@ class SessionRepositoryImpl : SessionRepository {
     override fun newSession(session: Session): Session {
         var entity = session.toSessionEntity()
         entity = sessionJpaRepository.save(entity)
-        return entity.toSession()
+        return entity.toModel()
     }
 
     override fun updateSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
@@ -46,7 +46,7 @@ class SessionRepositoryImpl : SessionRepository {
         sessionOrderEntity = sessionOrderJpaRepository.save(sessionOrderEntity)
         sessionEntity.orders.add(sessionOrderEntity)
         sessionEntity = sessionJpaRepository.save(sessionEntity)
-        return sessionEntity.toSession()
+        return sessionEntity.toModel()
     }
 
     override fun updateSessionUser(session: Session): Session {
@@ -60,7 +60,7 @@ class SessionRepositoryImpl : SessionRepository {
         try{
             val entity = sessionJpaRepository.findById(id).get()
 
-            return entity.toSession()
+            return entity.toModel()
         }catch (exception: Exception){
             throw NotFoundException("Session with id $id not found.")
         }
@@ -70,7 +70,7 @@ class SessionRepositoryImpl : SessionRepository {
         try{
             val sessions = sessionJpaRepository.getSessionsByCounter(counter)
 
-            return sessions.toSessionList()
+            return sessions.toModelList()
         }catch (exception: Exception){
             throw NotFoundException("Session with table $counter not found")
         }

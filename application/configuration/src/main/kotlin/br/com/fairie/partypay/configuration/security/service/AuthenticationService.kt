@@ -4,6 +4,7 @@ import br.com.fairie.partypay.configuration.security.mapper.toUsernamePasswordAu
 import br.com.fairie.partypay.entity.UserEntity
 import br.com.fairie.partypay.entity.UserEntity.Companion.toEntity
 import br.com.fairie.partypay.exception.BadRequestException
+import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.usecase.authentication.AuthService
 import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
 import br.com.fairie.partypay.usecase.authentication.vo.LoginData
@@ -21,7 +22,7 @@ import java.util.*
 
 @Service
 class AuthenticationService(
-    private val userRepository: UserRepository,
+        private val userRepository: UserRepository,
 ) : UserDetailsService, AuthService {
 
     private lateinit var authManager: AuthenticationManager
@@ -33,8 +34,12 @@ class AuthenticationService(
     private lateinit var jwtSecret: String
 
 
-    override fun loadUserByUsername(username: String?): UserDetails {
-        return userRepository.findUserByEmail(username).toEntity()
+    override fun loadUserByUsername(username: String): UserDetails {
+
+        val users = userRepository.findUserByEmail(username)
+        if (users.isEmpty()) throw NotFoundException("User $username not found.")
+
+        return users.first().toEntity()
     }
 
     override fun generateToken(login: LoginData): GeneratedToken {
@@ -47,12 +52,12 @@ class AuthenticationService(
             val expirationDate = Date(now.time + jwtExpiration.toLong())
 
             val token = Jwts.builder()
-                .setIssuer("PartyPay! Api")
-                .setSubject(user.id.toString())
-                .setIssuedAt(now)
-                .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS256, jwtSecret)
-                .compact()
+                    .setIssuer("PartyPay! Api")
+                    .setSubject(user.id.toString())
+                    .setIssuedAt(now)
+                    .setExpiration(expirationDate)
+                    .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                    .compact()
 
             return GeneratedToken(token, jwtExpiration)
 

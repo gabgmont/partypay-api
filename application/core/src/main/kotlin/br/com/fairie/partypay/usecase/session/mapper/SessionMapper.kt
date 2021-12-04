@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.usecase.session.mapper
 
-import br.com.fairie.partypay.exception.SessionStatusException
+import br.com.fairie.partypay.exception.InconsistenceException
 import br.com.fairie.partypay.usecase.session.vo.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -29,7 +29,7 @@ fun Session.isClosed(): Boolean = status == SessionStatus.CLOSED
 
 fun Session.close(){
     if (isOpen()) this.status = SessionStatus.CLOSED
-    else throw SessionStatusException("Session is already closed.")
+    else throw InconsistenceException("Session is already closed.")
 }
 
 fun SessionOrder.valuePerUser(): BigDecimal {

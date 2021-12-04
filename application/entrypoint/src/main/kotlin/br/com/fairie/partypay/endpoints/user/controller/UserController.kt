@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/user")
 @Api(tags = [USER_TAG_TITLE], description = USER_TAG_DESCRIPTION)
 class UserController(
-    private val threadPool: ThreadPool,
-    private val useCase: UserUseCase
-    ) {
+        private val threadPool: ThreadPool,
+        private val useCase: UserUseCase
+) {
 
     @GetMapping
     @ApiOperation(value = GET_USER_OPERATION_VALUE, notes = GET_USER_OPERATION_NOTES)
@@ -33,7 +33,9 @@ class UserController(
             response = useCase.get(request).toDto()
 
         }.also { future ->
-            while (!future.isDone) { Thread.sleep(100) }
+            while (!future.isDone) {
+                Thread.sleep(100)
+            }
 
             future.get()
             if (response == null) throw ThreadExecutionException("Failed to execute Thread.")
@@ -44,7 +46,7 @@ class UserController(
 
     @PostMapping("/register")
     @ApiOperation(value = GET_USER_OPERATION_VALUE, notes = GET_USER_OPERATION_NOTES)
-    fun registerUser(@RequestBody form: UserForm): ResponseEntity<UserDTO>{
+    fun registerUser(@RequestBody form: UserForm): ResponseEntity<UserDTO> {
         var response: UserDTO? = null
 
         threadPool.executor.submit {
@@ -52,7 +54,9 @@ class UserController(
             response = useCase.register(request).toDTO()
 
         }.also { future ->
-            while (!future.isDone){ Thread.sleep(100)}
+            while (!future.isDone) {
+                Thread.sleep(100)
+            }
             future.get()
 
             if (response == null) throw ThreadExecutionException("Failed to execute Thread.")

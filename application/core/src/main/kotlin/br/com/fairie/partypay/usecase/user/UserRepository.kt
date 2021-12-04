@@ -7,6 +7,6 @@ interface UserRepository{
 
     fun registerUser(user: User): User
     fun findUser(cpf: CPF?): List<User>
-    fun findUserByEmail(email: String?) : User
+    fun findUserByEmail(email: String) : List<User>
     fun findUserById(userId: Long): User
 }

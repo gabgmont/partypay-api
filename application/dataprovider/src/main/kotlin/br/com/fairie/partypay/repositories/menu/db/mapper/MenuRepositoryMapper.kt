@@ -10,7 +10,7 @@ fun Order.toEntity(): OrderEntity = OrderEntity(
         value = value
 )
 
-fun OrderEntity.toOrder(): Order = Order(
+fun OrderEntity.toModel(): Order = Order(
         id = id,
         name = name,
         description = description,

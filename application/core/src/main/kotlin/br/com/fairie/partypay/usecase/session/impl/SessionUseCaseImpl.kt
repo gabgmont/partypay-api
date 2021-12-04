@@ -1,9 +1,7 @@
 package br.com.fairie.partypay.usecase.session.impl
 
 import br.com.fairie.partypay.exception.EmptyListException
-import br.com.fairie.partypay.exception.SessionCreationException
-import br.com.fairie.partypay.exception.SessionInconsistenceException
-import br.com.fairie.partypay.exception.SessionStatusException
+import br.com.fairie.partypay.exception.InconsistenceException
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.SessionUseCase
@@ -31,7 +29,7 @@ class SessionUseCaseImpl(
 
         if (sessionsByTable.isNotEmpty())
             sessionsByTable.forEach { instance ->
-                if (instance.isOpen()) throw SessionCreationException("Session is already open on this table.")
+                if (instance.isOpen()) throw InconsistenceException("Session is already open on this table.")
             }
 
         return sessionRepository.newSession(session)
@@ -43,13 +41,13 @@ class SessionUseCaseImpl(
 
     override fun addUser(sessionId: Long, cpf: CPF): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
-        if (session.isClosed()) throw SessionStatusException("Session is already closed.")
+        if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
         val users = userRepository.findUser(cpf)
         if (users.isEmpty()) throw EmptyListException("No users found with provided CPF.")
 
         val user = users.first()
-        if (session.users.contains(user)) throw SessionInconsistenceException("User ${user.cpf.value} already in session.")
+        if (session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} already in session.")
 
         session.users.add(users.first())
         return sessionRepository.updateSessionUser(session)
@@ -57,7 +55,7 @@ class SessionUseCaseImpl(
 
     override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
-        if (session.isClosed()) throw SessionStatusException("Session is already closed.")
+        if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
         val order = menuJsonRepository.getOrderByName(session.restaurant, orderName)
         val userList = ArrayList<User>()
@@ -67,7 +65,7 @@ class SessionUseCaseImpl(
         }
 
         userList.forEach { user ->
-            if (!session.users.contains(user)) throw SessionInconsistenceException("User ${user.cpf.value} not in current session.")
+            if (!session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} not in current session.")
         }
 
         val sessionOrder = SessionOrder(0, order, userList)
