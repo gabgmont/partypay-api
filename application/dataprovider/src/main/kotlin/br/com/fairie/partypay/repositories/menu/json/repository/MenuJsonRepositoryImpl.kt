@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.repositories.menu.json.repository
 
 import br.com.fairie.partypay.exception.NotFoundException
-import br.com.fairie.partypay.repositories.menu.json.OutbackMenu
+import br.com.fairie.partypay.repositories.menu.json.OUTBACK_MENU_JSON
 import br.com.fairie.partypay.repositories.menu.json.dao.MenuDao
 import br.com.fairie.partypay.repositories.menu.json.mapper.toVo
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
@@ -9,9 +9,6 @@ import br.com.fairie.partypay.usecase.menu.vo.Category
 import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import java.io.File
-import java.io.FileNotFoundException
-import java.nio.file.Files
 
 class MenuJsonRepositoryImpl : MenuJsonRepository {
 
@@ -62,7 +59,7 @@ class MenuJsonRepositoryImpl : MenuJsonRepository {
 //        val file = File(url.file).toPath()
 //
 //        val content = String(Files.readAllBytes(file))
-        return jacksonObjectMapper().readValue(OutbackMenu.menuJson, MenuDao::class.java)
+        return jacksonObjectMapper().readValue(OUTBACK_MENU_JSON, MenuDao::class.java)
     }
 }
 

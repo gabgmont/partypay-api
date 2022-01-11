@@ -1,8 +1,6 @@
 package br.com.fairie.partypay.repositories.menu.json
 
-class OutbackMenu {
-    companion object {
-        val menuJson = """{
+const val OUTBACK_MENU_JSON = """{
   "id": 1,
   "restaurant": "Outback",
   "menu": [
@@ -890,6 +888,5 @@ class OutbackMenu {
       ]
     }
   ]
-}""".trimIndent()
-    }
-}
+}"""
+
