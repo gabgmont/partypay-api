@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.endpoints.authentication.controller
 
-import br.com.fairie.partypay.endpoints.authentication.dto.TokenDto
+import br.com.fairie.partypay.endpoints.authentication.dto.AuthenticationDTO
 import br.com.fairie.partypay.endpoints.authentication.form.LoginForm
 import br.com.fairie.partypay.endpoints.authentication.mapper.toDto
 import br.com.fairie.partypay.endpoints.authentication.mapper.toLoginData
@@ -28,7 +28,7 @@ class AuthenticationController(
 
     @PostMapping
     @ApiOperation(value = POST_AUTHENTICATION_VALUE, notes = POST_AUTHENTICATION_NOTES)
-    fun authenticate(@RequestBody loginForm: LoginForm): TokenDto {
+    fun authenticate(@RequestBody loginForm: LoginForm): AuthenticationDTO {
         val loginData = loginForm.toLoginData()
         val authenticated = authUseCase.authenticate(loginData)
 

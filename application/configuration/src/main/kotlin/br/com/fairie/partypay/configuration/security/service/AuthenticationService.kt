@@ -10,6 +10,7 @@ import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
 import br.com.fairie.partypay.usecase.authentication.vo.LoginData
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.vo.CPF
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
@@ -36,7 +37,7 @@ class AuthenticationService(
 
     override fun loadUserByUsername(username: String): UserDetails {
 
-        val users = userRepository.findUserByEmail(username)
+        val users = userRepository.findUser(CPF(username))
         if (users.isEmpty()) throw NotFoundException("User $username not found.")
 
         return users.first().toEntity()
@@ -88,5 +89,4 @@ class AuthenticationService(
     fun setAuthManager(authManager: AuthenticationManager) {
         this.authManager = authManager
     }
-
 }

@@ -1,6 +1,6 @@
 buildscript {
     ext.artifactId = 'partypay'
-    ext.deploy_version = '0.0.2'
+    ext.deploy_version = '0.0.3'
     ext.p_group = 'br.com.fairie.partypay'
     ext.archive_extension = 'jar'
     ext.archive_file_name = "${artifactId}-${deploy_version}.${archive_extension}"

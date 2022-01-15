@@ -2,7 +2,7 @@ package br.com.fairie.partypay.endpoints.authentication.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class TokenDto(
+class AuthenticationDTO(
         @JsonProperty(value = "type")
         val type: String,
         @JsonProperty(value = "token")

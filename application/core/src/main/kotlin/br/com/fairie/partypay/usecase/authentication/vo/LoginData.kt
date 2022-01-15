@@ -1,8 +1,8 @@
 package br.com.fairie.partypay.usecase.authentication.vo
 
-import br.com.fairie.partypay.vo.Email
+import br.com.fairie.partypay.vo.CPF
 
 class LoginData(
-    val email: Email,
-    val secret: String
+        val cpf: CPF,
+        val secret: String
 )

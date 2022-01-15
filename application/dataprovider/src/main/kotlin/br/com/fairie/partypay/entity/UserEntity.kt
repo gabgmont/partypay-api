@@ -37,7 +37,7 @@ class UserEntity(
 
     override fun getPassword(): String = secret
 
-    override fun getUsername(): String = email
+    override fun getUsername(): String = cpf
 
     override fun isAccountNonExpired(): Boolean = true
 
