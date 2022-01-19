@@ -37,17 +37,19 @@ class SessionUseCaseImpl(
         return sessionRepository.getSessionWithId(sessionId)
     }
 
-    override fun addUser(sessionId: Long, cpf: CPF): Session {
+    override fun addUser(sessionId: Long, cpfs: List<CPF>): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
-        val users = userRepository.findUser(cpf)
-        if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
+        cpfs.forEach { cpf ->
+            val users = userRepository.findUser(cpf)
+            if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
 
-        val user = users.first()
-        if (session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} already in session.")
+            val user = users.first()
+            if (session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} already in session.")
 
-        session.users.add(users.first())
+            session.users.add(users.first())
+        }
         return sessionRepository.updateSession(session)
     }
 

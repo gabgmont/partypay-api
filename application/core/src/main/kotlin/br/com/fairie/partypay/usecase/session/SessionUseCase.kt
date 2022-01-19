@@ -9,7 +9,7 @@ interface SessionUseCase {
 
     fun createSession(session: Session) : Session
     fun getSession(sessionId: Long): Session
-    fun addUser(sessionId: Long, cpf: CPF): Session
+    fun addUser(sessionId: Long, cpfs: List<CPF>): Session
     fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session
     fun updateOrderStatus(sessionId: Long, sessionOrderId: Long, status: SessionOrderStatus): Session
     fun endSession(sessionId: Long, forceClose: Boolean): SessionResume

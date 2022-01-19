@@ -13,7 +13,6 @@ import br.com.fairie.partypay.usecase.session.SessionUseCase
 import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
 import br.com.fairie.partypay.usecase.session.vo.SessionStatus
 import br.com.fairie.partypay.utils.*
-import br.com.fairie.partypay.vo.CPF
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -52,7 +51,8 @@ class SessionController(
     @ApiOperation(value = ADD_ORDER_SESSION_OPERATION_VALUE, notes = ADD_ORDER_SESSION_OPERATION_NOTES)
     fun addOrder(
             @PathVariable sessionId: Long,
-            @PathVariable orderName: String, @RequestBody cpfListForm: CPFListForm
+            @PathVariable orderName: String,
+            @RequestBody cpfListForm: CPFListForm
     ): ResponseEntity<ResumedSessionDTO> {
         val cpfList = cpfListForm.toCPFList()
         val session = useCase.addOrder(sessionId, orderName, cpfList).toResumedDTO()
@@ -72,13 +72,15 @@ class SessionController(
         return ResponseEntity.ok(session)
     }
 
-    @PutMapping("/{sessionId}/add/user/{cpf}")
+    @PutMapping("/{sessionId}/add/user/cpf")
     @ApiOperation(value = ADD_USER_SESSION_OPERATION_VALUE, notes = ADD_USER_SESSION_OPERATION_NOTES)
     fun addUser(
             @PathVariable sessionId: Long,
-            @PathVariable cpf: String
+            @RequestBody cpfListForm: CPFListForm
     ): ResponseEntity<ResumedSessionDTO> {
-        val session = useCase.addUser(sessionId, CPF(cpf)).toResumedDTO()
+
+        val cpfList = cpfListForm.toCPFList()
+        val session = useCase.addUser(sessionId, cpfList).toResumedDTO()
 
         return ResponseEntity.ok(session)
     }
