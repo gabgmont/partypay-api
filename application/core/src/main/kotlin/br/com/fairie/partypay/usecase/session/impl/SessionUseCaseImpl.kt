@@ -70,7 +70,7 @@ class SessionUseCaseImpl(
             return@map users.first()
         }
 
-        val sessionOrder = SessionOrder(null, order, SessionOrderStatus.PENDING, userList)
+        val sessionOrder = SessionOrder(null, order, SessionOrderStatus.DELIVERED, userList)
         return sessionRepository.addSessionOrder(session, sessionOrder)
     }
 
