@@ -52,9 +52,15 @@ fun SessionResume.toDTO(): SessionResumeDTO = SessionResumeDTO(
 
 fun SessionUser.toResumedDTO(): ResumedSessionUserDTO = ResumedSessionUserDTO(
         user = user.toResumedDTO(),
-        orders = orders.map { order -> order.toResumedDTO() }.toMutableList(),
+        orders = orders.map { resumeOrder -> resumeOrder.toResumeOrderDTO() }.toMutableList(),
         totalValue = totalValue
 )
+
+fun SessionResumeOrder.toResumeOrderDTO() =
+        SessionResumeOrderDTO(
+                resumeOrder = order.toResumedDTO(),
+                valuePerUser =  valuePerUser
+        )
 
 fun Session.toResumedDTO(): ResumedSessionDTO =
         ResumedSessionDTO(

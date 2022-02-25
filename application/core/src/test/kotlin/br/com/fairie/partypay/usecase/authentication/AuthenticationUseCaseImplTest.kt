@@ -2,13 +2,12 @@ package br.com.fairie.partypay.usecase.authentication
 
 import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
 import br.com.fairie.partypay.usecase.authentication.vo.LoginData
-import br.com.fairie.partypay.vo.Email
+import br.com.fairie.partypay.vo.CPF
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
 class AuthenticationUseCaseImplTest {
 
@@ -20,7 +19,7 @@ class AuthenticationUseCaseImplTest {
 
     @Test
     fun authenticationTokenGenerationTest(){
-        val generatedToken = service.generateToken(LoginData(Email("teste@email.com"), "s3cr3t"))
+        val generatedToken = service.generateToken(LoginData(CPF("teste@email.com"), "s3cr3t"))
 
         assertNotNull(generatedToken)
         assertEquals(generatedToken.token, "FAKE TOKEN 1234")
