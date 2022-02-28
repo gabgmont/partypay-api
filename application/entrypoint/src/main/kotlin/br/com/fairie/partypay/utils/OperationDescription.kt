@@ -49,6 +49,9 @@ const val UPDATE_ORDER_STATUS_SESSION_OPERATION_NOTES = ""
 const val ADD_USER_SESSION_OPERATION_VALUE = "Adds user to current session."
 const val ADD_USER_SESSION_OPERATION_NOTES = ""
 
+const val SESSION_RESUME_OPERATION_VALUE = "Consult session resume"
+const val SESSION_RESUME_OPERATION_NOTES = ""
+
 const val CLOSE_SESSION_OPERATION_VALUE = "Ends session and calculate check."
 const val CLOSE_SESSION_OPERATION_NOTES = ""
 

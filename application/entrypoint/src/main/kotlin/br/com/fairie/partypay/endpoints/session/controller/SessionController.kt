@@ -85,6 +85,13 @@ class SessionController(
         return ResponseEntity.ok(session)
     }
 
+    @GetMapping("/resume/{sessionId}")
+    @ApiOperation(value = SESSION_RESUME_OPERATION_VALUE, notes = SESSION_RESUME_OPERATION_NOTES)
+    fun sessionResume(@PathVariable sessionId: Long): ResponseEntity<SessionResumeDTO>{
+        val sessionResume = useCase.getResume(sessionId).toDTO()
+        return ResponseEntity.ok(sessionResume)
+    }
+
     @PutMapping("/{sessionId}/close")
     @ApiOperation(value = CLOSE_SESSION_OPERATION_VALUE, notes = CLOSE_SESSION_OPERATION_NOTES)
     fun closeSession(

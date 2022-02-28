@@ -86,6 +86,19 @@ class SessionUseCaseImpl(
 
     }
 
+    override fun getResume(sessionId: Long): SessionResume {
+        val session = sessionRepository.getSessionWithId(sessionId)
+        val sessionUserList = session.users.map { user ->
+            SessionUser(
+                user = user,
+                orders = arrayListOf(),
+                totalValue = BigDecimal.ZERO
+            )
+        }
+
+        return session.calculateSessionResume(sessionUserList)
+    }
+
     override fun endSession(sessionId: Long, forceClose: Boolean): SessionResume {
         val session = sessionRepository.getSessionWithId(sessionId)
 
