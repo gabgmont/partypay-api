@@ -13,6 +13,7 @@ import br.com.fairie.partypay.usecase.session.SessionUseCase
 import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
 import br.com.fairie.partypay.usecase.session.vo.SessionStatus
 import br.com.fairie.partypay.utils.*
+import br.com.fairie.partypay.vo.CPF
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -21,11 +22,11 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/session")
 @Api(
-        description = SESSION_TAG_DESCRIPTION,
-        tags = [SESSION_TAG_TITLE]
+    description = SESSION_TAG_DESCRIPTION,
+    tags = [SESSION_TAG_TITLE]
 )
 class SessionController(
-        val useCase: SessionUseCase
+    val useCase: SessionUseCase
 ) {
 
     @PostMapping("/create")
@@ -40,19 +41,29 @@ class SessionController(
     @GetMapping("/{sessionId}")
     @ApiOperation(value = GET_SESSION_OPERATION_VALUE, notes = GET_SESSION_OPERATION_NOTES)
     fun getSession(
-            @PathVariable sessionId: Long
+        @PathVariable sessionId: Long
     ): ResponseEntity<SessionDTO> {
         val createdSession = useCase.getSession(sessionId).toDTO()
 
         return ResponseEntity.ok(createdSession)
     }
 
+    @GetMapping("/user/online/{cpf}")
+    @ApiOperation(value = GET_SESSION_OPERATION_VALUE, notes = GET_SESSION_OPERATION_NOTES)
+    fun checkUserOnline(
+        @PathVariable cpf: String
+    ): ResponseEntity<SessionDTO> {
+        val userSession = useCase.checkUserOnline(CPF(cpf)).toDTO()
+
+        return ResponseEntity.ok(userSession)
+    }
+
     @PutMapping("/{sessionId}/add/order/{orderName}")
     @ApiOperation(value = ADD_ORDER_SESSION_OPERATION_VALUE, notes = ADD_ORDER_SESSION_OPERATION_NOTES)
     fun addOrder(
-            @PathVariable sessionId: Long,
-            @PathVariable orderName: String,
-            @RequestBody cpfListForm: CPFListForm
+        @PathVariable sessionId: Long,
+        @PathVariable orderName: String,
+        @RequestBody cpfListForm: CPFListForm
     ): ResponseEntity<ResumedSessionDTO> {
         val cpfList = cpfListForm.toCPFList()
         val session = useCase.addOrder(sessionId, orderName, cpfList).toResumedDTO()
@@ -61,11 +72,14 @@ class SessionController(
     }
 
     @PutMapping("/{sessionId}/update/order/{orderId}/status/{status}")
-    @ApiOperation(value = UPDATE_ORDER_STATUS_SESSION_OPERATION_VALUE, notes = UPDATE_ORDER_STATUS_SESSION_OPERATION_NOTES)
+    @ApiOperation(
+        value = UPDATE_ORDER_STATUS_SESSION_OPERATION_VALUE,
+        notes = UPDATE_ORDER_STATUS_SESSION_OPERATION_NOTES
+    )
     fun cancelOrder(
-            @PathVariable sessionId: Long,
-            @PathVariable orderId: Long,
-            @PathVariable status: SessionOrderStatus
+        @PathVariable sessionId: Long,
+        @PathVariable orderId: Long,
+        @PathVariable status: SessionOrderStatus
     ): ResponseEntity<ResumedSessionDTO> {
         val session = useCase.updateOrderStatus(sessionId, orderId, status).toResumedDTO()
 
@@ -75,8 +89,8 @@ class SessionController(
     @PutMapping("/{sessionId}/add/user/cpf")
     @ApiOperation(value = ADD_USER_SESSION_OPERATION_VALUE, notes = ADD_USER_SESSION_OPERATION_NOTES)
     fun addUser(
-            @PathVariable sessionId: Long,
-            @RequestBody cpfListForm: CPFListForm
+        @PathVariable sessionId: Long,
+        @RequestBody cpfListForm: CPFListForm
     ): ResponseEntity<ResumedSessionDTO> {
 
         val cpfList = cpfListForm.toCPFList()
@@ -87,7 +101,7 @@ class SessionController(
 
     @GetMapping("/resume/{sessionId}")
     @ApiOperation(value = SESSION_RESUME_OPERATION_VALUE, notes = SESSION_RESUME_OPERATION_NOTES)
-    fun sessionResume(@PathVariable sessionId: Long): ResponseEntity<SessionResumeDTO>{
+    fun sessionResume(@PathVariable sessionId: Long): ResponseEntity<SessionResumeDTO> {
         val sessionResume = useCase.getResume(sessionId).toDTO()
         return ResponseEntity.ok(sessionResume)
     }
@@ -95,8 +109,8 @@ class SessionController(
     @PutMapping("/{sessionId}/close")
     @ApiOperation(value = CLOSE_SESSION_OPERATION_VALUE, notes = CLOSE_SESSION_OPERATION_NOTES)
     fun closeSession(
-            @PathVariable sessionId: Long,
-            @RequestParam(required = false, defaultValue = "false") forceClose: Boolean
+        @PathVariable sessionId: Long,
+        @RequestParam(required = false, defaultValue = "false") forceClose: Boolean
     ): ResponseEntity<SessionResumeDTO> {
         val endedSession = useCase.endSession(sessionId, forceClose).toDTO()
 

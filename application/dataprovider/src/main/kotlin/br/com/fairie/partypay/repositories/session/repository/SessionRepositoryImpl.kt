@@ -11,6 +11,7 @@ import br.com.fairie.partypay.repositories.session.mapper.toModelList
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.vo.Session
 import br.com.fairie.partypay.usecase.session.vo.SessionOrder
+import br.com.fairie.partypay.usecase.session.vo.SessionStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -85,6 +86,16 @@ class SessionRepositoryImpl : SessionRepository {
             return sessions.toModelList()
         } catch (exception: Exception) {
             throw NotFoundException("Session with table $counter not found")
+        }
+    }
+
+    override fun getOpenSessions(): List<Session> {
+        try {
+            val sessions = sessionJpaRepository.getSessionEntitiesByStatus(SessionStatus.OPEN)
+            return sessions.toModelList()
+
+        }catch (exception: Exception){
+            throw NotFoundException("All sessions are closed.")
         }
     }
 

@@ -10,5 +10,6 @@ interface SessionRepository {
     fun updateSessionOrder(session: Session, sessionOrder: SessionOrder): Session
     fun getSessionWithId(id: Long): Session
     fun getSessionsWithCounter(counter: Int): List<Session>
+    fun getOpenSessions(): List<Session>
     fun getSessions(): List<Session>
 }

@@ -8,6 +8,6 @@ spring:
 application:
   name: PartyPay Api
   description: Api do Partypay
-  version: 0.0.4
+  version: 0.0.6
   artifactid: partypay
 

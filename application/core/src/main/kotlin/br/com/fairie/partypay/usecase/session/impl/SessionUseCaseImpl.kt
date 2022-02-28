@@ -16,9 +16,9 @@ import br.com.fairie.partypay.vo.CPF
 import java.math.BigDecimal
 
 class SessionUseCaseImpl(
-        private val sessionRepository: SessionRepository,
-        private val userRepository: UserRepository,
-        private val menuJsonRepository: MenuJsonRepository
+    private val sessionRepository: SessionRepository,
+    private val userRepository: UserRepository,
+    private val menuJsonRepository: MenuJsonRepository
 ) : SessionUseCase {
 
     override fun createSession(session: Session): Session {
@@ -35,6 +35,20 @@ class SessionUseCaseImpl(
 
     override fun getSession(sessionId: Long): Session {
         return sessionRepository.getSessionWithId(sessionId)
+    }
+
+    override fun checkUserOnline(cpf: CPF): Session {
+        val users = userRepository.findUser(cpf)
+        if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
+
+        val sessions = sessionRepository.getOpenSessions()
+        val user = users.first()
+        val userSessions = sessions.filter { session -> session.users.contains(user) }
+
+        if (userSessions.isEmpty()) throw NotFoundException("User ${user.cpf} is not in any open session.")
+        if (userSessions.size > 1) throw InconsistenceException("Multiple sessions for user ${user.cpf}")
+
+        return userSessions.first()
     }
 
     override fun addUser(sessionId: Long, cpfs: List<CPF>): Session {
@@ -109,14 +123,17 @@ class SessionUseCaseImpl(
         val notDeliveredOrders = session.orders.filter { order ->
             order.status != SessionOrderStatus.DELIVERED && order.status != SessionOrderStatus.CANCELED
         }
-        if (notDeliveredOrders.isNotEmpty()) throw PendingOrdersException("There are pending orders in this session.", notDeliveredOrders)
+        if (notDeliveredOrders.isNotEmpty()) throw PendingOrdersException(
+            "There are pending orders in this session.",
+            notDeliveredOrders
+        )
 
 
         val sessionUserList = session.users.map { user ->
             SessionUser(
-                    user = user,
-                    orders = arrayListOf(),
-                    totalValue = BigDecimal.ZERO
+                user = user,
+                orders = arrayListOf(),
+                totalValue = BigDecimal.ZERO
             )
         }
 
