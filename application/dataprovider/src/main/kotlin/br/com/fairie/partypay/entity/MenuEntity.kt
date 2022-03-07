@@ -12,6 +12,8 @@ class MenuEntity(
     var restaurant: String,
 
     @Column
-    @OneToMany(mappedBy = "name")
-    var menu: List<CategoryEntity>
-)
+    @OneToMany(fetch = FetchType.LAZY)
+    var categories: List<CategoryEntity> = arrayListOf()
+){
+    constructor(id: Long, restaurant: String) : this(id, restaurant, arrayListOf())
+}

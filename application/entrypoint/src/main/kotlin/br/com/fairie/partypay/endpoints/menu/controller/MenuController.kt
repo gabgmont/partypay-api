@@ -3,7 +3,9 @@ package br.com.fairie.partypay.endpoints.menu.controller
 import br.com.fairie.partypay.endpoints.menu.dto.CategoryDTO
 import br.com.fairie.partypay.endpoints.menu.dto.MenuDTO
 import br.com.fairie.partypay.endpoints.menu.dto.OrderDTO
+import br.com.fairie.partypay.endpoints.menu.dto.RestaurantsDTO
 import br.com.fairie.partypay.endpoints.menu.mapper.toDTO
+import br.com.fairie.partypay.endpoints.menu.mapper.toRestaurantsDTO
 import br.com.fairie.partypay.exception.ThreadExecutionException
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
 import br.com.fairie.partypay.usecase.menu.vo.Category
@@ -18,19 +20,26 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/menu/{restaurant}")
+@RequestMapping("/menu")
 @Api(tags = [MENU_TAG_TITLE], description = MENU_TAG_DESCRIPTION)
 class MenuController(
     private val threadPool: ThreadPool,
     private val useCase: MenuUseCase
 ) {
 
-    @GetMapping
+    @GetMapping("/restaurants")
+    @ApiOperation(value = GET_RESTAURANTS_OPERATION_VALUE, notes = GET_RESTAURANTS_OPERATION_NOTES)
+    fun getAllRestaurants(): List<RestaurantsDTO>{
+        val response = useCase.getRestaurants()
+        return response.map { menu -> menu.toRestaurantsDTO() }
+    }
+
+    @GetMapping("/{id}")
     @ApiOperation(value = GET_MENU_OPERATION_VALUE, notes = GET_MENU_OPERATION_NOTES)
-    fun browseMenu(@PathVariable restaurant: String): MenuDTO {
+    fun browseMenu(@PathVariable id: Long): MenuDTO {
         var response: Menu? = null
 
-        threadPool.executor.submit { response = useCase.getMenu(restaurant)
+        threadPool.executor.submit { response = useCase.getMenu(id)
             Thread.sleep(10000)
         }.also { future ->
             while (!future.isDone) {
@@ -42,12 +51,12 @@ class MenuController(
         }
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/category/{categoryId}")
     @ApiOperation(value = GET_MENU_CATEGORY_OPERATION_VALUE, notes = GET_MENU_CATEGORY_OPERATION_NOTES)
-    fun browseCategory(@PathVariable restaurant: String, @PathVariable category: String): CategoryDTO {
+    fun browseCategory(@PathVariable categoryId: Long): CategoryDTO {
         var response: Category? = null
 
-        threadPool.executor.submit { response = useCase.getMenuCategory(restaurant, category) }.also { future ->
+        threadPool.executor.submit { response = useCase.getMenuCategory(categoryId) }.also { future ->
             while (!future.isDone) {
                 Thread.sleep(100)
             }
@@ -59,10 +68,10 @@ class MenuController(
 
     @GetMapping("/order/{order}")
     @ApiOperation(value = GET_MENU_ORDER_OPERATION_VALUE, notes = GET_MENU_ORDER_OPERATION_NOTES)
-    fun browseOrder(@PathVariable restaurant: String, @PathVariable order: String): OrderDTO {
+    fun browseOrder(@PathVariable order: Long): OrderDTO {
         var response: Order? = null
 
-        threadPool.executor.submit { response = useCase.getMenuOrder(restaurant, order) }.also { future ->
+        threadPool.executor.submit { response = useCase.getMenuOrder(order) }.also { future ->
             while (!future.isDone) {
                 Thread.sleep(100)
             }

@@ -5,7 +5,8 @@ import br.com.fairie.partypay.usecase.menu.vo.Menu
 import br.com.fairie.partypay.usecase.menu.vo.Order
 
 interface MenuUseCase {
-    fun getMenu(menu: String): Menu
-    fun getMenuCategory(restaurant: String, category: String): Category
-    fun getMenuOrder(restaurant: String, order: String): Order
+    fun getRestaurants(): List<Menu>
+    fun getMenu(id: Long): Menu
+    fun getMenuCategory(categoryId: Long): Category
+    fun getMenuOrder(orderId: Long): Order
 }

@@ -21,6 +21,9 @@ const val GET_USER_OPERATION_NOTES = """
 const val MENU_TAG_TITLE = "Menu"
 const val MENU_TAG_DESCRIPTION = "Menu Operations."
 
+const val GET_RESTAURANTS_OPERATION_VALUE = "Browse All Restaurants"
+const val GET_RESTAURANTS_OPERATION_NOTES = "Browse All Restaurants"
+
 const val GET_MENU_OPERATION_VALUE = "Browse restaurants menu"
 const val GET_MENU_OPERATION_NOTES = ""
 

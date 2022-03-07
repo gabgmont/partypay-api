@@ -22,7 +22,7 @@ open class MenuConfiguration {
 
     @Bean
     open fun loadMenuUseCase(
-        repository: MenuJsonRepository
+        repository: MenuRepository
     ): MenuUseCase =
         MenuUseCaseImpl(repository)
 

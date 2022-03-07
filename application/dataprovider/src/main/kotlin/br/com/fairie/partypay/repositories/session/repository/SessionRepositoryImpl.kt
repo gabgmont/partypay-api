@@ -36,13 +36,8 @@ class SessionRepositoryImpl : SessionRepository {
     override fun addSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
         var sessionEntity = session.toEntity()
         var sessionOrderEntity = sessionOrder.toEntity()
+        val orderEntity = orderJpaRepository.getById(sessionOrderEntity.order.id)
 
-        val orderEntity = try {
-            orderJpaRepository.findOrderEntityByName(sessionOrderEntity.order.name)
-
-        } catch (exception: Exception) {
-            orderJpaRepository.save(sessionOrderEntity.order)
-        }
         sessionOrderEntity.order = orderEntity
         sessionOrderEntity = sessionOrderJpaRepository.save(sessionOrderEntity)
         sessionEntity.orders.add(sessionOrderEntity)
@@ -58,7 +53,7 @@ class SessionRepositoryImpl : SessionRepository {
             return sessionJpaRepository.findById(session.id()).get().toModel()
 
         } catch (exception: Exception) {
-            throw SQLCallException("Failed to cancel order ${sessionOrder.id()} - ${sessionOrder.order}")
+            throw SQLCallException("Failed to update order ${sessionOrder.id()} - ${sessionOrder.order}")
         }
     }
 

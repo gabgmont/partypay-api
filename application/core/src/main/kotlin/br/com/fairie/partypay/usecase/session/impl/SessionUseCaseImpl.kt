@@ -3,7 +3,7 @@ package br.com.fairie.partypay.usecase.session.impl
 import br.com.fairie.partypay.exception.InconsistenceException
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.exception.PendingOrdersException
-import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
+import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.session.SessionRepository
 import br.com.fairie.partypay.usecase.session.SessionUseCase
 import br.com.fairie.partypay.usecase.session.mapper.calculateSessionResume
@@ -18,18 +18,26 @@ import java.math.BigDecimal
 class SessionUseCaseImpl(
     private val sessionRepository: SessionRepository,
     private val userRepository: UserRepository,
-    private val menuJsonRepository: MenuJsonRepository
+    private val menuRepository: MenuRepository
 ) : SessionUseCase {
 
-    override fun createSession(session: Session): Session {
-        menuJsonRepository.getMenuByName(session.restaurant)
-        val sessionsByTable = sessionRepository.getSessionsWithCounter(session.table)
+    override fun createSession(menuId: Long, table: Int, cpfs: List<CPF>): Session {
+        val menu = menuRepository.getMenuById(menuId)
+        val sessionsByTable = sessionRepository.getSessionsWithCounter(table)
 
         if (sessionsByTable.isNotEmpty())
             sessionsByTable.forEach { instance ->
                 if (instance.isOpen()) throw InconsistenceException("Session is already open on this table.")
             }
 
+        val users = cpfs.map { cpf ->
+            val users = userRepository.findUser(cpf)
+            if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
+
+           return@map users.first()
+        } as MutableList
+
+        val session = Session(0, menu.name, table, SessionStatus.OPEN, users, arrayListOf())
         return sessionRepository.newSession(session)
     }
 
@@ -67,11 +75,11 @@ class SessionUseCaseImpl(
         return sessionRepository.updateSession(session)
     }
 
-    override fun addOrder(sessionId: Long, orderName: String, cpfs: List<CPF>): Session {
+    override fun addOrder(sessionId: Long, orderId: Long, cpfs: List<CPF>): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
-        val order = menuJsonRepository.getOrderByName(session.restaurant, orderName)
+        val order = menuRepository.getOrderById(orderId)
 
         val userList = cpfs.map { cpf ->
             val users = userRepository.findUser(cpf)

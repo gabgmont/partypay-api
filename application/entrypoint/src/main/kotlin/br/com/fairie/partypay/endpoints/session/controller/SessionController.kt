@@ -8,10 +8,8 @@ import br.com.fairie.partypay.endpoints.session.form.SessionForm
 import br.com.fairie.partypay.endpoints.session.mapper.toCPFList
 import br.com.fairie.partypay.endpoints.session.mapper.toDTO
 import br.com.fairie.partypay.endpoints.session.mapper.toResumedDTO
-import br.com.fairie.partypay.endpoints.session.mapper.toVo
 import br.com.fairie.partypay.usecase.session.SessionUseCase
 import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
-import br.com.fairie.partypay.usecase.session.vo.SessionStatus
 import br.com.fairie.partypay.utils.*
 import br.com.fairie.partypay.vo.CPF
 import io.swagger.annotations.Api
@@ -32,8 +30,7 @@ class SessionController(
     @PostMapping("/create")
     @ApiOperation(value = CREATE_SESSION_OPERATION_VALUE, notes = CREATE_SESSION_OPERATION_NOTES)
     fun createSession(@RequestBody sessionForm: SessionForm): ResponseEntity<SessionDTO> {
-        val session = sessionForm.toVo(SessionStatus.OPEN)
-        val createdSession = useCase.createSession(session).toDTO()
+        val createdSession = useCase.createSession(sessionForm.menuId, sessionForm.table, sessionForm.users.toCPFList()).toDTO()
 
         return ResponseEntity.ok(createdSession)
     }
@@ -58,15 +55,15 @@ class SessionController(
         return ResponseEntity.ok(userSession)
     }
 
-    @PutMapping("/{sessionId}/add/order/{orderName}")
+    @PutMapping("/{sessionId}/add/order/{orderId}")
     @ApiOperation(value = ADD_ORDER_SESSION_OPERATION_VALUE, notes = ADD_ORDER_SESSION_OPERATION_NOTES)
     fun addOrder(
         @PathVariable sessionId: Long,
-        @PathVariable orderName: String,
+        @PathVariable orderId: Long,
         @RequestBody cpfListForm: CPFListForm
     ): ResponseEntity<ResumedSessionDTO> {
         val cpfList = cpfListForm.toCPFList()
-        val session = useCase.addOrder(sessionId, orderName, cpfList).toResumedDTO()
+        val session = useCase.addOrder(sessionId, orderId, cpfList).toResumedDTO()
 
         return ResponseEntity.ok(session)
     }

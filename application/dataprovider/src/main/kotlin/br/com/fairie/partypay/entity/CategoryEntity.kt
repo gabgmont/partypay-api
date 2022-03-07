@@ -12,6 +12,6 @@ class CategoryEntity(
     val name: String,
 
     @Column
-    @OneToMany(mappedBy = "name")
+    @OneToMany(fetch = FetchType.EAGER)
     val orders: List<OrderEntity>
 )

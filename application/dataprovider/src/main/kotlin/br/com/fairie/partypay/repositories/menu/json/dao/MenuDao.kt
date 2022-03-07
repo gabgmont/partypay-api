@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 class MenuDao(
     @get:JsonProperty("id")
-    val id: Int,
+    val id: Long,
     @get:JsonProperty("restaurant")
     val restaurant: String,
     @get:JsonProperty("menu")
