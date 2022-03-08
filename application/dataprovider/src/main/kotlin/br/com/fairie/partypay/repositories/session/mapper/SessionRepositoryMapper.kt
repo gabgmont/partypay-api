@@ -6,9 +6,9 @@ import br.com.fairie.partypay.entity.UserEntity
 import br.com.fairie.partypay.entity.UserEntity.Companion.toEntity
 import br.com.fairie.partypay.repositories.menu.db.mapper.toEntity
 import br.com.fairie.partypay.repositories.menu.db.mapper.toModel
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.session.model.Session
+import br.com.fairie.partypay.usecase.session.model.SessionOrder
+import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone
@@ -24,7 +24,7 @@ fun SessionEntity.toModel(): Session = Session(
 )
 
 fun SessionOrder.toEntity(): SessionOrderEntity = SessionOrderEntity(
-        id = id(),
+        id = id,
         order = order.toEntity(),
         status = status,
         users = users.map { user -> user.toEntity() }
@@ -52,7 +52,7 @@ fun SessionOrderEntity.toModel(): SessionOrder = SessionOrder(
 )
 
 fun Session.toEntity(): SessionEntity = SessionEntity(
-        id = id(),
+        id = id,
         restaurant = restaurant,
         counter = table,
         status = status,

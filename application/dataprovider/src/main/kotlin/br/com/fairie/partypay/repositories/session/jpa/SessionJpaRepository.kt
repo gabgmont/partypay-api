@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.repositories.session.jpa
 
 import br.com.fairie.partypay.entity.SessionEntity
-import br.com.fairie.partypay.usecase.session.vo.SessionStatus
+import br.com.fairie.partypay.usecase.session.model.SessionStatus
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

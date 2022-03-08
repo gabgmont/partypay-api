@@ -1,6 +1,6 @@
-package br.com.fairie.partypay.usecase.menu.vo
+package br.com.fairie.partypay.usecase.menu.model
 
-class Menu(
+data class Menu(
     val id: Long,
     val name: String,
     val categoryList: List<Category>

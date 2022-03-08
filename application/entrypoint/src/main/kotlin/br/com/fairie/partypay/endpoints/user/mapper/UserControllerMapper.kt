@@ -3,7 +3,7 @@ package br.com.fairie.partypay.endpoints.user.mapper
 import br.com.fairie.partypay.endpoints.user.dto.UserDTO
 import br.com.fairie.partypay.endpoints.user.dto.UserForm
 import br.com.fairie.partypay.shared.dto.CPFForm
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone

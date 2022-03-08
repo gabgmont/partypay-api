@@ -2,9 +2,9 @@ package br.com.fairie.partypay.usecase.menu.impl
 
 import br.com.fairie.partypay.usecase.menu.MenuRepository
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
-import br.com.fairie.partypay.usecase.menu.vo.Category
-import br.com.fairie.partypay.usecase.menu.vo.Menu
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Category
+import br.com.fairie.partypay.usecase.menu.model.Menu
+import br.com.fairie.partypay.usecase.menu.model.Order
 
 class MenuUseCaseImpl(
     private val menuRepo: MenuRepository

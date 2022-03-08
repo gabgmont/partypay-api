@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.usecase.session
 
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
+import br.com.fairie.partypay.usecase.session.model.Session
+import br.com.fairie.partypay.usecase.session.model.SessionOrder
 
 interface SessionRepository {
     fun newSession(session: Session): Session

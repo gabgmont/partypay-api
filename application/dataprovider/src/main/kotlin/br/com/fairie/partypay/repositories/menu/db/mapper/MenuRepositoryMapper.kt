@@ -1,10 +1,10 @@
 package br.com.fairie.partypay.repositories.menu.db.mapper
 
 import br.com.fairie.partypay.entity.OrderEntity
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Order
 
 fun Order.toEntity(): OrderEntity = OrderEntity(
-        id = id(),
+        id = id,
         name = name,
         description = description,
         value = value

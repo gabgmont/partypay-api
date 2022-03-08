@@ -1,8 +1,8 @@
 package br.com.fairie.partypay.usecase.session
 
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
-import br.com.fairie.partypay.usecase.session.vo.SessionResume
+import br.com.fairie.partypay.usecase.session.model.Session
+import br.com.fairie.partypay.usecase.session.model.SessionOrderStatus
+import br.com.fairie.partypay.usecase.session.model.SessionResume
 import br.com.fairie.partypay.vo.CPF
 
 interface SessionUseCase {

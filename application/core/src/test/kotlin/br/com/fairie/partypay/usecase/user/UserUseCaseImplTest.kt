@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.usecase.user
 
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.usecase.user.impl.UserUseCaseImpl
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email

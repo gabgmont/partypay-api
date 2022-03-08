@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 
 class OrderDTO(
+        @JsonProperty(value = "order_id")
+        val id: Long,
         @JsonProperty(value = "name")
         val name: String,
         @JsonProperty(value = "description")

@@ -6,16 +6,16 @@ import br.com.fairie.partypay.endpoints.session.dto.*
 import br.com.fairie.partypay.endpoints.session.form.CPFListForm
 import br.com.fairie.partypay.endpoints.user.dto.ResumedUserDTO
 import br.com.fairie.partypay.endpoints.user.mapper.toDTO
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Order
 import br.com.fairie.partypay.usecase.session.mapper.valuePerUser
-import br.com.fairie.partypay.usecase.session.vo.*
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.session.model.*
+import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.CPF
 
 fun CPFListForm.toCPFList(): List<CPF> = cpfList.map { cpf -> CPF(cpf) }
 
 fun Session.toDTO(): SessionDTO = SessionDTO(
-        id = id(),
+        id = id,
         restaurant = restaurant,
         table = table,
         status = status,
@@ -56,7 +56,7 @@ fun SessionResumeOrder.toResumeOrderDTO() =
 
 fun Session.toResumedDTO(): ResumedSessionDTO =
         ResumedSessionDTO(
-                id = id(),
+                id = id,
                 restaurant = restaurant,
                 table = table,
                 users = users.map { user -> user.toResumedDTO() },

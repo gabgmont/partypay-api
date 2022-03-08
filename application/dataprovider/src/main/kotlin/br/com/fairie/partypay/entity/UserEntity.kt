@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.entity
 
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.user.model.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.*
@@ -50,7 +50,7 @@ class UserEntity(
     companion object {
         fun User.toEntity(): UserEntity {
             return UserEntity(
-                id = id(),
+                id = id,
                 name = name,
                 cpf = cpf.value,
                 email = email.value,

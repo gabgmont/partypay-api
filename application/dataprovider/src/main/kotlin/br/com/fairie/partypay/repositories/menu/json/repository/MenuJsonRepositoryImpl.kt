@@ -5,9 +5,9 @@ import br.com.fairie.partypay.repositories.menu.json.OUTBACK_MENU_JSON
 import br.com.fairie.partypay.repositories.menu.json.dao.MenuDao
 import br.com.fairie.partypay.repositories.menu.json.mapper.toVo
 import br.com.fairie.partypay.usecase.menu.MenuJsonRepository
-import br.com.fairie.partypay.usecase.menu.vo.Category
-import br.com.fairie.partypay.usecase.menu.vo.Menu
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Category
+import br.com.fairie.partypay.usecase.menu.model.Menu
+import br.com.fairie.partypay.usecase.menu.model.Order
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 class MenuJsonRepositoryImpl : MenuJsonRepository {

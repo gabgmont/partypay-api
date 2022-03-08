@@ -9,7 +9,7 @@ import br.com.fairie.partypay.usecase.authentication.AuthService
 import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
 import br.com.fairie.partypay.usecase.authentication.vo.LoginData
 import br.com.fairie.partypay.usecase.user.UserRepository
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.CPF
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm

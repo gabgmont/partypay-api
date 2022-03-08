@@ -2,7 +2,7 @@ package br.com.fairie.partypay.endpoints.session.dto
 
 import br.com.fairie.partypay.endpoints.menu.dto.OrderDTO
 import br.com.fairie.partypay.endpoints.user.dto.UserDTO
-import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
+import br.com.fairie.partypay.usecase.session.model.SessionOrderStatus
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 

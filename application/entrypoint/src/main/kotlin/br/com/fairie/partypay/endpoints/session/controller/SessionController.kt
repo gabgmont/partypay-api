@@ -9,7 +9,7 @@ import br.com.fairie.partypay.endpoints.session.mapper.toCPFList
 import br.com.fairie.partypay.endpoints.session.mapper.toDTO
 import br.com.fairie.partypay.endpoints.session.mapper.toResumedDTO
 import br.com.fairie.partypay.usecase.session.SessionUseCase
-import br.com.fairie.partypay.usecase.session.vo.SessionOrderStatus
+import br.com.fairie.partypay.usecase.session.model.SessionOrderStatus
 import br.com.fairie.partypay.utils.*
 import br.com.fairie.partypay.vo.CPF
 import io.swagger.annotations.Api

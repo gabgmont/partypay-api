@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.usecase.session.mapper
 
 import br.com.fairie.partypay.exception.InconsistenceException
-import br.com.fairie.partypay.usecase.session.vo.*
+import br.com.fairie.partypay.usecase.session.model.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 

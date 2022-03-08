@@ -8,9 +8,9 @@ import br.com.fairie.partypay.endpoints.menu.mapper.toDTO
 import br.com.fairie.partypay.endpoints.menu.mapper.toRestaurantsDTO
 import br.com.fairie.partypay.exception.ThreadExecutionException
 import br.com.fairie.partypay.usecase.menu.MenuUseCase
-import br.com.fairie.partypay.usecase.menu.vo.Category
-import br.com.fairie.partypay.usecase.menu.vo.Menu
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Category
+import br.com.fairie.partypay.usecase.menu.model.Menu
+import br.com.fairie.partypay.usecase.menu.model.Order
 import br.com.fairie.partypay.utils.*
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation

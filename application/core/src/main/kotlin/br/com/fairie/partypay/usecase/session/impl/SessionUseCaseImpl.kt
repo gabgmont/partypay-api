@@ -10,7 +10,7 @@ import br.com.fairie.partypay.usecase.session.mapper.calculateSessionResume
 import br.com.fairie.partypay.usecase.session.mapper.close
 import br.com.fairie.partypay.usecase.session.mapper.isClosed
 import br.com.fairie.partypay.usecase.session.mapper.isOpen
-import br.com.fairie.partypay.usecase.session.vo.*
+import br.com.fairie.partypay.usecase.session.model.*
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.vo.CPF
 import java.math.BigDecimal
@@ -100,7 +100,7 @@ class SessionUseCaseImpl(
         val session = sessionRepository.getSessionWithId(sessionId)
 
         val sessionOrder = session.orders.find { sessionOrder ->
-            sessionOrder.id() == sessionOrderId
+            sessionOrder.id == sessionOrderId
         } ?: throw NotFoundException("Order $sessionOrderId not found in this session.")
 
         sessionOrder.status = status

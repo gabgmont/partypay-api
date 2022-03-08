@@ -1,12 +1,12 @@
-package br.com.fairie.partypay.usecase.user.vo
+package br.com.fairie.partypay.usecase.user.model
 
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
 
-class User(
-    private val id: Long,
+data class User(
+    val id: Long,
     val name: String,
     val cpf: CPF,
     val email: Email,
@@ -15,7 +15,6 @@ class User(
     val photo: Photo?,
     val profiles: MutableCollection<Profile>
 ){
-    fun id() = id
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

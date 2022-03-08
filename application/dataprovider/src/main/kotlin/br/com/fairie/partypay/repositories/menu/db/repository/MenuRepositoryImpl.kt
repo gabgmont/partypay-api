@@ -9,9 +9,9 @@ import br.com.fairie.partypay.repositories.menu.db.jpa.OrderJpaRepository
 import br.com.fairie.partypay.repositories.menu.db.mapper.toEntity
 import br.com.fairie.partypay.repositories.menu.db.mapper.toModel
 import br.com.fairie.partypay.usecase.menu.MenuRepository
-import br.com.fairie.partypay.usecase.menu.vo.Category
-import br.com.fairie.partypay.usecase.menu.vo.Menu
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Category
+import br.com.fairie.partypay.usecase.menu.model.Menu
+import br.com.fairie.partypay.usecase.menu.model.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -93,6 +93,7 @@ fun MenuEntity.toModel(): Menu =
 
 fun CategoryEntity.toModel(): Category =
     Category(
+        id = id,
         name = name,
         orderList = orders.map { order -> order.toModel() }
     )

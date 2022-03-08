@@ -9,9 +9,9 @@ import br.com.fairie.partypay.repositories.session.mapper.toEntity
 import br.com.fairie.partypay.repositories.session.mapper.toModel
 import br.com.fairie.partypay.repositories.session.mapper.toModelList
 import br.com.fairie.partypay.usecase.session.SessionRepository
-import br.com.fairie.partypay.usecase.session.vo.Session
-import br.com.fairie.partypay.usecase.session.vo.SessionOrder
-import br.com.fairie.partypay.usecase.session.vo.SessionStatus
+import br.com.fairie.partypay.usecase.session.model.Session
+import br.com.fairie.partypay.usecase.session.model.SessionOrder
+import br.com.fairie.partypay.usecase.session.model.SessionStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -46,7 +46,7 @@ class SessionRepositoryImpl : SessionRepository {
             return sessionEntity.toModel()
 
         } catch (exception: Exception) {
-            throw SQLCallException("Failed to add order ${sessionOrder.id()} - ${sessionOrder.order}")
+            throw SQLCallException("Failed to add order ${sessionOrder.id} - ${sessionOrder.order}")
         }
     }
 
@@ -55,10 +55,10 @@ class SessionRepositoryImpl : SessionRepository {
             val sessionOrderEntity = sessionOrder.toEntity()
 
             sessionOrderJpaRepository.save(sessionOrderEntity)
-            return sessionJpaRepository.findById(session.id()).get().toModel()
+            return sessionJpaRepository.findById(session.id).get().toModel()
 
         } catch (exception: Exception) {
-            throw SQLCallException("Failed to update order ${sessionOrder.id()} - ${sessionOrder.order}")
+            throw SQLCallException("Failed to update order ${sessionOrder.id} - ${sessionOrder.order}")
         }
     }
 

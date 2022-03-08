@@ -5,7 +5,7 @@ import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.UserUseCase
-import br.com.fairie.partypay.usecase.user.vo.User
+import br.com.fairie.partypay.usecase.user.model.User
 
 class UserUseCaseImpl(
         private val repository: UserRepository

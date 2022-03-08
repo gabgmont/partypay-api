@@ -3,9 +3,9 @@ package br.com.fairie.partypay.repositories.menu.json.mapper
 import br.com.fairie.partypay.repositories.menu.json.dao.CategoryDao
 import br.com.fairie.partypay.repositories.menu.json.dao.MenuDao
 import br.com.fairie.partypay.repositories.menu.json.dao.OrderDao
-import br.com.fairie.partypay.usecase.menu.vo.Category
-import br.com.fairie.partypay.usecase.menu.vo.Menu
-import br.com.fairie.partypay.usecase.menu.vo.Order
+import br.com.fairie.partypay.usecase.menu.model.Category
+import br.com.fairie.partypay.usecase.menu.model.Menu
+import br.com.fairie.partypay.usecase.menu.model.Order
 import java.math.BigDecimal
 
 fun MenuDao.toVo(): Menu = Menu(
@@ -15,6 +15,7 @@ fun MenuDao.toVo(): Menu = Menu(
 )
 
 fun CategoryDao.toVo(): Category = Category(
+        id = 0,
         name = name,
         orderList = orders.map { order -> order.toVo() }
 )

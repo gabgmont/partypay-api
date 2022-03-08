@@ -1,6 +1,6 @@
 package br.com.fairie.partypay.entity
 
-import br.com.fairie.partypay.usecase.session.vo.SessionStatus
+import br.com.fairie.partypay.usecase.session.model.SessionStatus
 import javax.persistence.*
 
 @Entity(name = "session_tbl")
