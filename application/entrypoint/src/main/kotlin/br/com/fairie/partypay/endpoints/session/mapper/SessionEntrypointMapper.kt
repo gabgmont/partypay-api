@@ -89,6 +89,7 @@ fun SessionOrder.toResumedDTO(): ResumedSessionOrderDTO {
 
 fun Order.toResumedDTO(): ResumedOrderDTO =
         ResumedOrderDTO(
+                id = id,
                 name = name,
                 value = value,
         )
