@@ -17,6 +17,7 @@ fun CPFListForm.toCPFList(): List<CPF> = cpfList.map { cpf -> CPF(cpf) }
 fun Session.toDTO(): SessionDTO = SessionDTO(
         id = id,
         restaurant = restaurant,
+        menuId = menuId,
         table = table,
         status = status,
         users = users.map { user -> user.toDTO() },
@@ -37,9 +38,10 @@ fun SessionOrder.toDTO(): SessionOrderDTO {
 }
 
 fun SessionResume.toDTO(): SessionResumeDTO = SessionResumeDTO(
-        users = users.map { user -> user.toResumedDTO() },
+        menuId = menuId,
         status = status,
-        check = check.toDouble()
+        check = check.toDouble(),
+        users = users.map { user -> user.toResumedDTO() }
 )
 
 fun SessionUser.toResumedDTO(): ResumedSessionUserDTO = ResumedSessionUserDTO(
@@ -58,6 +60,7 @@ fun Session.toResumedDTO(): ResumedSessionDTO =
         ResumedSessionDTO(
                 id = id,
                 restaurant = restaurant,
+                menuId = menuId,
                 table = table,
                 users = users.map { user -> user.toResumedDTO() },
                 orders = orders.map { order -> order.toResumedDTO() }

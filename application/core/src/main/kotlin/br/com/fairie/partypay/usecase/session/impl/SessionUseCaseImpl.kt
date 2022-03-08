@@ -37,7 +37,7 @@ class SessionUseCaseImpl(
            return@map users.first()
         } as MutableList
 
-        val session = Session(0, menu.name, table, SessionStatus.OPEN, users, arrayListOf())
+        val session = Session(0, menu.name, menuId, table, SessionStatus.OPEN, users, arrayListOf())
         return sessionRepository.newSession(session)
     }
 

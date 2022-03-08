@@ -8,6 +8,8 @@ class ResumedSessionDTO(
         val id: Long,
         @JsonProperty(value = "restaurant")
         val restaurant: String,
+        @JsonProperty(value = "menu_id")
+        val menuId: Long,
         @JsonProperty(value = "table")
         val table: Int,
         @JsonProperty(value = "user_list")

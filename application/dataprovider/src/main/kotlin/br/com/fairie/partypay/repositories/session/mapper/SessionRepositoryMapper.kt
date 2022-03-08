@@ -17,6 +17,7 @@ import br.com.fairie.partypay.vo.Photo
 fun SessionEntity.toModel(): Session = Session(
         id = id,
         restaurant = restaurant,
+        menuId = menuId,
         table = counter,
         status = status,
         users = users.map { userEntity -> userEntity.toModel() }.toMutableList(),
@@ -54,6 +55,7 @@ fun SessionOrderEntity.toModel(): SessionOrder = SessionOrder(
 fun Session.toEntity(): SessionEntity = SessionEntity(
         id = id,
         restaurant = restaurant,
+        menuId = menuId,
         counter = table,
         status = status,
         users = users.map { user -> user.toEntity() },

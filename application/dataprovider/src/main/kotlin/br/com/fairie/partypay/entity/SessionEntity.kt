@@ -13,6 +13,9 @@ class SessionEntity(
     val restaurant: String,
 
     @Column
+    val menuId: Long,
+
+    @Column
     val counter: Int,
 
     @Column

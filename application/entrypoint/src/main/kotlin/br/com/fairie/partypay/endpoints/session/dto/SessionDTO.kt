@@ -9,6 +9,8 @@ class SessionDTO(
         val id: Long,
         @JsonProperty(value = "restaurant")
         val restaurant: String,
+        @JsonProperty(value = "menu_id")
+        val menuId: Long,
         @JsonProperty(value = "table")
         val table: Int,
         @JsonProperty(value = "session_status")

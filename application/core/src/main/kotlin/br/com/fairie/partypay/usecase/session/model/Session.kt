@@ -5,6 +5,7 @@ import br.com.fairie.partypay.usecase.user.model.User
 data class Session(
     val id: Long,
     val restaurant: String,
+    val menuId: Long,
     val table: Int,
     var status: SessionStatus,
     val users: MutableList<User>,
