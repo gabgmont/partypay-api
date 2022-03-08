@@ -34,15 +34,20 @@ class SessionRepositoryImpl : SessionRepository {
     }
 
     override fun addSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
-        var sessionEntity = session.toEntity()
-        var sessionOrderEntity = sessionOrder.toEntity()
-        val orderEntity = orderJpaRepository.getById(sessionOrderEntity.order.id)
+        try {
+            var sessionEntity = session.toEntity()
+            var sessionOrderEntity = sessionOrder.toEntity()
+            val orderEntity = orderJpaRepository.getById(sessionOrderEntity.order.id)
 
-        sessionOrderEntity.order = orderEntity
-        sessionOrderEntity = sessionOrderJpaRepository.save(sessionOrderEntity)
-        sessionEntity.orders.add(sessionOrderEntity)
-        sessionEntity = sessionJpaRepository.save(sessionEntity)
-        return sessionEntity.toModel()
+            sessionOrderEntity.order = orderEntity
+            sessionOrderEntity = sessionOrderJpaRepository.save(sessionOrderEntity)
+            sessionEntity.orders.add(sessionOrderEntity)
+            sessionEntity = sessionJpaRepository.save(sessionEntity)
+            return sessionEntity.toModel()
+
+        } catch (exception: Exception) {
+            throw SQLCallException("Failed to add order ${sessionOrder.id()} - ${sessionOrder.order}")
+        }
     }
 
     override fun updateSessionOrder(session: Session, sessionOrder: SessionOrder): Session {
@@ -58,10 +63,15 @@ class SessionRepositoryImpl : SessionRepository {
     }
 
     override fun updateSession(session: Session): Session {
-        var sessionEntity = session.toEntity()
+        try {
+            var sessionEntity = session.toEntity()
 
-        sessionEntity = sessionJpaRepository.save(sessionEntity)
-        return sessionEntity.toModel()
+            sessionEntity = sessionJpaRepository.save(sessionEntity)
+            return sessionEntity.toModel()
+
+        } catch (exception: Exception) {
+            throw SQLCallException("Failed to update session.")
+        }
     }
 
     override fun getSessionWithId(id: Long): Session {
@@ -79,6 +89,7 @@ class SessionRepositoryImpl : SessionRepository {
             val sessions = sessionJpaRepository.getSessionsByCounter(counter)
 
             return sessions.toModelList()
+
         } catch (exception: Exception) {
             throw NotFoundException("Session with table $counter not found")
         }
@@ -89,7 +100,7 @@ class SessionRepositoryImpl : SessionRepository {
             val sessions = sessionJpaRepository.getSessionEntitiesByStatus(SessionStatus.OPEN)
             return sessions.toModelList()
 
-        }catch (exception: Exception){
+        } catch (exception: Exception) {
             throw NotFoundException("All sessions are closed.")
         }
     }
