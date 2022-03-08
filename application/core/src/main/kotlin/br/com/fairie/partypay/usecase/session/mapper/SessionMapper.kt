@@ -23,7 +23,7 @@ fun Session.calculateSessionResume(userList: List<SessionUser>): SessionResume {
         }
     }
 
-    return SessionResume(userList, check)
+    return SessionResume(userList, status, check)
 }
 
 fun Session.isOpen(): Boolean = status == SessionStatus.OPEN
