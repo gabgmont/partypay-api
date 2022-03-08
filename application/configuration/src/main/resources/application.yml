@@ -6,8 +6,11 @@ spring:
     active: des
 
 application:
-  name: PartyPay Api
-  description: Api do Partypay
-  version: 0.0.6
-  artifactid: partypay
+  name: ${project.name} #PartyPay Api
+  description: ${project.description} #Api do Partypay
+  version: ${project.version} #0.0.6
+  artifactid: ${project.artifactId} #partypay
+
+
+
 

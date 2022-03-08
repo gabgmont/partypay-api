@@ -1,9 +1,8 @@
 buildscript {
     ext.artifactId = 'partypay'
-    ext.deploy_version = '0.0.6'
-    ext.p_group = 'br.com.fairie.partypay'
+    ext.project_version = '0.0.6'
     ext.archive_extension = 'jar'
-    ext.archive_file_name = "${artifactId}-${deploy_version}.${archive_extension}"
+    ext.archive_file_name = "${artifactId}-${project_version}.${archive_extension}"
 
     ext.kotlin_version = '1.5.21'
     ext.jacoco_palantir_version = '0.4.0'
@@ -22,9 +21,9 @@ buildscript {
     }
 }
 
-group = ext.p_group
-version = ext.deploy_version
-description = "Projeto de integração"
+version = ext.project_version
+group = 'br.com.fairie.partypay'
+description = "Api do partypay"
 
 apply plugin: 'jacoco'
 apply plugin: "kotlin-jpa"

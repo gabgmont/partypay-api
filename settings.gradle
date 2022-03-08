@@ -1,4 +1,4 @@
-rootProject.name = 'partypay'
+rootProject.name = 'partypay-api'
 
 include "application:dataprovider"
 include "application:entrypoint"
