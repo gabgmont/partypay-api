@@ -1,4 +1,4 @@
-package br.com.fairie.partypay.usecase.authentication.vo
+package br.com.fairie.partypay.usecase.authentication.model
 
 class GeneratedToken(
     val token: String,

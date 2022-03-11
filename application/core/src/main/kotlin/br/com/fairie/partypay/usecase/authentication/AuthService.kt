@@ -1,7 +1,7 @@
 package br.com.fairie.partypay.usecase.authentication
 
-import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
-import br.com.fairie.partypay.usecase.authentication.vo.LoginData
+import br.com.fairie.partypay.usecase.authentication.model.GeneratedToken
+import br.com.fairie.partypay.usecase.authentication.model.LoginData
 import br.com.fairie.partypay.usecase.user.model.User
 
 interface AuthService {

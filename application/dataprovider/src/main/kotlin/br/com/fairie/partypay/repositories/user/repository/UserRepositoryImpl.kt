@@ -6,7 +6,6 @@ import br.com.fairie.partypay.repositories.session.mapper.toModel
 import br.com.fairie.partypay.repositories.user.jpa.UserJpaRepository
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.model.User
-import br.com.fairie.partypay.vo.CPF
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -21,10 +20,10 @@ class UserRepositoryImpl : UserRepository {
         return user
     }
 
-    override fun findUser(cpf: CPF?): List<User> {
+    override fun findUserByUsername(username: String?): List<User> {
         return try {
-            val users = if (cpf == null) jpaRepository.findAll()
-            else jpaRepository.getUserEntityByCpf(cpf.value)
+            val users = if (username == null) jpaRepository.findAll()
+            else jpaRepository.getUserEntityByUsername(username)
 
             users.map { userEntity -> userEntity.toModel() }
 

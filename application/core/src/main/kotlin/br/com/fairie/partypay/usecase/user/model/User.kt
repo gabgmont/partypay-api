@@ -1,6 +1,5 @@
 package br.com.fairie.partypay.usecase.user.model
 
-import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
@@ -8,7 +7,7 @@ import br.com.fairie.partypay.vo.Photo
 data class User(
     val id: Long,
     val name: String,
-    val cpf: CPF,
+    val username: String,
     val email: Email,
     val secret: String,
     val phone: Phone,
@@ -23,7 +22,7 @@ data class User(
         other as User
 
         if (name != other.name) return false
-        if (cpf.value != other.cpf.value) return false
+        if (username != other.username) return false
 
         return true
     }
@@ -31,7 +30,7 @@ data class User(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + cpf.hashCode()
+        result = 31 * result + username.hashCode()
         result = 31 * result + email.hashCode()
         result = 31 * result + secret.hashCode()
         result = 31 * result + phone.hashCode()

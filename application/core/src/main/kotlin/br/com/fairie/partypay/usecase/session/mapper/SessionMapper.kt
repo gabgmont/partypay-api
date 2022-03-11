@@ -14,7 +14,7 @@ fun Session.calculateSessionResume(userList: List<SessionUser>): SessionResume {
         check = check.add(sessionOrder.order.value)
         sessionOrder.users.forEach { user ->
             userList.forEach { sessionUser ->
-                if(user.cpf.value == sessionUser.user.cpf.value) {
+                if(user.username == sessionUser.user.username) {
                     val resumeOrder = SessionResumeOrder(sessionOrder.order, sessionOrder.valuePerUser())
                     sessionUser.orders.add(resumeOrder)
                     sessionUser.totalValue = sessionUser.totalValue.add(sessionOrder.order.value.divide(BigDecimal(sessionOrder.users.size), RoundingMode.HALF_UP))

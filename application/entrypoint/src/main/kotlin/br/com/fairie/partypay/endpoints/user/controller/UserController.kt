@@ -2,12 +2,11 @@ package br.com.fairie.partypay.endpoints.user.controller
 
 import br.com.fairie.partypay.endpoints.user.dto.UserDTO
 import br.com.fairie.partypay.endpoints.user.dto.UserForm
-import br.com.fairie.partypay.endpoints.user.mapper.toCPForNull
 import br.com.fairie.partypay.endpoints.user.mapper.toDTO
 import br.com.fairie.partypay.endpoints.user.mapper.toDto
 import br.com.fairie.partypay.endpoints.user.mapper.toVo
 import br.com.fairie.partypay.exception.ThreadExecutionException
-import br.com.fairie.partypay.shared.dto.CPFForm
+import br.com.fairie.partypay.shared.dto.UsernameForm
 import br.com.fairie.partypay.usecase.user.UserUseCase
 import br.com.fairie.partypay.utils.*
 import io.swagger.annotations.Api
@@ -25,12 +24,11 @@ class UserController(
 
     @GetMapping
     @ApiOperation(value = GET_USER_OPERATION_VALUE, notes = GET_USER_OPERATION_NOTES)
-    fun getUser(cpfForm: CPFForm): ResponseEntity<List<UserDTO>> {
+    fun getUser(usernameForm: UsernameForm): ResponseEntity<List<UserDTO>> {
         var response: List<UserDTO>? = null
 
         threadPool.executor.submit {
-            val request = cpfForm.toCPForNull()
-            response = useCase.get(request).toDto()
+            response = useCase.get(usernameForm.username).toDto()
 
         }.also { future ->
             while (!future.isDone) {

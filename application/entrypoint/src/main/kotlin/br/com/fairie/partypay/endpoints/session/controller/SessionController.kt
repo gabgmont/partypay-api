@@ -3,15 +3,13 @@ package br.com.fairie.partypay.endpoints.session.controller
 import br.com.fairie.partypay.endpoints.session.dto.ResumedSessionDTO
 import br.com.fairie.partypay.endpoints.session.dto.SessionDTO
 import br.com.fairie.partypay.endpoints.session.dto.SessionResumeDTO
-import br.com.fairie.partypay.endpoints.session.form.CPFListForm
+import br.com.fairie.partypay.endpoints.session.form.UsernameListForm
 import br.com.fairie.partypay.endpoints.session.form.SessionForm
-import br.com.fairie.partypay.endpoints.session.mapper.toCPFList
 import br.com.fairie.partypay.endpoints.session.mapper.toDTO
 import br.com.fairie.partypay.endpoints.session.mapper.toResumedDTO
 import br.com.fairie.partypay.usecase.session.SessionUseCase
 import br.com.fairie.partypay.usecase.session.model.SessionOrderStatus
 import br.com.fairie.partypay.utils.*
-import br.com.fairie.partypay.vo.CPF
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -30,7 +28,7 @@ class SessionController(
     @PostMapping("/create")
     @ApiOperation(value = CREATE_SESSION_OPERATION_VALUE, notes = CREATE_SESSION_OPERATION_NOTES)
     fun createSession(@RequestBody sessionForm: SessionForm): ResponseEntity<SessionDTO> {
-        val createdSession = useCase.createSession(sessionForm.menuId, sessionForm.table, sessionForm.users.toCPFList()).toDTO()
+        val createdSession = useCase.createSession(sessionForm.menuId, sessionForm.table, sessionForm.users.usernameList).toDTO()
 
         return ResponseEntity.ok(createdSession)
     }
@@ -45,12 +43,12 @@ class SessionController(
         return ResponseEntity.ok(createdSession)
     }
 
-    @GetMapping("/user/online/{cpf}")
+    @GetMapping("/user/online/{username}")
     @ApiOperation(value = GET_SESSION_OPERATION_VALUE, notes = GET_SESSION_OPERATION_NOTES)
     fun checkUserOnline(
-        @PathVariable cpf: String
+        @PathVariable username: String
     ): ResponseEntity<SessionDTO> {
-        val userSession = useCase.checkUserOnline(CPF(cpf)).toDTO()
+        val userSession = useCase.checkUserOnline(username).toDTO()
 
         return ResponseEntity.ok(userSession)
     }
@@ -60,10 +58,9 @@ class SessionController(
     fun addOrder(
         @PathVariable sessionId: Long,
         @PathVariable orderId: Long,
-        @RequestBody cpfListForm: CPFListForm
+        @RequestBody usernameListForm: UsernameListForm
     ): ResponseEntity<ResumedSessionDTO> {
-        val cpfList = cpfListForm.toCPFList()
-        val session = useCase.addOrder(sessionId, orderId, cpfList).toResumedDTO()
+        val session = useCase.addOrder(sessionId, orderId, usernameListForm.usernameList).toResumedDTO()
 
         return ResponseEntity.ok(session)
     }
@@ -83,15 +80,14 @@ class SessionController(
         return ResponseEntity.ok(session)
     }
 
-    @PutMapping("/{sessionId}/add/user/cpf")
+    @PutMapping("/{sessionId}/add/user/username")
     @ApiOperation(value = ADD_USER_SESSION_OPERATION_VALUE, notes = ADD_USER_SESSION_OPERATION_NOTES)
     fun addUser(
         @PathVariable sessionId: Long,
-        @RequestBody cpfListForm: CPFListForm
+        @RequestBody usernameListForm: UsernameListForm
     ): ResponseEntity<ResumedSessionDTO> {
 
-        val cpfList = cpfListForm.toCPFList()
-        val session = useCase.addUser(sessionId, cpfList).toResumedDTO()
+        val session = useCase.addUser(sessionId, usernameListForm.usernameList).toResumedDTO()
 
         return ResponseEntity.ok(session)
     }

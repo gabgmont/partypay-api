@@ -6,11 +6,10 @@ import br.com.fairie.partypay.entity.UserEntity.Companion.toEntity
 import br.com.fairie.partypay.exception.BadRequestException
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.usecase.authentication.AuthService
-import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
-import br.com.fairie.partypay.usecase.authentication.vo.LoginData
+import br.com.fairie.partypay.usecase.authentication.model.GeneratedToken
+import br.com.fairie.partypay.usecase.authentication.model.LoginData
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.model.User
-import br.com.fairie.partypay.vo.CPF
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
@@ -37,7 +36,7 @@ class AuthenticationService(
 
     override fun loadUserByUsername(username: String): UserDetails {
 
-        val users = userRepository.findUser(CPF(username))
+        val users = userRepository.findUserByUsername(username)
         if (users.isEmpty()) throw NotFoundException("User $username not found.")
 
         return users.first().toEntity()

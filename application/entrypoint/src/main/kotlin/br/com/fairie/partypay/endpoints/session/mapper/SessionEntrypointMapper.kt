@@ -3,16 +3,12 @@ package br.com.fairie.partypay.endpoints.session.mapper
 import br.com.fairie.partypay.endpoints.menu.dto.ResumedOrderDTO
 import br.com.fairie.partypay.endpoints.menu.mapper.toDTO
 import br.com.fairie.partypay.endpoints.session.dto.*
-import br.com.fairie.partypay.endpoints.session.form.CPFListForm
 import br.com.fairie.partypay.endpoints.user.dto.ResumedUserDTO
 import br.com.fairie.partypay.endpoints.user.mapper.toDTO
 import br.com.fairie.partypay.usecase.menu.model.Order
 import br.com.fairie.partypay.usecase.session.mapper.valuePerUser
 import br.com.fairie.partypay.usecase.session.model.*
 import br.com.fairie.partypay.usecase.user.model.User
-import br.com.fairie.partypay.vo.CPF
-
-fun CPFListForm.toCPFList(): List<CPF> = cpfList.map { cpf -> CPF(cpf) }
 
 fun Session.toDTO(): SessionDTO = SessionDTO(
         id = id,
@@ -69,7 +65,7 @@ fun Session.toResumedDTO(): ResumedSessionDTO =
 fun User.toResumedDTO(): ResumedUserDTO =
         ResumedUserDTO(
                 name = name,
-                cpf = cpf.value
+                username = username
         )
 
 fun SessionOrder.toResumedDTO(): ResumedSessionOrderDTO {

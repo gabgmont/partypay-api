@@ -15,7 +15,7 @@ const val GET_USER_OPERATION_VALUE = "Retrieve registered users."
 const val GET_USER_OPERATION_NOTES = """
     -Operation used to get user from Database.
     
-    CPF can be informed as a parameter to search for specific user. If left blank retrieves all users from database."""
+    Username can be informed as a parameter to search for specific user. If left blank retrieves all users from database."""
 
 //Menu Controller
 const val MENU_TAG_TITLE = "Menu"

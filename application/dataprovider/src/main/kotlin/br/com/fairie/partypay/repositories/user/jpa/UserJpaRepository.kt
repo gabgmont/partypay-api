@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserJpaRepository: JpaRepository<UserEntity, Long> {
 
-    fun getUserEntityByCpf(cpf: String): List<UserEntity>
+    fun getUserEntityByUsername(username: String): List<UserEntity>
     fun getUserEntityByEmail(email: String) : List<UserEntity>
 }

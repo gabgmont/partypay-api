@@ -1,8 +1,7 @@
 package br.com.fairie.partypay.usecase.authentication
 
-import br.com.fairie.partypay.usecase.authentication.vo.GeneratedToken
-import br.com.fairie.partypay.usecase.authentication.vo.LoginData
-import br.com.fairie.partypay.vo.CPF
+import br.com.fairie.partypay.usecase.authentication.model.GeneratedToken
+import br.com.fairie.partypay.usecase.authentication.model.LoginData
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -19,7 +18,7 @@ class AuthenticationUseCaseImplTest {
 
     @Test
     fun authenticationTokenGenerationTest(){
-        val generatedToken = service.generateToken(LoginData(CPF("teste@email.com"), "s3cr3t"))
+        val generatedToken = service.generateToken(LoginData("teste", "s3cr3t"))
 
         assertNotNull(generatedToken)
         assertEquals(generatedToken.token, "FAKE TOKEN 1234")

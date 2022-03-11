@@ -12,7 +12,6 @@ import br.com.fairie.partypay.usecase.session.mapper.isClosed
 import br.com.fairie.partypay.usecase.session.mapper.isOpen
 import br.com.fairie.partypay.usecase.session.model.*
 import br.com.fairie.partypay.usecase.user.UserRepository
-import br.com.fairie.partypay.vo.CPF
 import java.math.BigDecimal
 
 class SessionUseCaseImpl(
@@ -21,7 +20,7 @@ class SessionUseCaseImpl(
     private val menuRepository: MenuRepository
 ) : SessionUseCase {
 
-    override fun createSession(menuId: Long, table: Int, cpfs: List<CPF>): Session {
+    override fun createSession(menuId: Long, table: Int, usernames: List<String>): Session {
         val menu = menuRepository.getMenuById(menuId)
         val sessionsByTable = sessionRepository.getSessionsWithCounter(table)
 
@@ -30,9 +29,9 @@ class SessionUseCaseImpl(
                 if (instance.isOpen()) throw InconsistenceException("Session is already open on this table.")
             }
 
-        val users = cpfs.map { cpf ->
-            val users = userRepository.findUser(cpf)
-            if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
+        val users = usernames.map { username ->
+            val users = userRepository.findUserByUsername(username)
+            if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
 
            return@map users.first()
         } as MutableList
@@ -45,49 +44,49 @@ class SessionUseCaseImpl(
         return sessionRepository.getSessionWithId(sessionId)
     }
 
-    override fun checkUserOnline(cpf: CPF): Session {
-        val users = userRepository.findUser(cpf)
-        if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
+    override fun checkUserOnline(username: String): Session {
+        val users = userRepository.findUserByUsername(username)
+        if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
 
         val sessions = sessionRepository.getOpenSessions()
         val user = users.first()
         val userSessions = sessions.filter { session -> session.users.contains(user) }
 
-        if (userSessions.isEmpty()) throw NotFoundException("User ${user.cpf} is not in any open session.")
-        if (userSessions.size > 1) throw InconsistenceException("Multiple sessions for user ${user.cpf}")
+        if (userSessions.isEmpty()) throw NotFoundException("User ${user.username} is not in any open session.")
+        if (userSessions.size > 1) throw InconsistenceException("Multiple sessions for user ${user.username}")
 
         return userSessions.first()
     }
 
-    override fun addUser(sessionId: Long, cpfs: List<CPF>): Session {
+    override fun addUser(sessionId: Long, usernames: List<String>): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
-        cpfs.forEach { cpf ->
-            val users = userRepository.findUser(cpf)
-            if (users.isEmpty()) throw NotFoundException("User ${cpf.value} not found.")
+        usernames.forEach { username ->
+            val users = userRepository.findUserByUsername(username)
+            if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
 
             val user = users.first()
-            if (session.users.contains(user)) throw InconsistenceException("User ${user.cpf.value} already in session.")
+            if (session.users.contains(user)) throw InconsistenceException("User ${user.username} already in session.")
 
             session.users.add(users.first())
         }
         return sessionRepository.updateSession(session)
     }
 
-    override fun addOrder(sessionId: Long, orderId: Long, cpfs: List<CPF>): Session {
+    override fun addOrder(sessionId: Long, orderId: Long, usernames: List<String>): Session {
         val session = sessionRepository.getSessionWithId(sessionId)
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
         val order = menuRepository.getOrderById(orderId)
 
-        val userList = cpfs.map { cpf ->
-            val users = userRepository.findUser(cpf)
-            if (users.isEmpty()) throw NotFoundException("User ${cpf.value} is not on current session.")
+        val userList = usernames.map { username ->
+            val users = userRepository.findUserByUsername(username)
+            if (users.isEmpty()) throw NotFoundException("User ${username} is not on current session.")
 
             session.users.find { user ->
-                user.cpf.value == cpf.value
-            } ?: throw NotFoundException("User ${cpf.value} not on current session.")
+                user.username == username
+            } ?: throw NotFoundException("User ${username} not on current session.")
 
             return@map users.first()
         }

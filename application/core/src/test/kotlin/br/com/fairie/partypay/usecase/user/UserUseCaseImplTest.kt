@@ -1,8 +1,7 @@
 package br.com.fairie.partypay.usecase.user
 
-import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.usecase.user.impl.UserUseCaseImpl
-import br.com.fairie.partypay.vo.CPF
+import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone
 import io.mockk.every
@@ -16,7 +15,7 @@ class UserUseCaseImplTest {
     private val user = User(
             id = 1,
             name = "Gabriel",
-            cpf = CPF("999.999.999-00"),
+            username = "gabriel",
             email = Email("gabriel@email.com"),
             secret = "secret",
             phone = Phone("99 9999-9999"),
@@ -25,24 +24,15 @@ class UserUseCaseImplTest {
         )
 
     private val repository = mockk<UserRepository>().also { repository ->
-        every { repository.findUser(any()) } returns arrayListOf(user)
-        every { repository.findUser(null) } returns arrayListOf(user, user, user)
+        every { repository.findUserByUsername(any()) } returns arrayListOf(user)
+        every { repository.findUserByUsername(null) } returns arrayListOf(user, user, user)
     }
 
     private val useCase = UserUseCaseImpl(repository)
 
     @Test
-    fun getUserWithMaskedCpfTest() {
-        val user = useCase.get(CPF("999.999.999-00"))
-
-        assertNotNull(user)
-        assert(user.size == 1)
-        assertEquals(user.first().name, "Gabriel")
-    }
-
-    @Test
-    fun getUserWithCpfNumberTest() {
-        val user = useCase.get(CPF("99999999900"))
+    fun getUserWithUsernameTest() {
+        val user = useCase.get("gabgmont")
 
         assertNotNull(user)
         assert(user.size == 1)

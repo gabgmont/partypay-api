@@ -10,5 +10,5 @@ class SessionForm(
         val table: Int,
 
         @JsonProperty(value = "users")
-        val users: CPFListForm
+        val users: UsernameListForm
 )

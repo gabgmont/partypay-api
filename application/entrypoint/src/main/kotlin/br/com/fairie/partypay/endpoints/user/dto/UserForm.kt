@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 class UserForm(
         @JsonProperty(value = "name")
         val name: String,
-        @JsonProperty(value = "cpf")
-        val cpf: String,
+        @JsonProperty(value = "username")
+        val username: String,
         @JsonProperty(value = "password")
         val password: String,
         @JsonProperty(value = "email")

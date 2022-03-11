@@ -9,7 +9,6 @@ import br.com.fairie.partypay.repositories.menu.db.mapper.toModel
 import br.com.fairie.partypay.usecase.session.model.Session
 import br.com.fairie.partypay.usecase.session.model.SessionOrder
 import br.com.fairie.partypay.usecase.user.model.User
-import br.com.fairie.partypay.vo.CPF
 import br.com.fairie.partypay.vo.Email
 import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
@@ -35,7 +34,7 @@ fun SessionOrder.toEntity(): SessionOrderEntity = SessionOrderEntity(
 fun UserEntity.toModel(): User = User(
         id = id,
         name = name,
-        cpf = CPF(cpf),
+        username = usernm,
         email = Email(email),
         secret = secret,
         phone = Phone(phone),
