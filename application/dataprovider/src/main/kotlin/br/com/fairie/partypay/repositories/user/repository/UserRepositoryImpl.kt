@@ -1,11 +1,14 @@
 package br.com.fairie.partypay.repositories.user.repository
 
+import br.com.fairie.partypay.entity.ProfileEntity
 import br.com.fairie.partypay.entity.UserEntity.Companion.toEntity
 import br.com.fairie.partypay.exception.NotFoundException
 import br.com.fairie.partypay.repositories.session.mapper.toModel
+import br.com.fairie.partypay.repositories.user.jpa.ProfileJpaRepository
 import br.com.fairie.partypay.repositories.user.jpa.UserJpaRepository
 import br.com.fairie.partypay.usecase.user.UserRepository
 import br.com.fairie.partypay.usecase.user.model.User
+import br.com.fairie.partypay.vo.Email
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -15,8 +18,18 @@ class UserRepositoryImpl : UserRepository {
     @Autowired
     private lateinit var jpaRepository: UserJpaRepository
 
+    @Autowired
+    private lateinit var profileRepository: ProfileJpaRepository
+
     override fun registerUser(user: User): User {
-        jpaRepository.save(user.toEntity())
+        val profileEntities = arrayListOf<ProfileEntity>()
+
+        user.profiles.forEach { profile ->
+            profileEntities.add(profileRepository.getByName(profile.type.name))
+        }
+        val userEntity = user.toEntity()
+        userEntity.profiles = profileEntities
+        jpaRepository.save(userEntity)
         return user
     }
 
@@ -32,9 +45,9 @@ class UserRepositoryImpl : UserRepository {
         }
     }
 
-    override fun findUserByEmail(email: String): List<User> {
+    override fun findUserByEmail(email: Email): List<User> {
         return try {
-            val users = jpaRepository.getUserEntityByEmail(email)
+            val users = jpaRepository.getUserEntityByEmail(email.value)
             users.map { userEntity -> userEntity.toModel() }
 
         } catch (exception: Exception) {

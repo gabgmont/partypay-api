@@ -1,19 +1,17 @@
 package br.com.fairie.partypay.usecase.user.model
 
 import br.com.fairie.partypay.vo.Email
-import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
 
 data class User(
     val id: Long,
     val name: String,
-    val username: String,
+    var username: String,
     val email: Email,
-    val secret: String,
-    val phone: Phone,
+    val secret: String?,
     val photo: Photo?,
     val profiles: MutableCollection<Profile>
-){
+) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -33,7 +31,6 @@ data class User(
         result = 31 * result + username.hashCode()
         result = 31 * result + email.hashCode()
         result = 31 * result + secret.hashCode()
-        result = 31 * result + phone.hashCode()
         result = 31 * result + (photo?.hashCode() ?: 0)
         result = 31 * result + profiles.hashCode()
         return result

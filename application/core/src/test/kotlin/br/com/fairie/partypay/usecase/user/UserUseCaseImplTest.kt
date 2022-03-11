@@ -3,7 +3,6 @@ package br.com.fairie.partypay.usecase.user
 import br.com.fairie.partypay.usecase.user.impl.UserUseCaseImpl
 import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.Email
-import br.com.fairie.partypay.vo.Phone
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -18,7 +17,6 @@ class UserUseCaseImplTest {
             username = "gabriel",
             email = Email("gabriel@email.com"),
             secret = "secret",
-            phone = Phone("99 9999-9999"),
             photo = null,
             profiles = arrayListOf()
         )

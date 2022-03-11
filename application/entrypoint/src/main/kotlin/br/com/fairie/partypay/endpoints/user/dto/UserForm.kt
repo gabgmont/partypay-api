@@ -11,8 +11,6 @@ class UserForm(
         val password: String,
         @JsonProperty(value = "email")
         val email: String,
-        @JsonProperty(value = "phone")
-        val phone: String,
         @JsonProperty(value = "photo")
         val photo: String?
 )

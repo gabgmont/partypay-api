@@ -4,7 +4,6 @@ import br.com.fairie.partypay.endpoints.user.dto.UserDTO
 import br.com.fairie.partypay.endpoints.user.dto.UserForm
 import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.Email
-import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
@@ -14,7 +13,6 @@ fun User.toDTO(): UserDTO = UserDTO(
         name = name,
         username = username,
         email = email.value,
-        phone = phone.value,
         photo = photo?.value ?: "",
 )
 
@@ -24,7 +22,6 @@ fun UserForm.toVo(): User = User(
         username = username,
         email = Email(email),
         secret = BCryptPasswordEncoder().encode(password),
-        phone = Phone(phone),
         photo = Photo(photo ?: ""),
         profiles = arrayListOf(),
 )

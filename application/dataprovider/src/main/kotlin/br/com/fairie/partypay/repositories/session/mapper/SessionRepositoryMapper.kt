@@ -10,7 +10,6 @@ import br.com.fairie.partypay.usecase.session.model.Session
 import br.com.fairie.partypay.usecase.session.model.SessionOrder
 import br.com.fairie.partypay.usecase.user.model.User
 import br.com.fairie.partypay.vo.Email
-import br.com.fairie.partypay.vo.Phone
 import br.com.fairie.partypay.vo.Photo
 
 fun SessionEntity.toModel(): Session = Session(
@@ -37,7 +36,6 @@ fun UserEntity.toModel(): User = User(
         username = usernamed,
         email = Email(email),
         secret = secret,
-        phone = Phone(phone),
         photo = Photo(photo ?: ""),
         profiles = arrayListOf(),
 )

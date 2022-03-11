@@ -1,5 +1,6 @@
 package br.com.fairie.partypay.entity
 
+import br.com.fairie.partypay.entity.ProfileEntity.Companion.toEntity
 import br.com.fairie.partypay.usecase.user.model.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -24,13 +25,10 @@ class UserEntity(
     val secret: String,
 
     @Column
-    val phone: String,
-
-    @Column
     val photo: String?,
 
     @ManyToMany(fetch = FetchType.EAGER)
-    val profiles: MutableCollection<ProfileEntity>
+    var profiles: MutableCollection<ProfileEntity>
 
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = profiles
@@ -54,13 +52,10 @@ class UserEntity(
                 name = name,
                 usernamed = username,
                 email = email.value,
-                secret = secret,
-                phone = phone.value,
+                secret = secret ?: "",
                 photo = photo?.value ?: "",
-                profiles = arrayListOf()
+                profiles = profiles.map { profile -> profile.toEntity() }.toMutableList()
             )
-
-            //TODO CONFIGURE PROFILES
         }
     }
 }
