@@ -8,7 +8,7 @@ data class User(
     val name: String,
     var username: String,
     val email: Email,
-    val secret: String?,
+    val secret: String,
     val photo: Photo?,
     val profiles: MutableCollection<Profile>
 ) {

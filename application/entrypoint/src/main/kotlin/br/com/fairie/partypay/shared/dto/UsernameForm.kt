@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.swagger.annotations.ApiModelProperty
 
 class UsernameForm(
-    @ApiModelProperty(value = "Username", example = "myusername")
+    @ApiModelProperty(value = "Username / Email", example = "example / example@email.com")
     val username: String?
 ) {
     override fun toString(): String {

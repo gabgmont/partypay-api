@@ -27,10 +27,17 @@ class UserRepositoryImpl : UserRepository {
         user.profiles.forEach { profile ->
             profileEntities.add(profileRepository.getByName(profile.type.name))
         }
-        val userEntity = user.toEntity()
+        var userEntity = user.toEntity()
         userEntity.profiles = profileEntities
-        jpaRepository.save(userEntity)
-        return user
+        while (true){
+            try {
+                userEntity = jpaRepository.save(userEntity)
+                break
+            }catch (ignored: Exception){
+                userEntity.usernamed += (1..999).random()
+            }
+        }
+        return userEntity.toModel()
     }
 
     override fun findUserByUsername(username: String?): List<User> {

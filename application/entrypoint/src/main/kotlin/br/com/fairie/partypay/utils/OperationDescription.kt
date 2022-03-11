@@ -15,7 +15,17 @@ const val GET_USER_OPERATION_VALUE = "Retrieve registered users."
 const val GET_USER_OPERATION_NOTES = """
     -Operation used to get user from Database.
     
-    Username can be informed as a parameter to search for specific user. If left blank retrieves all users from database."""
+    Username or Email can be informed as a parameter to search for specific user. If left blank retrieves all users from database."""
+
+const val REGISTER_USER_OPERATION_VALUE = "Register standard users."
+const val REGISTER_USER_OPERATION_NOTES = """
+    -Operation used to register users.
+"""
+
+const val SOCIAL_REGISTER_USER_OPERATION_VALUE = "Register social users."
+const val SOCIAL_REGISTER_USER_OPERATION_NOTES = """
+    -Operation used to register users from social login.
+"""
 
 //Menu Controller
 const val MENU_TAG_TITLE = "Menu"

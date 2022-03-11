@@ -15,8 +15,8 @@ class UserEntity(
     @Column
     val name: String,
 
-    @Column(name = "username")
-    val usernamed: String,
+    @Column(name = "username", unique = true)
+    var usernamed: String,
 
     @Column
     val email: String,
@@ -52,7 +52,7 @@ class UserEntity(
                 name = name,
                 usernamed = username,
                 email = email.value,
-                secret = secret ?: "",
+                secret = secret,
                 photo = photo?.value ?: "",
                 profiles = profiles.map { profile -> profile.toEntity() }.toMutableList()
             )
