@@ -23,7 +23,7 @@ class UserRepositoryImpl : UserRepository {
     override fun findUserByUsername(username: String?): List<User> {
         return try {
             val users = if (username == null) jpaRepository.findAll()
-            else jpaRepository.getUserEntityByUsername(username)
+            else jpaRepository.getUserEntityByUsernamed(username)
 
             users.map { userEntity -> userEntity.toModel() }
 

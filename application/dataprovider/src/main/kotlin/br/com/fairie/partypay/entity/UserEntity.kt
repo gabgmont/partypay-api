@@ -14,8 +14,8 @@ class UserEntity(
     @Column
     val name: String,
 
-    @Column
-    val usernm: String,
+    @Column(name = "username")
+    val usernamed: String,
 
     @Column
     val email: String,
@@ -37,7 +37,7 @@ class UserEntity(
 
     override fun getPassword(): String = secret
 
-    override fun getUsername(): String = usernm
+    override fun getUsername(): String = usernamed
 
     override fun isAccountNonExpired(): Boolean = true
 
@@ -52,7 +52,7 @@ class UserEntity(
             return UserEntity(
                 id = id,
                 name = name,
-                usernm = username,
+                usernamed = username,
                 email = email.value,
                 secret = secret,
                 phone = phone.value,
