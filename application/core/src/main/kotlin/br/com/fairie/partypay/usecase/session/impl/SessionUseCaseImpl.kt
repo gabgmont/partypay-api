@@ -30,7 +30,7 @@ class SessionUseCaseImpl(
             }
 
         val users = usernames.map { username ->
-            val users = userRepository.findUserByUsername(username)
+            val users = userRepository.findUserByUsernameOrEmail(username)
             if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
 
            return@map users.first()
@@ -45,7 +45,7 @@ class SessionUseCaseImpl(
     }
 
     override fun checkUserOnline(username: String): Session {
-        val users = userRepository.findUserByUsername(username)
+        val users = userRepository.findUserByUsernameOrEmail(username)
         if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
 
         val sessions = sessionRepository.getOpenSessions()
@@ -63,7 +63,7 @@ class SessionUseCaseImpl(
         if (session.isClosed()) throw InconsistenceException("Session is already closed.")
 
         usernames.forEach { username ->
-            val users = userRepository.findUserByUsername(username)
+            val users = userRepository.findUserByUsernameOrEmail(username)
             if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
 
             val user = users.first()
@@ -81,7 +81,7 @@ class SessionUseCaseImpl(
         val order = menuRepository.getOrderById(orderId)
 
         val userList = usernames.map { username ->
-            val users = userRepository.findUserByUsername(username)
+            val users = userRepository.findUserByUsernameOrEmail(username)
             if (users.isEmpty()) throw NotFoundException("User ${username} is not on current session.")
 
             session.users.find { user ->

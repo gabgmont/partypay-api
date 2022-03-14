@@ -52,6 +52,18 @@ class UserRepositoryImpl : UserRepository {
         }
     }
 
+    override fun findUserByUsernameOrEmail(username: String?): List<User> {
+        return try {
+            val users = if (username == null) jpaRepository.findAll()
+            else jpaRepository.getUserEntityByUsernamedOrEmail(username, username)
+
+            users.map { userEntity -> userEntity.toModel() }
+
+        } catch (exception: Exception) {
+            arrayListOf()
+        }
+    }
+
     override fun findUserByEmail(email: Email): List<User> {
         return try {
             val users = jpaRepository.getUserEntityByEmail(email.value)

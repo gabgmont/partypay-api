@@ -9,4 +9,5 @@ interface UserJpaRepository: JpaRepository<UserEntity, Long> {
 
     fun getUserEntityByUsernamed(username: String): List<UserEntity>
     fun getUserEntityByEmail(email: String) : List<UserEntity>
+    fun getUserEntityByUsernamedOrEmail(username: String, email: String) : List<UserEntity>
 }

@@ -22,8 +22,8 @@ class UserUseCaseImplTest {
         )
 
     private val repository = mockk<UserRepository>().also { repository ->
-        every { repository.findUserByUsername(any()) } returns arrayListOf(user)
-        every { repository.findUserByUsername(null) } returns arrayListOf(user, user, user)
+        every { repository.findUserByUsernameOrEmail(any()) } returns arrayListOf(user)
+        every { repository.findUserByUsernameOrEmail(null) } returns arrayListOf(user, user, user)
     }
 
     private val useCase = UserUseCaseImpl(repository)

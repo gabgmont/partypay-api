@@ -20,7 +20,7 @@ class UserUseCaseImpl(
         }
 
         if(users.isEmpty()) {
-            users = repository.findUserByUsername(usernameOrEmail)
+            users = repository.findUserByUsernameOrEmail(usernameOrEmail)
         }
 
         if (users.isEmpty()) throw NotFoundException("User $usernameOrEmail not found")
@@ -32,7 +32,7 @@ class UserUseCaseImpl(
         var users = repository.findUserByEmail(user.email)
         if (users.isNotEmpty()) throw InconsistenceException("Email ${user.email.value} already registered")
 
-        users = repository.findUserByUsername(user.username)
+        users = repository.findUserByUsernameOrEmail(user.username)
         if (users.isNotEmpty()) throw InconsistenceException("Username ${user.username} already registered")
 
         user.profiles.add(Profile(0, Profile.Type.STANDARD))

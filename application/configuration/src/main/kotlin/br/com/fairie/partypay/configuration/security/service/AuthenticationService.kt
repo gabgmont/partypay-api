@@ -36,7 +36,7 @@ class AuthenticationService(
 
     override fun loadUserByUsername(username: String): UserDetails {
 
-        val users = userRepository.findUserByUsername(username)
+        val users = userRepository.findUserByUsernameOrEmail(username)
         if (users.isEmpty()) throw NotFoundException("User $username not found.")
 
         return users.first().toEntity()
