@@ -85,29 +85,31 @@ class MenuRepositoryImpl : MenuRepository {
 }
 
 fun MenuEntity.toModel(): Menu =
-    Menu(
-        id = id,
-        name = restaurant,
-        categoryList = categories.map { category -> category.toModel() }
-    )
+        Menu(
+                id = id,
+                name = restaurant,
+                image = image,
+                categoryList = categories.map { category -> category.toModel() }
+        )
 
 fun CategoryEntity.toModel(): Category =
-    Category(
-        id = id,
-        name = name,
-        orderList = orders.map { order -> order.toModel() }
-    )
+        Category(
+                id = id,
+                name = name,
+                orderList = orders.map { order -> order.toModel() }
+        )
 
 fun Menu.toEntity(): MenuEntity =
-    MenuEntity(
-        id = 0,
-        restaurant = name,
-        categories = categoryList.map { category -> category.toEntity() }
-    )
+        MenuEntity(
+                id = 0,
+                restaurant = name,
+                image = image,
+                categories = categoryList.map { category -> category.toEntity() }
+        )
 
 fun Category.toEntity(): CategoryEntity =
-    CategoryEntity(
-        id = 0,
-        name = name,
-        orders = orderList.map { order -> order.toEntity() }
-    )
+        CategoryEntity(
+                id = 0,
+                name = name,
+                orders = orderList.map { order -> order.toEntity() }
+        )

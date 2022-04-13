@@ -11,6 +11,7 @@ import java.math.BigDecimal
 fun MenuDao.toVo(): Menu = Menu(
         id = id,
         name = restaurant,
+        image = image,
         categoryList = menu.map { menu -> menu.toVo() }
 )
 

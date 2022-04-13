@@ -11,6 +11,7 @@ import br.com.fairie.partypay.usecase.menu.model.Order
 fun Menu.toDTO(): MenuDTO = MenuDTO(
         id = id,
         name = name,
+        image = image,
         categories = categoryList.map { category -> category.toDTO() }
 )
 
@@ -34,5 +35,6 @@ fun Order.toDTO(): OrderDTO =
 fun Menu.toRestaurantsDTO(): RestaurantsDTO =
         RestaurantsDTO(
                 id = id,
-                name = name
+                name = name,
+                image = image
         )
