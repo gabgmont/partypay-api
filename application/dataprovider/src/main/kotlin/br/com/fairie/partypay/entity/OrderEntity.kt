@@ -11,6 +11,9 @@ class OrderEntity(
     @Column
     val name: String,
 
+    @Column
+    val image: String,
+
     @Column(length = 500)
     val description: String,
 

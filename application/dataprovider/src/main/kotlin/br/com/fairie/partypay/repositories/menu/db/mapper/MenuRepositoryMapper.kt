@@ -6,6 +6,7 @@ import br.com.fairie.partypay.usecase.menu.model.Order
 fun Order.toEntity(): OrderEntity = OrderEntity(
         id = id,
         name = name,
+        image = image,
         description = description,
         value = value
 )
@@ -13,6 +14,7 @@ fun Order.toEntity(): OrderEntity = OrderEntity(
 fun OrderEntity.toModel(): Order = Order(
         id = id,
         name = name,
+        image = image,
         description = description,
         value = value
 )

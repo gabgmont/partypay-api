@@ -9,29 +9,30 @@ import br.com.fairie.partypay.usecase.menu.model.Menu
 import br.com.fairie.partypay.usecase.menu.model.Order
 
 fun Menu.toDTO(): MenuDTO = MenuDTO(
-    id = id,
-    name = name,
-    categories = categoryList.map { category -> category.toDTO() }
+        id = id,
+        name = name,
+        categories = categoryList.map { category -> category.toDTO() }
 )
 
 
 fun Category.toDTO(): CategoryDTO = CategoryDTO(
-    id = id,
-    name = name,
-    orders = orderList.map { order -> order.toDTO() }
+        id = id,
+        name = name,
+        orders = orderList.map { order -> order.toDTO() }
 )
 
 
 fun Order.toDTO(): OrderDTO =
-    OrderDTO(
-        id = id,
-        name = name,
-        description = description,
-        value = value
-    )
+        OrderDTO(
+                id = id,
+                name = name,
+                image = image,
+                description = description,
+                value = value
+        )
 
 fun Menu.toRestaurantsDTO(): RestaurantsDTO =
-    RestaurantsDTO(
-        id = id,
-        name = name
-    )
+        RestaurantsDTO(
+                id = id,
+                name = name
+        )

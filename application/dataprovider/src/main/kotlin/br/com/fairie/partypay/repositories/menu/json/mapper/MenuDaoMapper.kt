@@ -23,6 +23,7 @@ fun CategoryDao.toVo(): Category = Category(
 fun OrderDao.toVo(): Order = Order(
         id = 0,
         name = name,
+        image = image,
         description = description,
         value = BigDecimal(value)
 )

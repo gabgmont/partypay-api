@@ -8,6 +8,8 @@ class ResumedOrderDTO(
         val id: Long,
         @JsonProperty(value = "name")
         val name: String,
+        @JsonProperty(value = "image")
+        val image: String,
         @JsonProperty(value = "value")
         val value: BigDecimal
 )

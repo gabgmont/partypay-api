@@ -49,7 +49,7 @@ fun SessionUser.toResumedDTO(): ResumedSessionUserDTO = ResumedSessionUserDTO(
 fun SessionResumeOrder.toResumeOrderDTO() =
         SessionResumeOrderDTO(
                 resumeOrder = order.toResumedDTO(),
-                valuePerUser =  valuePerUser
+                valuePerUser = valuePerUser
         )
 
 fun Session.toResumedDTO(): ResumedSessionDTO =
@@ -87,5 +87,6 @@ fun Order.toResumedDTO(): ResumedOrderDTO =
         ResumedOrderDTO(
                 id = id,
                 name = name,
+                image = image,
                 value = value,
         )

@@ -8,6 +8,8 @@ class OrderDTO(
         val id: Long,
         @JsonProperty(value = "name")
         val name: String,
+        @JsonProperty(value = "image")
+        val image: String,
         @JsonProperty(value = "description")
         val description: String,
         @JsonProperty(value = "value")

@@ -12,7 +12,7 @@ import java.math.BigDecimal
 
 class MenuUseCaseImplTest {
 
-    private val order = Order(0, "Bloomin' Onions", "description", BigDecimal(99.99))
+    private val order = Order(0, "Bloomin' Onions", "image","description", BigDecimal(99.99))
     private val category = Category(1, "Aperitivos", arrayListOf(order))
     private val menu = Menu(1, "Outback", arrayListOf(category))
 
