@@ -65,7 +65,8 @@ fun Session.toResumedDTO(): ResumedSessionDTO =
 fun User.toResumedDTO(): ResumedUserDTO =
         ResumedUserDTO(
                 name = name,
-                username = username
+                username = username,
+                image = photo?.value ?: ""
         )
 
 fun SessionOrder.toResumedDTO(): ResumedSessionOrderDTO {

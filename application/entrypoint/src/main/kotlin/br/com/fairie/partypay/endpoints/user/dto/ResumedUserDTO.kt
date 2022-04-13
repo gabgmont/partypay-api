@@ -7,7 +7,9 @@ class ResumedUserDTO(
         @JsonProperty(value = "name")
         val name: String,
         @JsonProperty(value = "username")
-        val username: String
+        val username: String,
+        @JsonProperty(value = "image")
+        val image: String
 ) {
     override fun toString(): String {
         return ObjectMapper().writeValueAsString(this)
