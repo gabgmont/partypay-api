@@ -31,7 +31,7 @@ class SessionUseCaseImpl(
 
         val users = usernames.map { username ->
             val users = userRepository.findUserByUsernameOrEmail(username)
-            if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
+            if (users.isEmpty()) throw NotFoundException("User $username not found.")
 
            return@map users.first()
         } as MutableList
@@ -46,7 +46,7 @@ class SessionUseCaseImpl(
 
     override fun checkUserOnline(username: String): Session {
         val users = userRepository.findUserByUsernameOrEmail(username)
-        if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
+        if (users.isEmpty()) throw NotFoundException("User $username not found.")
 
         val sessions = sessionRepository.getOpenSessions()
         val user = users.first()
@@ -64,7 +64,7 @@ class SessionUseCaseImpl(
 
         usernames.forEach { username ->
             val users = userRepository.findUserByUsernameOrEmail(username)
-            if (users.isEmpty()) throw NotFoundException("User ${username} not found.")
+            if (users.isEmpty()) throw NotFoundException("User $username not found.")
 
             val user = users.first()
             if (session.users.contains(user)) throw InconsistenceException("User ${user.username} already in session.")
@@ -82,11 +82,11 @@ class SessionUseCaseImpl(
 
         val userList = usernames.map { username ->
             val users = userRepository.findUserByUsernameOrEmail(username)
-            if (users.isEmpty()) throw NotFoundException("User ${username} is not on current session.")
+            if (users.isEmpty()) throw NotFoundException("User $username is not on current session.")
 
             session.users.find { user ->
                 user.username == username
-            } ?: throw NotFoundException("User ${username} not on current session.")
+            } ?: throw NotFoundException("User $username not on current session.")
 
             return@map users.first()
         }
@@ -134,7 +134,6 @@ class SessionUseCaseImpl(
             "There are pending orders in this session.",
             notDeliveredOrders
         )
-
 
         val sessionUserList = session.users.map { user ->
             SessionUser(
